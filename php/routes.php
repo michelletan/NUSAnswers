@@ -1,4 +1,4 @@
 <?php
-require_once('dispatch.php');
+require_once 'dispatch.php';
 
 ?>

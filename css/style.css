@@ -1,5 +1,24 @@
 body {
     font-family: 'Open Sans', sans-serif;
+    background-color: #F7F7F7;
+}
+
+.navbar {
+    background-color: #00A8C6;
+    border: 0px;
+    border-radius: 0 !important;
+    box-shadow: 0 0 3px #26727F;
+}
+
+.navbar-brand, .navbar-nav > li > a {
+    color: white !important;
+}
+
+.navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+    background-color: #26727F !important;
 }
 
 #nav-search-bar {

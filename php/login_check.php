@@ -1,7 +1,7 @@
 <?php
 session_start();
 // if (isset($_SESSION["userRole"])) {
-    $isLoggedIn = true;
-    $isAdmin = $_SESSION["userRole"] == USER_ROLE_ADMIN;
+    $is_logged_in = true;
+    $is_admin = $_SESSION["user_role"] == USER_ROLE_ADMIN;
 // }
 ?>

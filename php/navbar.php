@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
   <div class="container-fluid center-block">
     <div class="row">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -23,14 +23,15 @@
         <li><a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Answer</a></li>
       </ul>
       <ul class="nav navbar-nav col-md-2 col-lg-2">
-        <?php if (!$isLoggedIn) {?>
+        <?php if (!$is_logged_in) {?>
             <li><a href="#">Login</a></li>
         <?php } ?>
-        <?php if ($isLoggedIn) {?>
+        <?php if ($is_logged_in) {?>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Dashboard</a></li>
+                <?php if ($is_admin) {?><li><a href="#">Admin Dashboard</a></li><?php } ?>
+                <li><a href="#">User Dashboard</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="#">Logout</a></li>
               </ul>
