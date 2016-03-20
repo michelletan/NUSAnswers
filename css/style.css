@@ -3,6 +3,10 @@ body {
     background-color: #F7F7F7;
 }
 
+a:hover {
+    cursor: pointer;
+}
+
 .navbar {
     background-color: #00A8C6;
     border: 0px;
@@ -19,6 +23,46 @@ body {
 .navbar-inverse .navbar-nav > .open > a:hover,
 .navbar-inverse .navbar-nav > .open > a:focus {
     background-color: #26727F !important;
+}
+
+.sidebar h5 {
+    color: #999999;
+}
+
+.sidebar ul {
+    padding: 5px;
+}
+
+.sidebar li {
+    list-style-type: none;
+    padding-bottom: 5px;
+}
+
+.question-list-item a:hover {
+    text-decoration: none;
+}
+
+.question-list-item h4 {
+    color: #00A8C6;
+}
+
+.question-list-item {
+    color: #999999;
+}
+
+.box-votes {
+    padding-left: 0px;
+    font-size: 16px;
+}
+
+.text-answer {
+    color: black;
+    margin-bottom: 10px;
+}
+
+.img-user {
+    width: 80px;
+    height: 80px;
 }
 
 #nav-search-bar {
