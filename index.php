@@ -1,19 +1,21 @@
-<?php include_once 'php/header.php'; ?>
-<body>
-    <?php include_once 'php/navbar.php'; ?>
-    <div class="container-fluid center-block">
-        <div class="row">
-            <?php include_once 'php/sidebar.php'; ?>
-            <div class="col-md-6 col-lg-6">
-                <?php include 'php/question_list_item.php'; ?>
-                <?php include 'php/question_list_item.php'; ?>
-                <?php include 'php/question_list_item.php'; ?>
-                <?php include 'php/question_list_item.php'; ?>
-                <?php include 'php/question_list_item.php'; ?>
-                <?php include 'php/question_list_item.php'; ?>
-                <?php include 'php/question_list_item.php'; ?>
-            </div>
-        </div>
-    </div>
-</body>
-<?php include_once 'php/footer.php'; ?>
+<?php
+require_once __DIR__ . '/php/lib/Toro.php';
+
+class HomeHandler {
+    function get() {
+        require  __DIR__ . '/home.php';
+    }
+}
+
+class APIHandler {
+    function get_xhr($name) {
+        require __DIR__ . '/json.php';
+    }
+}
+
+Toro::serve(array(
+    "/" => "HomeHandler",
+    "/json/:string" => "APIHandler"
+));
+
+?>
