@@ -1,5 +1,5 @@
-<script src="/js/jquery-1.12.2.js"></script>
-<script src="/js/bootstrap.js"></script>
+<script src="../js/jquery-1.12.2.js"></script>
+<script src="../js/bootstrap.js"></script>
 <script type="text/javascript">
 $.ajax({
   url: "/json/something"
