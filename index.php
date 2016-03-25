@@ -1,25 +1,29 @@
 <?php
-require_once __DIR__ . '/php/lib/Toro.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/Toro.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
 
 // Reference & examples: https://github.com/anandkunal/ToroPHP
 // More examples: http://www.sitepoint.com/apify-legacy-app-toro/
 
+define('VIEW_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/views/');
+define('API_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/api/');
+
 // Handlers for HTML pages
 class HomeHandler {
     function get() {
-        require  __DIR__ . '/home.php';
+        require VIEW_DIRECTORY . '/home.php';
     }
 }
 
 class LoginHandler {
     function get() {
-        require  __DIR__ . '/login_user.php';
+        require VIEW_DIRECTORY . '/login_user.php';
     }
 }
 
 class AdminLoginHandler {
     function get() {
-        require  __DIR__ . '/login_admin.php';
+        require VIEW_DIRECTORY . '/login_admin.php';
     }
 }
 
