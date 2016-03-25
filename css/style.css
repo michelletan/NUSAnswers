@@ -25,6 +25,10 @@ a:hover {
     background-color: #26727F !important;
 }
 
+.sidebar {
+    border-right: 2px solid #00A8C6;
+}
+
 .sidebar h5 {
     color: #999999;
 }
