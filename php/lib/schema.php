@@ -23,7 +23,7 @@ function create_profile_table () {
   global $db;
   $query = "CREATE TABLE profiles (" .
            "profile_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
-           "display_name VARCHAR(32)" .
+           "display_name VARCHAR(32) NOT NULL" .
            ")";
   $db->query($query);
 }
@@ -74,6 +74,7 @@ function create_answer_table () {
   $query = "CREATE TABLE answers (" .
            "answer_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
            "content MEDIUMTEXT NOT NULL," .
+           "votes INTEGER NOT NULL,"
            "profile_fk INTEGER NOT NULL," .
            "question_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)," .
