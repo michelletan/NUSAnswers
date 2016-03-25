@@ -8,7 +8,7 @@
   <!-- List group -->
   <ul class="list-group">
       <li class="list-group-item">
-          <a href=""><h4>When does the UTown gym open?</h4></a>
+          <a href="/question/123"><h4>When does the UTown gym open?</h4></a>
           Tags: <a href="">#utown</a>, <a href="">#gym</a>, <a href="">#random</a>, <a href="">#needtoknow</a>
           <p class="pull-right">Posted: 2 hours ago</p>
       </li>

@@ -27,6 +27,28 @@ class AnswerHandler {
     }
 }
 
+class QuestionHandler {
+    // function __construct() {
+    //     ToroHook::add("after_handler", function() {
+    //
+    //     });
+    // }
+
+    function get($id) {
+        if ($id) {
+            // Get question data before showing question.php
+            $data = array();
+            $data["question_title"] = "When does the gym open?";
+            $data["question_details"] = "I don't know when the gym opens Help!";
+            $data["question_owner"] = "Michelle Tan";
+
+            include VIEW_DIRECTORY . '/question.php';
+        } else {
+            include VIEW_DIRECTORY . '/question.php';
+        }
+    }
+}
+
 class LoginHandler {
     function get() {
         require VIEW_DIRECTORY . '/login_user.php';
@@ -60,6 +82,7 @@ $html_urls = array(
     "/" => "HomeHandler",
     "/ask" => "AskHandler",
     "/answer" => "AnswerHandler",
+    "/question/:number" => "QuestionHandler",
     "/login" => "LoginHandler",
     "/admin/login" => "AdminLoginHandler"
 );
@@ -67,8 +90,8 @@ $html_urls = array(
 $json_url_prefix = "/api";
 
 $json_base_urls = array(
-    "/question/:string" => "SampleAPIHandler",
-    "/question/:number" => "QuestionAPIHandler"
+    "/api/question/:string" => "SampleAPIHandler",
+    "/api/question/:number" => "QuestionAPIHandler"
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);

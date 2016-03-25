@@ -4,8 +4,8 @@
     <div class="container-fluid center-block">
         <div class="row">
             <?php include_once __DIR__ . '/sidebar.php'; ?>
-            <div class="col-md-6 col-lg-6">
-                <h3>Login with Facebook</h3>
+            <div class="main col-md-6 col-lg-6">
+                <h3 class="page-title">Login with Facebook</h3>
                 <br>
                 <form class="form-horizontal">
                   <div class="form-group">

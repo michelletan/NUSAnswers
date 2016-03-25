@@ -7,6 +7,14 @@ a:hover {
     cursor: pointer;
 }
 
+.page-title {
+    /*background-color: white;*/
+    font-weight: 400;
+    color: #26727F;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
 .navbar {
     background-color: #00A8C6;
     border: 0px;
@@ -26,7 +34,11 @@ a:hover {
 }
 
 .sidebar {
-    border-right: 2px solid #00A8C6;
+    margin-top: 50px;
+}
+
+.sidebar-inner {
+    border-right: 3px solid #00A8C6;
 }
 
 .sidebar h5 {
@@ -40,6 +52,10 @@ a:hover {
 .sidebar li {
     list-style-type: none;
     padding-bottom: 5px;
+}
+
+.main {
+    margin-top: 70px;
 }
 
 .question-list-item a:hover {
@@ -67,6 +83,13 @@ a:hover {
 .img-user {
     width: 80px;
     height: 80px;
+}
+
+.answer {
+    background-color: white;
+    border-radius: 5px !important;
+    padding: 5px;
+    margin: 3px;
 }
 
 #nav-search-bar {

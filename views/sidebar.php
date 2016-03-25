@@ -1,9 +1,10 @@
 <div class="col-md-3 col-lg-3">
-    <div class="sidebar row">
+</div>
+<div class="sidebar affix col-md-3 col-lg-3">
+    <div class="row">
         <div class="col-md-6 col-lg-6">
-
         </div>
-        <div class="col-md-6 col-lg-6">
+        <div class="sidebar-inner col-md-6 col-lg-6">
             <h5 class="text-uppercase">Questions</h5>
             <ul class="">
                 <li><a href="">Popular</a></li>

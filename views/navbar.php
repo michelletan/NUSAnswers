@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid center-block">
     <div class="row">
     <!-- Brand and toggle get grouped for better mobile display -->

@@ -4,7 +4,7 @@
     <div class="container-fluid center-block">
         <div class="row">
             <?php include_once __DIR__ . '/sidebar.php'; ?>
-            <div class="col-md-6 col-lg-6">
+            <div class="main col-md-6 col-lg-6">
                 <?php include __DIR__ . '/question_list_item.php'; ?>
                 <?php include __DIR__ . '/question_list_item.php'; ?>
                 <?php include __DIR__ . '/question_list_item.php'; ?>
