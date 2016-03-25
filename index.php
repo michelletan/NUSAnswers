@@ -28,24 +28,20 @@ class AnswerHandler {
 }
 
 class QuestionHandler {
-    // function __construct() {
-    //     ToroHook::add("after_handler", function() {
-    //
-    //     });
-    // }
-
     function get($id) {
-        if ($id) {
-            // Get question data before showing question.php
-            $data = array();
-            $data["question_title"] = "When does the gym open?";
-            $data["question_details"] = "I don't know when the gym opens Help!";
-            $data["question_owner"] = "Michelle Tan";
+        // Get question data before showing question.php
+        $data = array();
+        $data["question_title"] = "When does the gym open?";
+        $data["question_details"] = "I don't know when the gym opens Help!";
+        $data["question_owner"] = "Michelle Tan";
 
-            include VIEW_DIRECTORY . '/question.php';
-        } else {
-            include VIEW_DIRECTORY . '/question.php';
-        }
+        require VIEW_DIRECTORY . '/question.php';
+    }
+}
+
+class UserProfileHandler {
+    function get($id) {
+        require VIEW_DIRECTORY . '/profile.php';
     }
 }
 
@@ -82,7 +78,10 @@ $html_urls = array(
     "/" => "HomeHandler",
     "/ask" => "AskHandler",
     "/answer" => "AnswerHandler",
+    "/question" => "HomeHandler",
     "/question/:number" => "QuestionHandler",
+    "/user" => "HomeHandler",
+    "/user/:number" => "UserProfileHandler",
     "/login" => "LoginHandler",
     "/admin/login" => "AdminLoginHandler"
 );
