@@ -15,6 +15,18 @@ class HomeHandler {
     }
 }
 
+class AskHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/ask.php';
+    }
+}
+
+class AnswerHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
 class LoginHandler {
     function get() {
         require VIEW_DIRECTORY . '/login_user.php';
@@ -46,6 +58,8 @@ class QuestionAPIHandler {
 
 $html_urls = array(
     "/" => "HomeHandler",
+    "/ask" => "AskHandler",
+    "/answer" => "AnswerHandler",
     "/login" => "LoginHandler",
     "/admin/login" => "AdminLoginHandler"
 );

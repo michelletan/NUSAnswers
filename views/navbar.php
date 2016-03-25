@@ -19,8 +19,8 @@
           <input type="text" id="nav-search-bar" class="form-control" placeholder="Search">
       </form>
       <ul class="nav navbar-nav col-md-2 col-lg-2">
-        <li><a href="#"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Ask</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Answer</a></li>
+        <li><a href="/ask"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Ask</a></li>
+        <li><a href="/answer"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Answer</a></li>
       </ul>
       <ul class="nav navbar-nav col-md-2 col-lg-2">
         <?php if (!$is_logged_in) {?>
