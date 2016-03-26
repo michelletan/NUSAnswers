@@ -9,13 +9,15 @@
             <ul class="">
                 <li><a href="">Popular</a></li>
                 <li><a href="">New</a></li>
-                <?php if ($is_logged_in) {?><li><a href="">My Questions</a></li><?php } ?>
+            <!--    <?php if ($is_logged_in) {?><li><a href="">My Questions</a></li><?php } ?> -->
+                <li class="login-view" style="display:none"><a href="">My Questions</a></li>
             </ul>
             <h5 class="text-uppercase">Answers</h5>
             <ul class="">
                 <li><a href="">Popular</a></li>
                 <li><a href="">New</a></li>
-                <?php if ($is_logged_in) {?><li><a href="">My Answers</a></li><?php } ?>
+            <!--    <?php if ($is_logged_in) {?><li><a href="">My Answers</a></li><?php } ?> -->
+                <li class="login-view" style="display:none"><a href="">My Answers</a></li>
             </ul>
             <h5 class="text-uppercase">Tags</h5>
             <ul class="">
