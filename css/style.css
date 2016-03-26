@@ -95,3 +95,7 @@ a:hover {
 #nav-search-bar {
     margin-top: 8px;
 }
+
+.top-buffer-20px {
+    margin-top: 20px;
+}

@@ -1,0 +1,40 @@
+.todays-stats {
+    height: 200px;
+    margin-top: 30px;
+    color: white;    
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 45px;
+}
+
+.todays-stats  .glyphicon {
+    font-size: 100px;
+}
+
+.todays-stats-quantity {
+    font-size: 50px;
+}
+
+.todays-stats-details {
+    
+}
+
+.todays-stats > span {  
+    vertical-align: middle;
+}
+
+.todays-stats-answers {
+    background-color: #e06666;
+}
+
+.todays-stats-questions {
+    background-color: #eecf20;
+}
+
+.todays-stats-users {
+    background-color: #6699ff;
+}
+
+.todays-stats-votes {
+    background-color: #61d251;
+}
