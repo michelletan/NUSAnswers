@@ -18,6 +18,12 @@ function logout() {
   }, {scope: 'email'});
 }
 
+/*function share() {
+  FB.ui({
+    method: 'share',
+    href: '[URL]',
+  }, function(response) {});
+} */
 
 window.fbAsyncInit = function() {
 	FB.init({
