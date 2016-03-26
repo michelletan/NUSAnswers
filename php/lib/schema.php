@@ -42,7 +42,7 @@ function create_user_table () {
 function create_moderator_table () {
   global $db;
   $query = "CREATE TABLE moderators (" .
-           "user_id VARCHAR(32) PRIMARY KEY," .
+           "moderator_id VARCHAR(32) PRIMARY KEY," .
            "profile_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
            ")";
