@@ -10,6 +10,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      <img class="navbar-logo" src="/img/logo.png"/>
       <a class="navbar-brand logo pull-right" href="<?php echo APP_HOME_URL; ?>"><span>NUS</span>Answers</a>
     </div>
 

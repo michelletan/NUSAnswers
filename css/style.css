@@ -34,6 +34,13 @@ a:hover {
     box-shadow: 0 0 3px #26727F;
 }
 
+.navbar-logo {
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
 .navbar-brand, .navbar-nav > li > a {
     color: white !important;
 }

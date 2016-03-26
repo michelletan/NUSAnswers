@@ -17,6 +17,11 @@ body {
     /*color: #F38630;*/
 }
 
+img {
+    width: 200px;
+    height: 200px;
+}
+
 .main {
     margin: auto;
 }
