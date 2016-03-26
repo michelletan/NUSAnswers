@@ -9,6 +9,12 @@ define('VIEW_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/views/');
 define('API_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/api/');
 
 // Handlers for HTML pages
+class ComingSoonHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/coming_soon.php';
+    }
+}
+
 class HomeHandler {
     function get() {
         require VIEW_DIRECTORY . '/home.php';

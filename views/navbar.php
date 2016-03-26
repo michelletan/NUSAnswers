@@ -10,7 +10,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?php echo APP_HOME_URL; ?>"><?php echo APP_TITLE;?></a>
+      <a class="navbar-brand logo" href="<?php echo APP_HOME_URL; ?>"><?php echo APP_TITLE;?></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
