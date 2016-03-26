@@ -6,13 +6,14 @@ body {
 }
 
 .logo {
-    font-family: 'Exo', sans-serif;
-    font-weight: 600;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 400;
     font-size: 72px;
     color: #F9F2E7;
 }
 
 .logo span {
+    font-weight: 600;
     /*color: #F38630;*/
 }
 

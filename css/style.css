@@ -8,8 +8,15 @@ a:hover {
 }
 
 .logo {
-    font-family: 'Exo', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: #F9F2E7;
+}
+
+.logo span {
     font-weight: 600;
+    /*color: #F38630;*/
 }
 
 .page-title {
@@ -43,7 +50,7 @@ a:hover {
 }
 
 .sidebar-inner {
-    border-right: 3px solid #00A8C6;
+    /*border-right: 3px solid #00A8C6;*/
 }
 
 .sidebar h5 {

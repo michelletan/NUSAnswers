@@ -2,15 +2,15 @@
   <div class="container-fluid center-block">
     <div class="row">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="col-md-2 col-lg-2"></div>
-    <div class="navbar-header col-sm-1 col-md-1 col-lg-1">
+    <div class="col-md-1 col-lg-1"></div>
+    <div class="navbar-header col-sm-1 col-md-2 col-lg-2 text-right">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand logo" href="<?php echo APP_HOME_URL; ?>"><?php echo APP_TITLE;?></a>
+      <a class="navbar-brand logo pull-right" href="<?php echo APP_HOME_URL; ?>"><span>NUS</span>Answers</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
