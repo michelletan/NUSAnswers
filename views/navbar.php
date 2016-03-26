@@ -23,20 +23,16 @@
         <li><a href="/answer"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Answer</a></li>
       </ul>
       <ul class="nav navbar-nav col-md-2 col-lg-2">
-        <?php if (!$is_logged_in) {?>
-            <li><a href="#">Login</a></li>
-        <?php } ?>
-        <?php if ($is_logged_in) {?>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <?php if ($is_admin) {?><li><a href="#">Admin Dashboard</a></li><?php } ?>
-                <li><a href="#">User Dashboard</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Logout</a></li>
-              </ul>
-            </li>
-        <?php } ?>
+        <li id="non-login-view" style="display:none"><a href="javascript:login();"><?php $is_logged_in = false; ?>Login</a></li>
+        <li class="dropdown login-view" style="display:none">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="username"><?php $is_logged_in = true; ?>Username <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <?php if ($is_admin) {?><li><a href="#">Admin Dashboard</a></li><?php } ?>
+            <li><a href="#">User Dashboard</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="javascript:logout();">Logout</a></li>
+          </ul>
+        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
     </div><!-- /.row -->

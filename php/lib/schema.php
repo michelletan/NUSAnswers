@@ -16,6 +16,7 @@ function create_tables () {
 function create_all_user_tables () {
   create_profile_table();
   create_user_table();
+  create_moderator_table();
   create_admin_table();
 }
 
@@ -32,6 +33,16 @@ function create_user_table () {
   global $db;
   $query = "CREATE TABLE users (" .
            "user_id VARCHAR(32) PRIMARY KEY," .
+           "profile_fk INTEGER NOT NULL," .
+           "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
+           ")";
+  $db->query($query);
+}
+
+function create_moderator_table () {
+  global $db;
+  $query = "CREATE TABLE moderators (" .
+           "moderator_id VARCHAR(32) PRIMARY KEY," .
            "profile_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
            ")";
@@ -186,6 +197,7 @@ function drop_tables () {
 function drop_all_user_tables () {
   drop_admin_table();
   drop_user_table();
+  drop_moderator_table();
   drop_profile_table();
 }
 
@@ -195,6 +207,10 @@ function drop_profile_table () {
 
 function drop_user_table () {
   drop_table_by_name("users");
+}
+
+function drop_moderator_table () {
+  drop_table_by_name("moderators");
 }
 
 function drop_admin_table () {
