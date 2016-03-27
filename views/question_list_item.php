@@ -66,7 +66,7 @@
         </div>
     </div>
     <div class="post-footer">
-        <div class="row">
+        <div class="row center-block">
             <div class="col-md-4 col-lg-4"></div>
             <a class="col-md-3 col-lg-3 text-center">View Answers(2)</a>
             <a class="col-md-3 col-lg-3 text-center">View Comments(10)</a>
