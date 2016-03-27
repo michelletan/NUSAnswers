@@ -73,7 +73,10 @@ function create_question_table () {
   global $db;
   $query = "CREATE TABLE questions (" .
            "question_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
+           "title TEXT NOT NULL," .
            "content MEDIUMTEXT NOT NULL," .
+           "answers INTEGER NOT NULL DEFAULT 0," .
+           "comments INTEGER NOT NULL DEFAULT 0," .
            "profile_fk INTEGER," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
            ")";
@@ -85,7 +88,8 @@ function create_answer_table () {
   $query = "CREATE TABLE answers (" .
            "answer_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
            "content MEDIUMTEXT NOT NULL," .
-           "votes INTEGER NOT NULL,"
+           "votes INTEGER NOT NULL DEFAULT 0," .
+           "comments INTEGER NOT NULL DEFAULT 0," .
            "profile_fk INTEGER NOT NULL," .
            "question_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)," .
