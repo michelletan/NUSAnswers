@@ -45,5 +45,9 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="//api.filestackapi.com/filestack.js"></script>
+
+    <input type="filepicker" data-fp-apikey="AtT1C69Q8Ssq4WsqPRNPEz"
+    onchange="alert(event.fpfile.url)">
 </body>
 <?php include_once __DIR__ . '/footer.php'; ?>
