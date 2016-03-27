@@ -143,6 +143,10 @@ a:hover {
     margin-top: 70px;
 }
 
+.ask-form label {
+    color: #F38630;
+}
+
 .question-list-item {
     margin-bottom: 20px;
 }

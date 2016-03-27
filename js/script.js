@@ -1,3 +1,8 @@
+$(document).ready(function() {
+  $('[data-toggle=offcanvas]').click(function() {
+    $('.row-offcanvas').toggleClass('active');
+  });
+});
 
 // Code for adding popup modal
 // $(document).ready(function() {
