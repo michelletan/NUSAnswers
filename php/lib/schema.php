@@ -88,7 +88,7 @@ function create_answer_table () {
   $query = "CREATE TABLE answers (" .
            "answer_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
            "content MEDIUMTEXT NOT NULL," .
-           "votes INTEGER NOT NULL DEFAULT 0,"
+           "votes INTEGER NOT NULL DEFAULT 0," .
            "comments INTEGER NOT NULL DEFAULT 0," .
            "profile_fk INTEGER NOT NULL," .
            "question_fk INTEGER NOT NULL," .
