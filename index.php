@@ -8,6 +8,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
 define('VIEW_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/views/');
 define('API_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/api/');
 
+$post_data = array();
+$post_data["post_title"] = "I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?";
+$post_data["post_answer"] = "The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELC's English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.";
+
 // Handlers for HTML pages
 class ComingSoonHandler {
     function get() {
@@ -17,6 +21,7 @@ class ComingSoonHandler {
 
 class HomeHandler {
     function get() {
+        global $post_data;
         require VIEW_DIRECTORY . '/home.php';
     }
 }
