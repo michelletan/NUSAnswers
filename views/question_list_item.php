@@ -1,4 +1,4 @@
-<div class="question-list-item card">
+<div id="123" class="question-list-item card">
     <div class="post-header">
         <div class="post-title row center-block">
             <a href="/question/123"><?php echo $post_data["post_title"]; ?></a>
@@ -53,9 +53,12 @@
     <div class="post-footer">
         <div class="row center-block">
             <div class="timestamp col-md-4 col-lg-4">Posted: 2 hours ago</div>
-            <a class="col-md-3 col-lg-3 text-center">View Answers(2)</a>
+            <a class="btn-view-answers col-md-3 col-lg-3 text-center">View Answers(2)</a>
             <a class="col-md-3 col-lg-3 text-center">View Comments(10)</a>
             <a class="col-md-2 col-lg-2 text-center"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
         </div>
     </div>
+</div>
+<div class="post-foldout">
+    Some answers here!
 </div>

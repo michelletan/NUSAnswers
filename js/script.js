@@ -1,7 +1,40 @@
 $(document).ready(function() {
-  $('[data-toggle=offcanvas]').click(function() {
-    $('.row-offcanvas').toggleClass('active');
-  });
+    $('.post-foldout').hide();
+
+    $('[data-toggle=offcanvas]').click(function() {
+        $('.row-offcanvas').toggleClass('active');
+    });
+
+    $('.btn-view-answers').click(function(e) {
+        e.preventDefault();
+
+        // Get its parent post
+        var post = $(e.currentTarget).closest('.question-list-item');
+        post.addClass('foldout-shown');
+
+        var foldout = post.next('.post-foldout');
+        foldout.show();
+        // Animate
+        foldout.animateCss('slideInDown');
+        foldout.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', changePosition);
+        //Retrieve answers
+
+        // Show answers
+    });
+});
+
+function changePosition(e) {
+    console.log(e);
+    $(e.currentTarget).show();
+}
+
+$.fn.extend({
+    animateCss: function (animationName) {
+        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+        $(this).addClass('animated ' + animationName).one(animationEnd, function() {
+            $(this).removeClass('animated ' + animationName);
+        });
+    }
 });
 
 // Code for adding popup modal
