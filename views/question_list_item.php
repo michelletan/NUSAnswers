@@ -14,14 +14,14 @@
             <div class="col-md-2 col-lg-2">
                 <div class="row center-block">
                     <div class="post-vote center-block">
-                        <div class="post-vote-up center-block text-center">
-                            <span class="glyphicon glyphicon-chevron-up"></span>
+                        <div class="center-block text-center">
+                            <a><span class="glyphicon glyphicon-chevron-up"></span><a>
                         </div>
                         <div class="post-vote-count text-center">
                             19
                         </div>
-                        <div class="post-vote-down center-block text-center">
-                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        <div class="center-block text-center">
+                            <a><span class="glyphicon glyphicon-chevron-down"></span></a>
                         </div>
 
                     </div>

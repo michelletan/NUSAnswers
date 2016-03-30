@@ -194,14 +194,8 @@ a:hover {
     margin-bottom: 15px;
 }
 
-.post-vote-up {
+.post-vote .glyphicon {
     font-size: 24px;
-    color: #47B280;
-}
-
-.post-vote-down {
-    font-size: 24px;
-    color: #CC7265;
 }
 
 .post-footer {
