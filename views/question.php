@@ -59,6 +59,14 @@
                             <textarea class="form-control" id="answer-text" placeholder="What's your answer?"></textarea>
                           </div>
                       </div>
+                      <div class="row form-group">
+                          <label class="col-sm-2 col-md-2 col-lg-2">Image Upload</label>
+                          <div class="col-sm-10 col-md-10 col-lg-10">
+                            <input type="file" accept="image/*" id="question-file">
+                            <p class="help-block">Only images with extension .jpg, .png and .gif are accepted. <br>
+                                Please keep your image size under 2MB.</p>
+                          </div>
+                      </div>    
                       <div class="row center-block text-right">
                           <button type="submit" id="btn-submit-answer" class="btn btn-primary">Answer</button>
                       </div>
