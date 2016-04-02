@@ -76,6 +76,7 @@ function create_question_table () {
            "title TEXT NOT NULL," .
            "content MEDIUMTEXT NOT NULL," .
            "created_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," .
+           "views INTEGER NOT NULL DEFAULT 0, " .
            "answers INTEGER NOT NULL DEFAULT 0," .
            "comments INTEGER NOT NULL DEFAULT 0," .
            "profile_fk INTEGER," .
@@ -140,9 +141,8 @@ function create_all_post_support_tables () {
 function create_question_image_table () {
   global $db;
   $query = "CREATE TABLE question_images (" .
-           "image_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
-           "location VARCHAR(256) NOT NULL," .
-           "question_fk INTEGER NOT NULL," .
+           "question_fk INTEGER PRIMARY KEY," .
+           "image_content LONGBLOB NOT NULL," .
            "FOREIGN KEY(question_fk) REFERENCES questions(question_id) ON DELETE CASCADE" .
            ")";
   $db->query($query);
@@ -151,9 +151,8 @@ function create_question_image_table () {
 function create_answer_image_table () {
   global $db;
   $query = "CREATE TABLE answer_images (" .
-           "image_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
-           "location VARCHAR(256) NOT NULL," .
-           "answer_fk INTEGER NOT NULL," .
+           "answer_fk INTEGER PRIMARY KEY," .
+           "image_content LONGBLOB NOT NULL," .
            "FOREIGN KEY(answer_fk) REFERENCES answers(answer_id) ON DELETE CASCADE" .
            ")";
   $db->query($query);
@@ -287,22 +286,38 @@ function insert_admin() {
     $db->query($query);
 }
 
+function insert_users() {
+  global $db;
+  $query = "INSERT INTO profiles (display_name) VALUES " .
+  "('Curien'), " .
+  "('Goldman'), " .
+  "('Cat') " .
+  ";";
+  $db->query($query);
+  $query = "INSERT INTO users (user_id, profile_fk) VALUES " .
+  " ('curien', 2), " .
+  " ('goldman', 3), " .
+  " ('catherine', 4), " .
+  ";";
+  $db->query($query);
+}
+
 function insert_questions() {
     global $db;
     $query = "INSERT INTO questions(title, content, profile_fk) VALUES ".
     "('Question Title 1', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
     "('Question Title 2', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
-    "('Question Title 3', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
+    "('Question Title 3', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 3),".
     "('Question Title 4', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
     "('Question Title 5', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
-    "('Question Title 6', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
+    "('Question Title 6', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 2),".
     "('Question Title 7', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
-    "('Question Title 8', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
+    "('Question Title 8', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 4),".
     "('Question Title 9', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
     "('Question Title 10', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
-    "('Question Title 11', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
+    "('Question Title 11', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 2),".
     "('Question Title 12', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
-    "('Question Title 13', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
+    "('Question Title 13', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 3),".
     "('Question Title 14', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1)".
     ";";
     $db->query($query);
@@ -311,21 +326,50 @@ function insert_questions() {
 function insert_answers() {
     global $db;
     $query = "INSERT INTO answers (content, votes, comments, profile_fk, question_fk) VALUES ".
+    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 0, 0, 1, 1),".
+    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 1, 0, 1, 1),".
     "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 1, 0, 1, 1),".
     "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 2, 0, 1, 1),".
-    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 3, 0, 1, 1),".
-    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 4, 0, 1, 1),".
-    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 13, 0, 1, 2),".
-    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 3, 0, 1, 4),".
-    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 1, 0, 1, 5),".
-    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 2, 0, 1, 6),".
-    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 1, 0, 1, 7),".
-    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 4, 0, 1, 8),".
-    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 1, 0, 1, 10),".
-    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 5, 0, 1, 11),".
-    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 6, 0, 1, 12)".
+    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 0, 0, 1, 2),".
+    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 1, 0, 1, 4),".
+    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 4, 0, 1, 5),".
+    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 1, 0, 1, 6),".
+    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 3, 0, 1, 7),".
+    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 0, 0, 1, 8),".
+    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 0, 0, 1, 10),".
+    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', -1, 0, 1, 11),".
+    "('The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELCs English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.', 0, 0, 1, 12)".
     ";";
     $db->query($query);
+}
+
+function insert_votes() {
+  global $db;
+  $query = "INSERT INTO votes (profile_fk, answer_fk, vote_type) VALUES " .
+  "(1, 1, 1), " .
+  "(1, 2, 1), " .
+  "(1, 3, 1), " .
+  "(1, 4, 1), " .
+  "(1, 5, 1), " .
+  "(1, 6, 1), " .
+  "(1, 7, 1), " .
+  "(1, 8, 1), " .
+  "(1, 9, 1), " .
+  "(1, 10, 1), " .
+  "(2, 2, 1), " .
+  "(2, 5, -1), " .
+  "(2, 7, 1), " .
+  "(2, 9, 1), " .
+  "(2, 10, -1), " .
+  "(2, 12, -1), " .
+  "(3, 1, -1), " .
+  "(3, 2, -1), " .
+  "(3, 4, 1), " .
+  "(3, 7, 1), " .
+  "(3, 9, 1), " .
+  "(4, 7, 1) " .
+  ";";
+  $db->query($query);
 }
 
 /************************* HELPER METHODS *************************/
@@ -337,12 +381,14 @@ function drop_table_by_name($name) {
 
 function setup_test_data() {
     insert_admin();
+    insert_users();
     insert_questions();
     insert_answers();
+    insert_votes();
 }
 
 drop_tables();
 create_tables();
 setup_test_data();
-echo("success");
+echo("success5");
 ?>
