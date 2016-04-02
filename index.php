@@ -24,7 +24,39 @@ class ComingSoonHandler {
 class HomeHandler {
     function get() {
         global $questions;
-        $questions = retrieve_questions_for_home_page(INITIAL_NUM_QUESTIONS);
+        $questions = retrieve_questions_by_latest(INITIAL_NUM_QUESTIONS);
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class PopularQuestionsHandler {
+    function get() {
+        global $questions;
+        $questions = retrieve_questions_with_recent_answers(INITIAL_NUM_QUESTIONS);
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class NewQuestionsHandler {
+    function get() {
+        global $questions;
+        $questions = retrieve_questions_by_latest(INITIAL_NUM_QUESTIONS);
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class PopularAnswersHandler {
+    function get() {
+        global $questions;
+        $questions = retrieve_questions_with_popular_answers(INITIAL_NUM_QUESTIONS);
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class NewAnswersHandler {
+    function get() {
+        global $questions;
+        $questions = retrieve_questions_with_recent_answers(INITIAL_NUM_QUESTIONS);
         require VIEW_DIRECTORY . '/home.php';
     }
 }
@@ -37,6 +69,8 @@ class AskHandler {
 
 class AnswerHandler {
     function get() {
+        global $questions;
+        $questions = retrieve_questions_for_answer_page(INITIAL_NUM_QUESTIONS);
         require VIEW_DIRECTORY . '/home.php';
     }
 }
@@ -87,7 +121,10 @@ class QuestionAPIHandler {
 
 $html_urls = array(
     "/" => "HomeHandler",
-    "/new" => "HomeHandler",
+    "/popular-questions" => "PopularQuestionsHandler",
+    "/new-questions" => "HomeHandler",
+    "/popular-answers" => "PopularAnswersHandler",
+    "/new-answers" => "NewAnswersHandler",
     "/ask" => "AskHandler",
     "/answer" => "AnswerHandler",
     "/question" => "HomeHandler",
