@@ -61,6 +61,15 @@ class NewAnswersHandler {
     }
 }
 
+class TagHandler {
+    function get($tag) {
+        global $questions;
+        $questions = retrieve_questions_with_tag($tag, INITIAL_NUM_QUESTIONS);
+        echo $questions;
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
 class AskHandler {
     function get() {
         require VIEW_DIRECTORY . '/ask.php';
@@ -129,6 +138,7 @@ $html_urls = array(
     "/answer" => "AnswerHandler",
     "/question" => "HomeHandler",
     "/question/:alpha" => "QuestionHandler",
+    "/tagged/:alpha" => "TagHandler",
     "/user" => "HomeHandler",
     "/user/:number" => "UserProfileHandler",
     "/login" => "LoginHandler",

@@ -357,6 +357,57 @@ function insert_votes() {
   $db->query($query);
 }
 
+function insert_tags() {
+    global $db;
+    $query = "INSERT INTO tags (tag_name) ".
+            "VALUES('cors'),".
+            "('newstudent'),".
+            "('admin'),".
+            "('needtoknow'),".
+            "('random'),".
+            "('bidding'),".
+            "('help');";
+    $db->query($query);
+}
+
+function insert_tag_links() {
+    global $db;
+    $query = "INSERT INTO has_tags (question_fk, tag_fk) ".
+            "VALUES(1, 1),".
+            "(1, 2),".
+            "(1, 3),".
+            "(1, 4),".
+            "(1, 5),".
+            "(1, 6),".
+            "(1, 7),".
+            "(2, 1),".
+            "(2, 2),".
+            "(2, 3),".
+            "(2, 4),".
+            "(2, 5),".
+            "(3, 6),".
+            "(3, 7),".
+            "(4, 2),".
+            "(4, 3),".
+            "(4, 4),".
+            "(4, 5),".
+            "(5, 1),".
+            "(6, 1),".
+            "(7, 1),".
+            "(8, 1),".
+            "(9, 1),".
+            "(10, 2),".
+            "(10, 3),".
+            "(10, 4),".
+            "(10, 5),".
+            "(11, 2),".
+            "(12, 3),".
+            "(13, 4),".
+            "(14, 5),".
+            "(14, 1);";
+    $db->query($query);
+}
+
 /************************* HELPER METHODS *************************/
 function drop_table_by_name($name) {
   global $db;
@@ -370,6 +421,8 @@ function setup_test_data() {
     insert_questions();
     insert_answers();
     insert_votes();
+    insert_tags();
+    insert_tag_links();
 }
 
 drop_tables();
