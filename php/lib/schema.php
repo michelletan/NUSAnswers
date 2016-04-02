@@ -16,7 +16,6 @@ function create_tables () {
 function create_all_user_tables () {
   create_profile_table();
   create_user_table();
-  create_moderator_table();
   create_admin_table();
 }
 
@@ -33,16 +32,7 @@ function create_user_table () {
   global $db;
   $query = "CREATE TABLE users (" .
            "user_id VARCHAR(32) PRIMARY KEY," .
-           "profile_fk INTEGER NOT NULL," .
-           "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
-           ")";
-  $db->query($query);
-}
-
-function create_moderator_table () {
-  global $db;
-  $query = "CREATE TABLE moderators (" .
-           "moderator_id VARCHAR(32) PRIMARY KEY," .
+           "role INTEGER NOT NULL," .
            "profile_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
            ")";
@@ -54,7 +44,6 @@ function create_admin_table () {
   $query = "CREATE TABLE admins (" .
            "admin_id VARCHAR(32) PRIMARY KEY," .
            "hashed_password VARCHAR(256) NOT NULL," .
-           "role INTEGER NOT NULL," .
            "profile_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
            ")";
@@ -205,7 +194,6 @@ function drop_tables () {
 function drop_all_user_tables () {
   drop_admin_table();
   drop_user_table();
-  drop_moderator_table();
   drop_profile_table();
 }
 
@@ -215,10 +203,6 @@ function drop_profile_table () {
 
 function drop_user_table () {
   drop_table_by_name("users");
-}
-
-function drop_moderator_table () {
-  drop_table_by_name("moderators");
 }
 
 function drop_admin_table () {
@@ -283,22 +267,22 @@ function insert_admin() {
     $query = "INSERT INTO profiles (display_name) VALUES ('Admin');";
     $db->query($query);
 
-    $query = "INSERT INTO admins VALUES ('admin', '$1$3DMv7ZUC$DLcAsnk9SekkdtCfkaSxz.', 0, 1);";
+    $query = "INSERT INTO admins VALUES ('admin', '$1$3DMv7ZUC$DLcAsnk9SekkdtCfkaSxz.', 1);";
     $db->query($query);
 }
 
 function insert_users() {
   global $db;
   $query = "INSERT INTO profiles (display_name) VALUES " .
-  "('Curien'), " .
-  "('Goldman'), " .
-  "('Cat') " .
+  "('Curien')," .
+  "('Goldman')," .
+  "('Cat')" .
   ";";
   $db->query($query);
-  $query = "INSERT INTO users (user_id, profile_fk) VALUES " .
-  " ('curien', 2), " .
-  " ('goldman', 3), " .
-  " ('catherine', 4), " .
+  $query = "INSERT INTO users (user_id, role, profile_fk) VALUES " .
+  " ('curien', 0, 2)," .
+  " ('goldman', 1, 3)," .
+  " ('catherine', 0, 4)" .
   ";";
   $db->query($query);
 }
@@ -391,5 +375,5 @@ function setup_test_data() {
 drop_tables();
 create_tables();
 setup_test_data();
-echo("success5");
+echo("success");
 ?>
