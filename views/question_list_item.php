@@ -25,16 +25,13 @@
                             Tags:
                         </div>
                         <div class="col-md-11 col-lg-11">
-                            <a href="">#cors</a>,
-                            <a href="">#celc</a>,
-                             <a href="">#newstudent</a>,
-                              <a href="">#needtoknow</a>,
-                              <a href="">#cors</a>,
-                              <a href="">#celc</a>,
-                               <a href="">#newstudent</a>,
-                               <a href="">#cors</a>,
-                               <a href="">#celc</a>,
-                                <a href="">#newstudent</a>
+                            <?php
+                            $tags = $data["tags"];
+                            $tag_count = count($tags);
+                            $count = 0;
+                            foreach ($tags as $tag) { ?>
+                                <a href="/tagged/<?php echo $tag; ?>">#<?php echo $tag; if ($count < $tag_count - 1) { echo ', '; } $count++;?></a>
+                            <?php }?>
                         </div>
                 </div>
             </div>
