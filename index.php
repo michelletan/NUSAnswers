@@ -87,6 +87,7 @@ class QuestionAPIHandler {
 
 $html_urls = array(
     "/" => "HomeHandler",
+    "/new" => "HomeHandler",
     "/ask" => "AskHandler",
     "/answer" => "AnswerHandler",
     "/question" => "HomeHandler",
