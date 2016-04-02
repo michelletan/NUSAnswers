@@ -7,7 +7,7 @@
             <?php include_once __DIR__ . '/sidebar.php'; ?>
             <div class="main col-sm-9 col-md-6 col-lg-6">
                 <?php
-                $questions = retrieve_questions_by_latest(INITIAL_NUM_QUESTIONS);
+                $questions = retrieve_questions_for_home_page(INITIAL_NUM_QUESTIONS);
                 for ($i = 1; $i <= count($questions); $i++) {
                     $data = $questions[$i];
                     include __DIR__ . '/question_list_item.php';
