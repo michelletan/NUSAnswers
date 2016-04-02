@@ -9,7 +9,7 @@
                 <div class="sidebar-title">Questions</div>
                 <div class="sidebar-body">
                     <a href="">Popular</a><br>
-                    <a href="">New</a><br>
+                    <a href="/new">New</a><br>
                     <a class="login-view" style="display:none">My Questions</a>
                 </div>
             </div>

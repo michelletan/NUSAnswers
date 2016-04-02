@@ -1,5 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/time_helper.php';
 
 function myinterface() {
   if (isset($_GET['post_type']) && isset($_GET['id'])) {
@@ -37,22 +38,29 @@ function retrieve_questions_for_home_page($limit_param) {
             "q.title as question_title, ".
             "q.content as question_content, ".
             "q.comments as question_comment_count, ".
+            "q.created_timestamp as question_timestamp, ".
+            "q.friendly_url as question_friendly_url, ".
             "a.answer_id as answer_id, ".
             "a.content as answer_content, ".
             "a.votes as answer_vote_count, ".
             "a.comments as answer_comment_count, ".
+            "a.created_timestamp as answer_timestamp, ".
             "p.profile_id as answer_user_id,".
-            "p.display_name as answer_user_name ".
+            "p.display_name as answer_user_name, ".
+            "p2.profile_id as question_user_id,".
+            "p2.display_name as question_user_name ".
             "FROM (SELECT * FROM questions LIMIT " . $limit.") q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
-            "ORDER BY question_id";
+            "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
+            "ORDER BY q.question_id DESC";
     $result = $db->query($query);
 
     if ($result->num_rows == 0) {
         return array();
     } else {
         $rows = $result->fetch_all(MYSQLI_ASSOC);
+
         $questions = array();
 
         // Retrieve only the highest voted answer for each question
@@ -67,6 +75,7 @@ function retrieve_questions_for_home_page($limit_param) {
                 $current_question_id = $row["question_id"];
                 $highest_votes = $row["answer_vote_count"];
                 $questions[$current_question_id] = $row;
+                $questions[$current_question_id]["question_timestamp"] = timestamp_to_relative_date($row["question_timestamp"]);
             }
 
             if ($current_question_id == $row["question_id"] && $row["answer_id"] != null) {
@@ -79,30 +88,31 @@ function retrieve_questions_for_home_page($limit_param) {
     }
 }
 
-function retrieve_question_with_answer($id_param) {
+function retrieve_question_with_answer($url_param) {
     global $db;
 
-    if (!is_int($id_param)) {
-        // ERROR
-        $id = $db->escape_string($id_param);
-    } else {
-        $id = $id_param;
-    }
+    $url = $db->escape_string($url_param);
 
     $query = "SELECT q.question_id as question_id, ".
             "q.title as question_title, ".
             "q.content as question_content, ".
             "q.comments as question_comment_count, ".
+            "q.created_timestamp as question_timestamp, ".
             "a.answer_id as answer_id, ".
             "a.content as answer_content, ".
             "a.votes as answer_vote_count, ".
             "a.comments as answer_comment_count, ".
+            "a.created_timestamp as answer_timestamp, ".
             "p.profile_id as answer_user_id,".
-            "p.display_name as answer_user_name ".
-            "FROM (SELECT * FROM questions WHERE question_id = ". $id .") q ".
+            "p.display_name as answer_user_name, ".
+            "p2.profile_id as question_user_id,".
+            "p2.display_name as question_user_name ".
+            "FROM (SELECT * FROM questions WHERE friendly_url = '". $url ."') q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
-            "ORDER BY question_id";
+            "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
+            "ORDER BY answer_vote_count DESC";
+
     $result = $db->query($query);
 
     if ($result->num_rows == 0) {
@@ -120,14 +130,27 @@ function retrieve_question_with_answer($id_param) {
                 $question["question_id"] = $row["question_id"];
                 $question["question_title"] = $row["question_title"];
                 $question["question_content"] = $row["question_content"];
-                $question["question_title"] = $row["question_title"];
-                $question["question_id"] = $row["question_id"];
-                $question["question_title"] = $row["question_title"];
+                $question["question_comment_count"] = $row["question_comment_count"];
+                $question["question_user_id"] = $row["question_user_id"];
+                $question["question_user_name"] = $row["question_user_name"];
+                $question["question_timestamp"] = timestamp_to_relative_date($row["question_timestamp"]);
             }
 
+            $answer = array();
+            $answer["answer_id"] = $row["answer_id"];
+            $answer["answer_content"] = $row["answer_content"];
+            $answer["answer_vote_count"] = $row["answer_vote_count"];
+            $answer["answer_comment_count"] = $row["answer_comment_count"];
+            $answer["answer_user_id"] = $row["answer_user_id"];
+            $answer["answer_user_name"] = $row["answer_user_name"];
+            $answer["answer_timestamp"] = timestamp_to_relative_date($row["answer_timestamp"]);
+
+            $answers[$i] = $answer;
         }
 
-        return $questions;
+        $question["answers"] = $answers;
+
+        return $question;
     }
 }
 

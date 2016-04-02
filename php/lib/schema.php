@@ -79,6 +79,7 @@ function create_question_table () {
            "views INTEGER NOT NULL DEFAULT 0, " .
            "answers INTEGER NOT NULL DEFAULT 0," .
            "comments INTEGER NOT NULL DEFAULT 0," .
+           "friendly_url VARCHAR(255) NOT NULL," .
            "profile_fk INTEGER," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
            ")";
@@ -304,21 +305,21 @@ function insert_users() {
 
 function insert_questions() {
     global $db;
-    $query = "INSERT INTO questions(title, content, profile_fk) VALUES ".
-    "('Question Title 1', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
-    "('Question Title 2', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
-    "('Question Title 3', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 3),".
-    "('Question Title 4', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
-    "('Question Title 5', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
-    "('Question Title 6', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 2),".
-    "('Question Title 7', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
-    "('Question Title 8', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 4),".
-    "('Question Title 9', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
-    "('Question Title 10', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
-    "('Question Title 11', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 2),".
-    "('Question Title 12', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1),".
-    "('Question Title 13', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 3),".
-    "('Question Title 14', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 1)".
+    $query = "INSERT INTO questions(title, content, friendly_url, profile_fk) VALUES ".
+    "('Question Title 1', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-1', 1),".
+    "('Question Title 2', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-2', 1),".
+    "('Question Title 3', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-3', 1),".
+    "('Question Title 4', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-4', 1),".
+    "('Question Title 5', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-5', 1),".
+    "('Question Title 6', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-6', 1),".
+    "('Question Title 7', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-7', 1),".
+    "('Question Title 8', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-8', 1),".
+    "('Question Title 9', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-9', 1),".
+    "('Question Title 10', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-10', 1),".
+    "('Question Title 11', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-11', 1),".
+    "('Question Title 12', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-12', 1),".
+    "('Question Title 13', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-13', 1),".
+    "('Question Title 14', 'I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?', 'question-title-14', 1)".
     ";";
     $db->query($query);
 }
