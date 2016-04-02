@@ -5,7 +5,7 @@ $(document).ready(function() {
         $('.row-offcanvas').toggleClass('active');
     });
 
-    $('.btn-view-answers').click(function(e) {
+    $('.btn-view').click(function(e) {
         e.preventDefault();
 
         // Get its parent post

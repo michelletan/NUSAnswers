@@ -43,10 +43,13 @@ function retrieve_questions_for_home_page($limit_param) {
             "a.votes as answer_vote_count, ".
             "a.comments as answer_comment_count, ".
             "p.profile_id as answer_user_id,".
-            "p.display_name as answer_user_name ".
+            "p.display_name as answer_user_name, ".
+            "p2.profile_id as question_user_id,".
+            "p2.display_name as question_user_name ".
             "FROM (SELECT * FROM questions LIMIT " . $limit.") q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
+            "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
             "ORDER BY question_id";
     $result = $db->query($query);
 

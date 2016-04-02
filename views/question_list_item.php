@@ -5,14 +5,57 @@
         </div>
     </div>
     <div class="post-content card-line">
+        <?php if ($data["question_content"]) { ?>
+            <div class="post-content-block card-line">
+                <div class="row">
+                    <div class="col-md-10 col-lg-10">
+                          <div class="post-answer">
+                              <?php echo $data["question_content"]; ?>
+                          </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2">
+                        <div class="post-user row center-block text-center">
+                                <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
+                                <a href="/user/<?php echo $data["question_user_id"]?>"><?php echo $data["question_user_name"]?></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-tags row text-left">
+                        <div class="col-md-1 col-lg-1 text-center">
+                            Tags:
+                        </div>
+                        <div class="col-md-11 col-lg-11">
+                            <a href="">#cors</a>,
+                            <a href="">#celc</a>,
+                             <a href="">#newstudent</a>,
+                              <a href="">#needtoknow</a>,
+                              <a href="">#cors</a>,
+                              <a href="">#celc</a>,
+                               <a href="">#newstudent</a>,
+                               <a href="">#cors</a>,
+                               <a href="">#celc</a>,
+                                <a href="">#newstudent</a>
+                        </div>
+                </div>
+            </div>
+        <?php } ?>
         <?php if ($data["answer_content"]) { ?>
+        <div class="row center-block">
+            <h5>Best Answer</h5>
+        </div>
         <div class="row">
-            <div class="col-md-10 col-lg-10">
+            <div class="col-md-2 col-lg-2">
+                <div class="post-user row center-block text-center">
+                        <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
+                        <a href="/user/<?php echo $data["answer_user_id"]?>"><?php echo $data["answer_user_name"]?></a>
+                </div>
+            </div>
+            <div class="col-md-9 col-lg-9">
                   <div class="post-answer">
                       <?php echo $data["answer_content"]; ?>
                   </div>
             </div>
-            <div class="col-md-2 col-lg-2">
+            <div class="col-md-1 col-lg-1">
                 <div class="row center-block">
                     <div class="post-vote center-block">
                         <div class="center-block text-center">
@@ -27,38 +70,33 @@
 
                     </div>
                 </div>
-                <div class="post-user row center-block text-center">
-                        <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
-                        <a href="/user/<?php echo $data["answer_user_id"]?>"><?php echo $data["answer_user_name"]?></a>
-                </div>
             </div>
         </div>
-        <div class="post-tags row text-left">
-                <div class="col-md-1 col-lg-1">
-                    Tags:
-                </div>
-                <div class="col-md-11 col-lg-11">
-                    <a href="">#cors</a>,
-                    <a href="">#celc</a>,
-                     <a href="">#newstudent</a>,
-                      <a href="">#needtoknow</a>,
-                      <a href="">#cors</a>,
-                      <a href="">#celc</a>,
-                       <a href="">#newstudent</a>,
-                       <a href="">#cors</a>,
-                       <a href="">#celc</a>,
-                        <a href="">#newstudent</a>
-                </div>
-        </div>
         <?php } else { ?>
-            <?php echo DEFAULT_NO_ANSWER; ?>
+        <div class="row center-block">
+            <h5>Your Answer</h5>
+        </div>
+        <div class="row">
+            <div class="answer-user col-sm-2 col-md-2 col-lg-2">
+                <div class="post-user row center-block text-center">
+                    <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
+                    <a href="">John Doe</a>
+                </div>
+            </div>
+          <div class="answer-text-box col-sm-10 col-md-10 col-lg-10">
+            <textarea class="form-control" id="answer-text" placeholder="What's your answer?"></textarea>
+          </div>
+      </div>
+      <div class="row center-block text-right">
+          <button type="submit" id="btn-submit-answer" class="btn btn-primary">Answer</button>
+      </div>
         <?php }?>
     </div>
     <div class="post-footer">
         <div class="row center-block">
             <div class="timestamp col-md-4 col-lg-4">Posted: 2 hours ago</div>
             <?php if ($data["answer_count"] > 0) { ?>
-                <a class="btn-view-answers col-md-3 col-lg-3 text-center">View Answers(<?php echo $data["answer_count"]; ?>)</a>
+                <a href="/question/<?php echo $data["question_friendly_url"]?>" class="btn-view-answers col-md-3 col-lg-3 text-center">View Answers(<?php echo $data["answer_count"]; ?>)</a>
             <?php } else { ?>
                 <div class="col-md-3 col-lg-3"></div>
             <?php } ?>
