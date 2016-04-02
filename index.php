@@ -32,7 +32,7 @@ class HomeHandler {
 class PopularQuestionsHandler {
     function get() {
         global $questions;
-        $questions = retrieve_questions_with_recent_answers(INITIAL_NUM_QUESTIONS);
+        $questions = retrieve_questions_by_views(INITIAL_NUM_QUESTIONS);
         require VIEW_DIRECTORY . '/home.php';
     }
 }
