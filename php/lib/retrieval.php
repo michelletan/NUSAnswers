@@ -143,6 +143,7 @@ function retrieve_question_with_answer($url_param) {
             $answer["answer_comment_count"] = $row["answer_comment_count"];
             $answer["answer_user_id"] = $row["answer_user_id"];
             $answer["answer_user_name"] = $row["answer_user_name"];
+            $answer["answer_timestamp"] = timestamp_to_relative_date($row["answer_timestamp"]);
 
             $answers[$i] = $answer;
         }

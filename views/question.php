@@ -39,7 +39,7 @@
                     </div>
                     <div class="post-footer">
                         <div class="row center-block">
-                            <div class="timestamp col-md-7 col-lg-7">Posted: 2 hours ago</div>
+                            <div class="timestamp col-md-7 col-lg-7">Posted: <?php echo $data["question_timestamp"]; ?></div>
                             <?php if ($data["question_comment_count"] > 0) { ?>
                                 <a class="col-md-3 col-lg-3 text-center">View Comments(<?php echo $data["question_comment_count"]; ?>)</a>
                             <?php } else { ?>
