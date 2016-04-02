@@ -1,5 +1,5 @@
 <?php
-require_once('dbaccess.php');
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
 
 function submit_question_anonymously($title_param, $content_param) {
   global $db;

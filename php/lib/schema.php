@@ -274,6 +274,27 @@ function drop_has_tag_table () {
   drop_table_by_name("has_tags");
 }
 
+function insert_admin() {
+    global $db;
+    $query = "INSERT INTO profiles (display_name) VALUES ('Admin');";
+    $db->query($query);
+
+    $query = "INSERT INTO admins VALUES ('admin', '$1$3DMv7ZUC$DLcAsnk9SekkdtCfkaSxz.', 0, 1);";
+    $db->query($query);
+}
+
+function insert_questions() {
+    global $db;
+    $query = "";
+    $db->query($query);
+}
+
+function insert_answers() {
+    global $db;
+    $query = "";
+    $db->query($query);
+}
+
 /************************* HELPER METHODS *************************/
 function drop_table_by_name($name) {
   global $db;
@@ -281,7 +302,14 @@ function drop_table_by_name($name) {
   $db->query($query);
 }
 
+function setup_test_data() {
+    insert_admin();
+    // insert_questions();
+    // insert_answers();
+}
+
 drop_tables();
 create_tables();
-echo("success5");
+setup_test_data();
+echo("success");
 ?>
