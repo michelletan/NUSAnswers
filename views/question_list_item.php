@@ -94,7 +94,7 @@
     </div>
     <div class="post-footer">
         <div class="row center-block">
-            <div class="timestamp col-md-4 col-lg-4">Posted: 2 hours ago</div>
+            <div class="timestamp col-md-4 col-lg-4">Posted: <?php echo $data["question_timestamp"]; ?></div>
             <?php if ($data["answer_count"] > 0) { ?>
                 <a href="/question/<?php echo $data["question_friendly_url"]?>" class="btn-view-answers col-md-3 col-lg-3 text-center">View Answers(<?php echo $data["answer_count"]; ?>)</a>
             <?php } else { ?>

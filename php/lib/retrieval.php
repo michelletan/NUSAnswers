@@ -1,5 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/time_helper.php';
 
 function myinterface() {
   if (isset($_GET['post_type']) && isset($_GET['id'])) {
@@ -37,11 +38,13 @@ function retrieve_questions_for_home_page($limit_param) {
             "q.title as question_title, ".
             "q.content as question_content, ".
             "q.comments as question_comment_count, ".
+            "q.created_timestamp as question_timestamp, ".
             "q.friendly_url as question_friendly_url, ".
             "a.answer_id as answer_id, ".
             "a.content as answer_content, ".
             "a.votes as answer_vote_count, ".
             "a.comments as answer_comment_count, ".
+            "a.created_timestamp as answer_timestamp, ".
             "p.profile_id as answer_user_id,".
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
@@ -72,6 +75,7 @@ function retrieve_questions_for_home_page($limit_param) {
                 $current_question_id = $row["question_id"];
                 $highest_votes = $row["answer_vote_count"];
                 $questions[$current_question_id] = $row;
+                $questions[$current_question_id]["question_timestamp"] = timestamp_to_relative_date($row["question_timestamp"]);
             }
 
             if ($current_question_id == $row["question_id"] && $row["answer_id"] != null) {
@@ -93,10 +97,12 @@ function retrieve_question_with_answer($url_param) {
             "q.title as question_title, ".
             "q.content as question_content, ".
             "q.comments as question_comment_count, ".
+            "q.created_timestamp as question_timestamp, ".
             "a.answer_id as answer_id, ".
             "a.content as answer_content, ".
             "a.votes as answer_vote_count, ".
             "a.comments as answer_comment_count, ".
+            "a.created_timestamp as answer_timestamp, ".
             "p.profile_id as answer_user_id,".
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
@@ -127,6 +133,7 @@ function retrieve_question_with_answer($url_param) {
                 $question["question_comment_count"] = $row["question_comment_count"];
                 $question["question_user_id"] = $row["question_user_id"];
                 $question["question_user_name"] = $row["question_user_name"];
+                $question["question_timestamp"] = timestamp_to_relative_date($row["question_timestamp"]);
             }
 
             $answer = array();
