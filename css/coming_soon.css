@@ -1,0 +1,35 @@
+body {
+    font-family: 'Pacifico', cursive;
+    background-color: #00A8C6;
+    color: #A7DBD8;
+    font-size: 60px;
+}
+
+.logo {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 400;
+    font-size: 72px;
+    color: #F9F2E7;
+}
+
+.logo span {
+    font-weight: 600;
+    /*color: #F38630;*/
+}
+
+img {
+    width: 200px;
+    height: 200px;
+}
+
+.main {
+    margin: auto;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 80vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}

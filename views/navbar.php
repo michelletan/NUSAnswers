@@ -2,15 +2,16 @@
   <div class="container-fluid center-block">
     <div class="row">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="col-md-2 col-lg-2"></div>
-    <div class="navbar-header col-sm-1 col-md-1 col-lg-1">
+    <div class="col-md-1 col-lg-1"></div>
+    <div class="navbar-header col-sm-1 col-md-2 col-lg-2 text-right">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?php echo APP_HOME_URL; ?>"><?php echo APP_TITLE;?></a>
+      <img class="navbar-logo" src="/img/logo.png"/>
+      <a class="navbar-brand logo pull-right" href="<?php echo APP_HOME_URL; ?>"><span>NUS</span>Answers</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -23,20 +24,16 @@
         <li><a href="/answer"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Answer</a></li>
       </ul>
       <ul class="nav navbar-nav col-md-2 col-lg-2">
-        <?php if (!$is_logged_in) {?>
-            <li><a href="#">Login</a></li>
-        <?php } ?>
-        <?php if ($is_logged_in) {?>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <?php if ($is_admin) {?><li><a href="#">Admin Dashboard</a></li><?php } ?>
-                <li><a href="#">User Dashboard</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Logout</a></li>
-              </ul>
-            </li>
-        <?php } ?>
+        <li id="non-login-view" style="display:none"><a href="javascript:login();"><?php $is_logged_in = false; ?>Login</a></li>
+        <li class="dropdown login-view" style="display:none">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="username"><?php $is_logged_in = true; ?>Username <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <?php if ($is_admin) {?><li><a href="#">Admin Dashboard</a></li><?php } ?>
+            <li><a href="#">User Dashboard</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="javascript:logout();">Logout</a></li>
+          </ul>
+        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
     </div><!-- /.row -->

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!-- this page is used to test that the .js files work, and is not meant for production -->
+<html>
+<title>Test Page</title>
+<head>
+  <meta charset="utf-8">
+  <script src="jquery-1.12.2.min.js"></script>
+  <script src="retrieval.js"></script>
+</head>
+
+<body>
+  id: <input type="number" id="id-input">
+  <button id="question">Get Question</button>
+  <button id="question-with-answers">Get Question With Answer</button>
+  <button id="answer">Get Answer</button>
+  <script>
+  $(document).ready(function() {
+    $("#question").on("click", function(e) {
+      getQuestion($("#id-input").val());
+    });
+
+    $("#question-with-answers").on("click", function(e) {
+      getQuestionWithAnswer($("#id-input").val());
+    });
+
+    $("#answer").on("click", function(e) {
+      getAnswer($("#id-input").val());
+    });
+  });
+  </script>
+</body>
+</html>

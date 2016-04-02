@@ -1,49 +1,76 @@
-<div class="panel panel-default question-list-item">
-  <!-- Default panel contents -->
-  <!-- <div class="panel-heading">Question</div>
-  <div class="panel-body">
-    <p>Answer content</p>
-  </div> -->
-
-  <!-- List group -->
-  <ul class="list-group">
-      <li class="list-group-item">
-          <a href="/question/123"><h4>When does the UTown gym open?</h4></a>
-          Tags: <a href="">#utown</a>, <a href="">#gym</a>, <a href="">#random</a>, <a href="">#needtoknow</a>
-          <p class="pull-right">Posted: 2 hours ago</p>
-      </li>
-      <li class="list-group-item">
-          <div class="row">
-              <div class="col-md-10 col-lg-10">
-                    <div class="text-answer">
-                        One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. "What's happened to me?" he thought. It wasn't a dream. His room, a proper human room although a little too small, lay peacefully between its four familiar walls.
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2 col-lg-2">
-                            <img class="img-user" src="" alt="user-profile-pic" class="img-thumbnail">
-                        </div>
-                        <div class="col-md-10 col-lg-10">
-                            <a href=""><h5>John Doe</h5></a>
-                        </div>
-                    </div>
-              </div>
-              <div class="col-md-2 col-lg-2 box-votes pull-right">
-                  <a class="block text-success">
-                      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 103
-                  </a><br><br>
-                  <a class="block text-danger">
-                      <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 9999
-                  </a>
-              </div>
-          </div>
-      </li>
-      <li class="list-group-item text-right">
+<div id="<?php echo $data["question_id"]?>" class="question-list-item card">
+    <div class="post-header">
+        <div class="post-title row center-block">
+            <a href="/question/<?php echo $data["question_id"]?>"><?php echo $data["question_title"]?></a>
+        </div>
+    </div>
+    <div class="post-content card-line">
+        <?php if ($data["answer_content"]) { ?>
         <div class="row">
-            <div class="col-md-4 col-lg-4"></div>
-            <a class="col-md-3 col-lg-3 text-center">View Answers(2)</a>
-            <a class="col-md-3 col-lg-3 text-center">View Comments(10)</a>
+            <div class="col-md-10 col-lg-10">
+                  <div class="post-answer">
+                      <?php echo $data["answer_content"]; ?>
+                  </div>
+            </div>
+            <div class="col-md-2 col-lg-2">
+                <div class="row center-block">
+                    <div class="post-vote center-block">
+                        <div class="center-block text-center">
+                            <a><span class="glyphicon glyphicon-chevron-up"></span><a>
+                        </div>
+                        <div class="post-vote-count text-center">
+                            <?php echo $data["answer_vote_count"]?>
+                        </div>
+                        <div class="center-block text-center">
+                            <a><span class="glyphicon glyphicon-chevron-down"></span></a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="post-user row center-block text-center">
+                        <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
+                        <a href="/user/<?php echo $data["answer_user_id"]?>"><?php echo $data["answer_user_name"]?></a>
+                </div>
+            </div>
+        </div>
+        <div class="post-tags row text-left">
+                <div class="col-md-1 col-lg-1">
+                    Tags:
+                </div>
+                <div class="col-md-11 col-lg-11">
+                    <a href="">#cors</a>,
+                    <a href="">#celc</a>,
+                     <a href="">#newstudent</a>,
+                      <a href="">#needtoknow</a>,
+                      <a href="">#cors</a>,
+                      <a href="">#celc</a>,
+                       <a href="">#newstudent</a>,
+                       <a href="">#cors</a>,
+                       <a href="">#celc</a>,
+                        <a href="">#newstudent</a>
+                </div>
+        </div>
+        <?php } else { ?>
+            <?php echo DEFAULT_NO_ANSWER; ?>
+        <?php }?>
+    </div>
+    <div class="post-footer">
+        <div class="row center-block">
+            <div class="timestamp col-md-4 col-lg-4">Posted: 2 hours ago</div>
+            <?php if ($data["answer_count"] > 0) { ?>
+                <a class="btn-view-answers col-md-3 col-lg-3 text-center">View Answers(<?php echo $data["answer_count"]; ?>)</a>
+            <?php } else { ?>
+                <div class="col-md-3 col-lg-3"></div>
+            <?php } ?>
+            <?php if ($data["question_comment_count"] > 0) { ?>
+                <a class="col-md-3 col-lg-3 text-center">View Comments(<?php echo $data["question_comment_count"]; ?>)</a>
+            <?php } else { ?>
+                <a class="col-md-3 col-lg-3 text-center">Comment</a>
+            <?php } ?>
             <a class="col-md-2 col-lg-2 text-center"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
         </div>
-    </li>
-  </ul>
+    </div>
+</div>
+<div class="post-foldout">
+    Some answers here!
 </div>
