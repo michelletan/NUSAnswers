@@ -50,13 +50,14 @@ function retrieve_questions_for_home_page($limit_param) {
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
             "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
-            "ORDER BY question_id";
+            "ORDER BY q.question_id DESC";
     $result = $db->query($query);
 
     if ($result->num_rows == 0) {
         return array();
     } else {
         $rows = $result->fetch_all(MYSQLI_ASSOC);
+
         $questions = array();
 
         // Retrieve only the highest voted answer for each question
@@ -104,7 +105,7 @@ function retrieve_question_with_answer($url_param) {
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
             "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
-            "ORDER BY question_id";
+            "ORDER BY answer_vote_count DESC";
 
     $result = $db->query($query);
 
