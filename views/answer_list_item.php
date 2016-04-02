@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-10 col-lg-10">
                   <div class="post-answer">
-                      <?php echo $post_data["post_answer"]; ?>
+                      <?php echo $answer["answer_content"]; ?>
                   </div>
             </div>
             <div class="col-md-2 col-lg-2">
@@ -13,7 +13,7 @@
                             <span class="glyphicon glyphicon-chevron-up"></span>
                         </div>
                         <div class="post-vote-count text-center">
-                            19
+                            <?php echo $answer["answer_vote_count"]; ?>
                         </div>
                         <div class="post-vote-down center-block text-center">
                             <span class="glyphicon glyphicon-chevron-down"></span>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="post-user row center-block text-center">
                         <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
-                        <a href="">John Doe</a>
+                        <a href="/user/<?php echo $answer["answer_user_id"]; ?>"><?php echo $answer["answer_user_name"]; ?></a>
                 </div>
             </div>
             <!-- <div class="post-votes-box col-md-2 col-lg-2 pull-right">
@@ -39,7 +39,11 @@
     <div class="post-footer">
         <div class="row center-block">
             <div class="timestamp col-md-7 col-lg-7">Posted: 2 hours ago</div>
-            <a class="col-md-3 col-lg-3 text-center">View Comments(10)</a>
+            <?php if ($data["question_comment_count"] > 0) { ?>
+                <a class="col-md-3 col-lg-3 text-center">View Comments(<?php echo $answer["answer_comment_count"]; ?>)</a>
+            <?php } else { ?>
+                <a class="col-md-3 col-lg-3 text-center">Comment</a>
+            <?php } ?>
             <a class="col-md-2 col-lg-2 text-center"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
         </div>
     </div>

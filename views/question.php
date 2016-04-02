@@ -10,12 +10,12 @@
                     <div class="post-content card-line">
                         <div class="post-details row center-block">
                             <div class="col-md-10 col-lg-10">
-                                <?php if ($data) { echo $data["question_details"]; } else { echo "Default question details"; }?>
+                                <?php if ($data) { echo $data["question_content"]; } else { echo "Default question details"; }?>
                             </div>
                             <div class="col-md-2 col-lg-2">
                                 <div class="post-user row center-block text-center">
                                         <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
-                                        <a href="">John Doe</a>
+                                        <a href="/user/<?php echo $data["question_user_id"]; ?>"><?php echo $data["question_user_name"]; ?></a>
                                 </div>
                             </div>
                         </div>
@@ -40,7 +40,11 @@
                     <div class="post-footer">
                         <div class="row center-block">
                             <div class="timestamp col-md-7 col-lg-7">Posted: 2 hours ago</div>
-                            <a class="col-md-3 col-lg-3 text-center">View Comments(10)</a>
+                            <?php if ($data["question_comment_count"] > 0) { ?>
+                                <a class="col-md-3 col-lg-3 text-center">View Comments(<?php echo $data["question_comment_count"]; ?>)</a>
+                            <?php } else { ?>
+                                <a class="col-md-3 col-lg-3 text-center">Comment</a>
+                            <?php } ?>
                             <a class="col-md-2 col-lg-2 text-center"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
                         </div>
                     </div>
@@ -64,9 +68,17 @@
                       </div>
                     </div>
                 </div>
-                <h4 class="heading">Answers (2)</h4>
-                <?php include __DIR__ . '/answer_list_item.php'; ?>
-                <?php include __DIR__ . '/answer_list_item.php'; ?>
+                <?php if ($data["answers"]) { ?>
+                    <h4 class="heading">Answers (<?php echo count($data["answers"]); ?>)</h4>
+                    <?php
+                    $answers = $data["answers"];
+                    for ($i = 0; $i < count($answers); $i++) {
+                        $answer = $answers[$i];
+                        include __DIR__ . '/answer_list_item.php';
+                    }?>
+                <?php } else { ?>
+
+                <?php } ?>
             </div>
         </div>
     </div>

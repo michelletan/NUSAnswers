@@ -23,6 +23,8 @@ class ComingSoonHandler {
 
 class HomeHandler {
     function get() {
+        global $questions;
+        $questions = retrieve_questions_for_home_page(INITIAL_NUM_QUESTIONS);
         require VIEW_DIRECTORY . '/home.php';
     }
 }
@@ -40,14 +42,9 @@ class AnswerHandler {
 }
 
 class QuestionHandler {
-    function get($id) {
-        // Get question data before showing question.php
-        $data = array();
-        $data["question_title"] = "I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?";
-        $data["question_details"] = $data["question_title"];
-        $data["question_owner"] = "Michelle Tan";
-
-        global $post_data;
+    function get($url) {
+        global $data;
+        $data = retrieve_question_with_answer($url);
 
         require VIEW_DIRECTORY . '/question.php';
     }
@@ -93,7 +90,7 @@ $html_urls = array(
     "/ask" => "AskHandler",
     "/answer" => "AnswerHandler",
     "/question" => "HomeHandler",
-    "/question/:number" => "QuestionHandler",
+    "/question/:alpha" => "QuestionHandler",
     "/user" => "HomeHandler",
     "/user/:number" => "UserProfileHandler",
     "/login" => "LoginHandler",

@@ -1,7 +1,7 @@
 <div id="<?php echo $data["question_id"]?>" class="question-list-item card">
     <div class="post-header">
         <div class="post-title row center-block">
-            <a href="/question/<?php echo $data["question_id"]?>"><?php echo $data["question_title"]?></a>
+            <a href="/question/<?php echo $data["question_friendly_url"]?>"><?php echo $data["question_title"]?></a>
         </div>
     </div>
     <div class="post-content card-line">
