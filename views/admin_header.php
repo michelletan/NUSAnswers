@@ -13,4 +13,5 @@ require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/login_check.php';
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/metisMenu.min.css">
 <link rel="stylesheet" href="../css/admin.css">
+<link rel="stylesheet" href="../css/admin_table.css">
 </head>

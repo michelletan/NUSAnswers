@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="username">Username</label>
-    <input type="text" class="form-control" id="username" placeholder="Email">
+    <input type="text" class="form-control" id="username" placeholder="Username">
 </div>
 <div class="form-group">
     <label for="password1">Password</label>

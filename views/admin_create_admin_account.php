@@ -25,4 +25,5 @@
         </div>
     </div>
 </body>
-<?php include_once __DIR__ . '/admin_footer.php'; ?>
+<?php include_once __DIR__ . '/admin_scripts.php'; ?>
+</html>
