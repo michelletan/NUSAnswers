@@ -1,3 +1,7 @@
+td {
+    border: none !important;
+}
+
 .todays-stats {
     height: 200px;
     margin-top: 30px;
@@ -35,6 +39,38 @@
     background-color: #6699ff;
 }
 
-.todays-stats-votes {
+.todays-stats-upvotes {
     background-color: #61d251;
+}
+@media (min-width: 1200px) {
+    #summary-column {
+        padding-right: 0px;
+    }
+    #summary-breakdown-column {
+        padding-left: 0px;
+    }
+    .summary-display {
+        max-height: 410px;
+        height: 100%;
+    }
+}
+  
+#summary-breakdown-column li {
+    border-left: none;
+}
+
+#summary-breakdown-canvas {
+    margin-top: 50px;
+}
+
+.donut-inner {
+   margin-top: -100px;
+   margin-bottom: 100px;
+}
+.donut-inner h5 {
+   margin-bottom: 5px;
+   margin-top: 0;
+}
+.donut-inner span {
+   font-size: 12px;
 }
