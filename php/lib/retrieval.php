@@ -26,7 +26,7 @@ function myinterface() {
 function retrieve_question_without_answer($id_param) {
   global $db;
   $id = $db->escape_string($id_param);
-  $query = "SELECT title, content, answers, comments, profile_fk " .
+  $query = "SELECT title, content, created_timestamp, answers, comments, profile_fk " .
            "FROM questions WHERE question_id = $id";
   $result = $db->query($query);
   $return_array = array();
@@ -34,6 +34,7 @@ function retrieve_question_without_answer($id_param) {
     $return_array['question_found'] = true;
     $return_array['title'] = $row['title'];
     $return_array['content'] = $row['content'];
+    $return_array['created'] = $row['created_timestamp'];
     $return_array['answer_count'] = $row['answers'];
     $return_array['comment_count'] = $row['comments'];
     $return_array['profile_id'] = $row['profile_fk'];
@@ -49,7 +50,7 @@ function retrieve_question_with_answer($id_param) {
   $id = $db->escape_string($id_param);
   $return_array = retrieve_question_without_answer($id);
   if ($return_array['question_found']) {
-    $query = "SELECT answer_id, content, votes, comments, profile_fk " .
+    $query = "SELECT answer_id, content, created_timestamp, votes, comments, profile_fk " .
              "FROM answers WHERE question_fk = $id";
     $result = $db->query($query);
     $answer_array = array();
@@ -57,6 +58,7 @@ function retrieve_question_with_answer($id_param) {
       $answer = array();
       $answer['answer_id'] = $row['answer_id'];
       $answer['content'] = $row['content'];
+      $answer['created'] = $row['created_timestamp'];
       $answer['votes'] = $row['votes'];
       $answer['comment_count'] = $row['comments'];
       $answer['profile_id'] = $row['profile_fk'];
@@ -70,13 +72,14 @@ function retrieve_question_with_answer($id_param) {
 function retrieve_answer($id_param) {
   global $db;
   $id = $db->escape_string($id_param);
-  $query = "SELECT content, votes, comments, profile_fk " .
+  $query = "SELECT content, created_timestamp, votes, comments, profile_fk " .
            "FROM answers WHERE answer_id = $id";
   $result = $db->query($query);
   $return_array = array();
   if ($row = $result->fetch_assoc()) {
     $return_array['answer_found'] = true;
     $return_array['content'] = $row['content'];
+    $return_array['created'] = $row['created_timestamp'];
     $return_array['vote_count'] = $row['votes'];
     $return_array['comment_count'] = $row['comments'];
     $return_array['profile_id'] = $row['profile_fk'];
