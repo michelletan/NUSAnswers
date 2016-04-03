@@ -11,7 +11,7 @@
                 <h3 class="page-title">Post Your Question</h3>
                 <div class="card">
                     <div class="post-content">
-                        <form class="ask-form form-horizontal" action=""> <!-- TODO -->
+                        <form class="ask-form form-horizontal" action="ask_success.php"> <!-- TODO -->
                           <div class="form-group">
                             <label for="question-title" class="col-sm-2 control-label">Title</label>
                             <div class="col-sm-10">
