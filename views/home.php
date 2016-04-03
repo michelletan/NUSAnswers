@@ -10,8 +10,10 @@
                 foreach ($questions as $data) {
                     include __DIR__ . '/question_list_item.php';
                 }?>
+                <?php include_once __DIR__ . '/pagination_bar.php'; ?>
             </div>
         </div>
+
     </div>
     <?php include_once __DIR__ . '/footer.php'; ?>
     <script src="../js/home.js"></script>
