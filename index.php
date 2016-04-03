@@ -22,42 +22,140 @@ class ComingSoonHandler {
     }
 }
 
-class HomeHandler {
+class PopularQuestionsHandler {
     function get() {
+        $data = retrieve_questions_by_views(INITIAL_NUM_QUESTIONS, 1);
+
         global $questions;
-        $questions = retrieve_questions_by_latest(INITIAL_NUM_QUESTIONS);
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = 1;
+
+
+
         require VIEW_DIRECTORY . '/home.php';
     }
 }
 
-class PopularQuestionsHandler {
-    function get() {
+class PopularQuestionsPageHandler {
+    function get($page_no) {
+        $data = retrieve_questions_by_views(INITIAL_NUM_QUESTIONS, $page_no);
+
         global $questions;
-        $questions = retrieve_questions_by_views(INITIAL_NUM_QUESTIONS);
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = $page_no;
+
         require VIEW_DIRECTORY . '/home.php';
     }
 }
 
 class NewQuestionsHandler {
     function get() {
+        $data = retrieve_questions_by_latest(INITIAL_NUM_QUESTIONS, 1);
+
         global $questions;
-        $questions = retrieve_questions_by_latest(INITIAL_NUM_QUESTIONS);
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = 1;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class NewQuestionsPageHandler {
+    function get($page_no) {
+        $data = retrieve_questions_by_latest(INITIAL_NUM_QUESTIONS, $page_no);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = $page_no;
+
         require VIEW_DIRECTORY . '/home.php';
     }
 }
 
 class PopularAnswersHandler {
     function get() {
+        $data = retrieve_questions_with_popular_answers(INITIAL_NUM_QUESTIONS, 1);
+
         global $questions;
-        $questions = retrieve_questions_with_popular_answers(INITIAL_NUM_QUESTIONS);
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = 1;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class PopularAnswersPageHandler {
+    function get($page_no) {
+        $data = retrieve_questions_with_popular_answers(INITIAL_NUM_QUESTIONS, $page_no);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = $page_no;
+
         require VIEW_DIRECTORY . '/home.php';
     }
 }
 
 class NewAnswersHandler {
     function get() {
+        $data = retrieve_questions_with_recent_answers(INITIAL_NUM_QUESTIONS, 1);
+
         global $questions;
-        $questions = retrieve_questions_with_recent_answers(INITIAL_NUM_QUESTIONS);
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = 1;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class NewAnswersPageHandler {
+    function get($page_no) {
+        $data = retrieve_questions_with_recent_answers(INITIAL_NUM_QUESTIONS, $page_no);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = $page_no;
+
         require VIEW_DIRECTORY . '/home.php';
     }
 }
@@ -78,8 +176,33 @@ class AskHandler {
 
 class AnswerHandler {
     function get() {
+        $data = retrieve_questions_for_answer_page(INITIAL_NUM_QUESTIONS, 1);
+
         global $questions;
-        $questions = retrieve_questions_for_answer_page(INITIAL_NUM_QUESTIONS);
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = 1;
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class AnswerPageHandler {
+    function get($page_no) {
+        $data = retrieve_questions_for_answer_page(INITIAL_NUM_QUESTIONS, $page_no);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = $page_no;
+
         require VIEW_DIRECTORY . '/home.php';
     }
 }
@@ -140,13 +263,18 @@ class AnswerCommentAPIHandler {
 }
 
 $html_urls = array(
-    "/" => "HomeHandler",
-    "/popular-questions" => "PopularQuestionsHandler",
-    "/new-questions" => "HomeHandler",
-    "/popular-answers" => "PopularAnswersHandler",
-    "/new-answers" => "NewAnswersHandler",
+    "/" => "PopularQuestionsHandler",
+    "/popular-questions/" => "PopularQuestionsHandler",
+    "/popular-questions/:number" => "PopularQuestionsPageHandler",
+    "/new-questions/" => "NewQuestionsHandler",
+    "/new-questions/:number" => "NewQuestionsPageHandler",
+    "/popular-answers/" => "PopularAnswersHandler",
+    "/popular-answers/:number" => "PopularAnswersPageHandler",
+    "/new-answers/" => "NewAnswersHandler",
+    "/new-answers/:number" => "NewAnswersPageHandler",
     "/ask" => "AskHandler",
-    "/answer" => "AnswerHandler",
+    "/answer/" => "AnswerHandler",
+    "/answer/:number" => "AnswerPageHandler",
     "/question" => "HomeHandler",
     "/question/:alpha" => "QuestionHandler",
     "/tagged/:alpha" => "TagHandler",
@@ -164,6 +292,9 @@ $json_base_urls = array(
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);
+
+// For 404 page
+ToroHook::add("404",  function() { require VIEW_DIRECTORY . '/404.php'; });
 
 Toro::serve(array_merge(
     $html_urls,

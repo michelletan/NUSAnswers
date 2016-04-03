@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     $('.btn-view-comments').click(function(e) {
         e.preventDefault();
-        
+
         // Get its parent post
         var post = $(e.currentTarget).closest('.question-list-item');
 
@@ -17,6 +17,15 @@ $(document).ready(function() {
             showFoldout(post);
         }
 
+    });
+
+    $('.main').jscroll({
+        debug: true,
+        loadingHtml: '<img src="/img/balls.gif" alt="Loading" /> Loading...',
+        padding: 20,
+        nextSelector: 'a.jscroll-next',
+        contentSelector: '.question-list-item',
+        pagingSelector: '.pager'
     });
 });
 

@@ -51,14 +51,16 @@ function retrieve_tag_names($limit_param) {
 
 // METHODS FOR QUESTIONS
 
-function retrieve_questions_by_views($limit_param) {
+function retrieve_questions_by_views($limit_param, $page_param) {
     global $db;
 
     if (!is_int($limit_param)) {
         // ERROR
         $limit = $db->escape_string($limit_param);
+        $param = $db->escape_string($page_param);
     } else {
         $limit = $limit_param;
+        $page = $page_param;
     }
 
     $query = "SELECT q.question_id as question_id, ".
@@ -85,7 +87,7 @@ function retrieve_questions_by_views($limit_param) {
             "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
             "GROUP BY q.question_id ".
             "ORDER BY q.views DESC ".
-            "LIMIT " . $limit ;
+            "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
 
     $result = $db->query($query);
 
@@ -96,18 +98,33 @@ function retrieve_questions_by_views($limit_param) {
 
         $questions = process_result_into_question_with_answer($rows);
 
-        return $questions;
+        $data = array();
+
+        // If the results had an extra row over the limit, there exists a next page
+        if ($result->num_rows >= $limit) {
+            // Remove the extra result from the return
+            array_pop($questions);
+            $data["has_next_page"] = true;
+        } else {
+            $data["has_next_page"] = false;
+        }
+
+        $data["questions"] = $questions;
+
+        return $data;
     }
 }
 
-function retrieve_questions_by_latest($limit_param) {
+function retrieve_questions_by_latest($limit_param, $page_param) {
     global $db;
 
     if (!is_int($limit_param)) {
         // ERROR
         $limit = $db->escape_string($limit_param);
+        $param = $db->escape_string($page_param);
     } else {
         $limit = $limit_param;
+        $page = $page_param;
     }
 
     $query = "SELECT q.question_id as question_id, ".
@@ -134,7 +151,7 @@ function retrieve_questions_by_latest($limit_param) {
             "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
             "GROUP BY q.question_id ".
             "ORDER BY q.question_id DESC ".
-            "LIMIT " . $limit ;
+            "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
 
     $result = $db->query($query);
 
@@ -145,18 +162,33 @@ function retrieve_questions_by_latest($limit_param) {
 
         $questions = process_result_into_question_with_answer($rows);
 
-        return $questions;
+        $data = array();
+
+        // If the results had an extra row over the limit, there exists a next page
+        if ($result->num_rows >= $limit) {
+            // Remove the extra result from the return
+            array_pop($questions);
+            $data["has_next_page"] = true;
+        } else {
+            $data["has_next_page"] = false;
+        }
+
+        $data["questions"] = $questions;
+
+        return $data;
     }
 }
 
-function retrieve_questions_with_popular_answers($limit_param) {
+function retrieve_questions_with_popular_answers($limit_param, $page_param) {
     global $db;
 
     if (!is_int($limit_param)) {
         // ERROR
         $limit = $db->escape_string($limit_param);
+        $param = $db->escape_string($page_param);
     } else {
         $limit = $limit_param;
+        $page = $page_param;
     }
 
     $query = "SELECT q.question_id as question_id, ".
@@ -185,7 +217,7 @@ function retrieve_questions_with_popular_answers($limit_param) {
             "WHERE answer_id is NOT NULL ".
             "GROUP BY q.question_id ".
             "ORDER BY a.votes DESC ".
-            "LIMIT " . $limit ;
+            "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
 
     $result = $db->query($query);
 
@@ -196,18 +228,33 @@ function retrieve_questions_with_popular_answers($limit_param) {
 
         $questions = process_result_into_question_with_answer($rows);
 
-        return $questions;
+        $data = array();
+
+        // If the results had an extra row over the limit, there exists a next page
+        if ($result->num_rows >= $limit) {
+            // Remove the extra result from the return
+            array_pop($questions);
+            $data["has_next_page"] = true;
+        } else {
+            $data["has_next_page"] = false;
+        }
+
+        $data["questions"] = $questions;
+
+        return $data;
     }
 }
 
-function retrieve_questions_with_recent_answers($limit_param) {
+function retrieve_questions_with_recent_answers($limit_param, $page_param) {
     global $db;
 
     if (!is_int($limit_param)) {
         // ERROR
         $limit = $db->escape_string($limit_param);
+        $param = $db->escape_string($page_param);
     } else {
         $limit = $limit_param;
+        $page = $page_param;
     }
 
     $query = "SELECT q.question_id as question_id, ".
@@ -236,7 +283,7 @@ function retrieve_questions_with_recent_answers($limit_param) {
             "WHERE answer_id is NOT NULL ".
             "GROUP BY q.question_id ".
             "ORDER BY a.answer_id DESC ".
-            "LIMIT " . $limit ;
+            "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
 
     $result = $db->query($query);
 
@@ -247,18 +294,33 @@ function retrieve_questions_with_recent_answers($limit_param) {
 
         $questions = process_result_into_question_with_answer($rows);
 
-        return $questions;
+        $data = array();
+
+        // If the results had an extra row over the limit, there exists a next page
+        if ($result->num_rows >= $limit) {
+            // Remove the extra result from the return
+            array_pop($questions);
+            $data["has_next_page"] = true;
+        } else {
+            $data["has_next_page"] = false;
+        }
+
+        $data["questions"] = $questions;
+
+        return $data;
     }
 }
 
-function retrieve_questions_with_tag($tag_param, $limit_param) {
+function retrieve_questions_with_tag($tag_param, $limit_param, $page_param) {
     global $db;
 
     if (!is_int($limit_param)) {
         // ERROR
         $limit = $db->escape_string($limit_param);
+        $page = $db->escape_string($page_param);
     } else {
         $limit = $limit_param;
+        $page = $page_param;
     }
     $tag = $db->escape_string($tag_param);
 
@@ -287,7 +349,7 @@ function retrieve_questions_with_tag($tag_param, $limit_param) {
             "GROUP BY a.answer_id ".
             "HAVING tags LIKE '%". $tag ."%' ".
             "ORDER BY q.views DESC ".
-            "LIMIT " . $limit ;
+            "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
 
     $result = $db->query($query);
 
@@ -298,18 +360,33 @@ function retrieve_questions_with_tag($tag_param, $limit_param) {
 
         $questions = process_result_into_question_with_answer($rows);
 
-        return $questions;
+        $data = array();
+
+        // If the results had an extra row over the limit, there exists a next page
+        if ($result->num_rows >= $limit) {
+            // Remove the extra result from the return
+            array_pop($questions);
+            $data["has_next_page"] = true;
+        } else {
+            $data["has_next_page"] = false;
+        }
+
+        $data["questions"] = $questions;
+
+        return $data;
     }
 }
 
-function retrieve_questions_for_answer_page($limit_param) {
+function retrieve_questions_for_answer_page($limit_param, $page_param) {
     global $db;
 
     if (!is_int($limit_param)) {
         // ERROR
         $limit = $db->escape_string($limit_param);
+        $param = $db->escape_string($page_param);
     } else {
         $limit = $limit_param;
+        $page = $page_param;
     }
 
     $query = "SELECT q.question_id as question_id, ".
@@ -337,7 +414,7 @@ function retrieve_questions_for_answer_page($limit_param) {
             "WHERE answer_id is NULL ".
             "GROUP BY q.question_id ".
             "ORDER BY q.question_id DESC ".
-            "LIMIT " . $limit ;
+            "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
 
     $result = $db->query($query);
 
@@ -348,7 +425,20 @@ function retrieve_questions_for_answer_page($limit_param) {
 
         $questions = process_result_into_question_with_answer($rows);
 
-        return $questions;
+        $data = array();
+
+        // If the results had an extra row over the limit, there exists a next page
+        if ($result->num_rows >= $limit) {
+            // Remove the extra result from the return
+            array_pop($questions);
+            $data["has_next_page"] = true;
+        } else {
+            $data["has_next_page"] = false;
+        }
+
+        $data["questions"] = $questions;
+
+        return $data;
     }
 }
 
