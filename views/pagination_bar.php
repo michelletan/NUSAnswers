@@ -2,13 +2,13 @@
     <?php
         // Determine the next page's url
 
-        $url = $_SERVER['PHP_SELF'];
+        $url = $_SERVER[REQUEST_URI];
         $parts = explode('/', $url);
         $num_parts = count($parts);
-        if ($num_parts == 1) {
+        if ($num_parts <= 2) {
             // At base directory, home
             $next_url = "/popular-questions/" . ($page+1);
-        } else if ($num_parts >= 2) {
+        } else if ($num_parts >= 3) {
             // On a page that looks like eg: /some-type/2
             // Just increment
             $next_url = $page + 1;
