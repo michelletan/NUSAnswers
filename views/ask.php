@@ -2,6 +2,7 @@
 <body>
     <!-- Include CAPTCHA script -->
     <script src='https://www.google.com/recaptcha/api.js'></script>
+
     <?php include_once __DIR__ . '/navbar.php'; ?>
     <div class="container-fluid center-block">
         <div class="row">
@@ -34,12 +35,14 @@
                           <!-- AREA FOR CAPTCHA -->
                           <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                              <div class="g-recaptcha" data-sitekey="6LfDtxsTAAAAALv8le3isdOYbxzMRYr-4GwrLJDg"></div>
+                              <div class="g-recaptcha" data-sitekey="6LfDtxsTAAAAALv8le3isdOYbxzMRYr-4GwrLJDg" data-callback="enableSubmit"></div>
                             </div>
                           </div>
                           <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-8" id=''>
+                                <!-- For posting success/failure -->
+                            </div>  
                             <div class="text-right col-sm-offset-10 col-sm-2">
-                              <!-- TODO: don't know about design, but check whether there is a response before posting? -->
                               <button type="submit" id="btn-submit-question" class="btn btn-primary" >Post</button>
                             </div>
                           </div>
@@ -50,4 +53,11 @@
         </div>
     </div>
 </body>
+<script type="text/javascript">
+  document.getElementById("btn-submit-question").disabled = true;
+  
+  function enableSubmit(){
+   document.getElementById("btn-submit-question").disabled = false;
+  }
+</script>
 <?php include_once __DIR__ . '/footer.php'; ?>
