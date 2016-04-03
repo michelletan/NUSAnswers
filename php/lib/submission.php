@@ -1,6 +1,51 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
 
+function submission_interface() {
+  $array_to_return = array();
+  if (!isset($_POST['type'])) {
+    $array_to_return['status'] = "Error: type of submission not defined";
+  }
+  else {
+    $type = $_POST['type'];
+    if ($type == "question") {
+      if (!isset($_POST['title'])) {
+        $array_to_return['status'] = "error";
+        $array_to_return['message'] = "Error: no title";
+      }
+      else if (!isset($_POST['content'])) {
+        $array_to_return['status'] = "error";
+        $array_to_return['message'] = "Error: no content";
+      }
+      else {
+        $tags = [];
+        if (isset($_POST['tags'])) {
+          $tags = json_decode($_POST['tags']);
+        }
+
+        if (!isset($_POST['profile']) || $_POST['profile'] == "") {
+          $id = submit_question_anonymously($_POST['title'], $_POST['content'], $tags);
+        }
+        else {
+          $id = submit_question($_POST['title'], $_POST['content'], $tags, $_POST['profile']);
+        }
+
+        if ($id) {
+          $array_to_return['status'] = "success";
+          $array_to_return['message'] = "Question submitted successfully";
+          $array_to_return['question_id'] = $id;
+        }
+        else {
+          $array_to_return['status'] = "error";
+          $array_to_return['message'] = "Question submission not successful";
+        }
+      }
+    }
+  }
+  $json_to_return = json_encode($array_to_return);
+  echo ($json_to_return);
+}
+
 function submit_question_anonymously($title_param, $content_param, $tags_param) {
   global $db;
   $title = $db->escape_string($title_param);
@@ -15,7 +60,9 @@ function submit_question_anonymously($title_param, $content_param, $tags_param) 
   if ($result) {
     $id = $db->insert_id;
     submit_tags($tags, $id);
+    return $id;
   }
+  return false;
 }
 
 function submit_question($title_param, $content_param, $tags_param, $profile_id_param) {
@@ -23,13 +70,19 @@ function submit_question($title_param, $content_param, $tags_param, $profile_id_
   $title = $db->escape_string($title_param);
   $content = $db->escape_string($content_param);
   $profile_id = $db->escape_string($profile_id_param);
+  $tags = array();
+  foreach ($tags_param as $value) {
+    $tags[] = $db->escape_string($value);
+  }
   $query = "INSERT INTO questions (title, content, profile_fk) " .
            "VALUES ('$title', '$content', $profile_id)";
   $result = $db->query($query);
   if ($result) {
     $id = $db->insert_id;
     submit_tags($tags, $id);
+    return $id;
   }
+  return false;
 }
 
 function submit_answer($content_param, $profile_id_param, $question_id_param) {
@@ -44,6 +97,10 @@ function submit_answer($content_param, $profile_id_param, $question_id_param) {
 
 function submit_tags($tags, $question_id) {
   global $db;
+
+  if (count($tags) == 0) {
+    return;
+  }
 
   // get which tags are already present
   $parameters = "(";
@@ -119,4 +176,6 @@ function get_seo_string($vp_string){
 
     return $vp_string;
 }
+
+submission_interface();
 ?>
