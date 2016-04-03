@@ -3,15 +3,9 @@
         <ul class="metismenu nav" id="menu">
             <li><a href="user_dashboard.php"><span class="glyphicon glyphicon-stats"></span> Charts</a>
             <li>
-                <a href="user_questions.php">
+                <a href="user_question_list.php">
                      <span class="glyphicon glyphicon-question-sign"></span>
                     Questions
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                     <span class="glyphicon glyphicon-comment"></span>
-                    Answers
                 </a>
             </li>
         </ul>

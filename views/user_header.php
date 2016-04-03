@@ -12,5 +12,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/NUSAnswers/php/login_check.php';
 <link href="../css/bootstrap.css" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/metisMenu.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="../css/user.css">
 </head>
