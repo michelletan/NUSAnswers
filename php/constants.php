@@ -6,6 +6,7 @@ define('USER_ROLE_MOD', 1);
 define('USER_ROLE_USER', 2);
 
 define('INITIAL_NUM_QUESTIONS', 10);
+define('SIDEBAR_TAG_NUMBER', 5);
 
 // MESSAGES
 define('DEFAULT_NO_ANSWER', 'No answers yet. Write your own!');

@@ -24,6 +24,29 @@ function myinterface() {
   }
 }
 
+function retrieve_tag_names($limit_param) {
+    global $db;
+
+    if (!is_int($limit_param)) {
+        // ERROR
+        $limit = $db->escape_string($limit_param);
+    } else {
+        $limit = $limit_param;
+    }
+
+    $query = "SELECT tag_name FROM tags LIMIT ". $limit;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        return $rows;
+    }
+}
+
 function retrieve_questions_by_views($limit_param) {
     global $db;
 
@@ -49,13 +72,16 @@ function retrieve_questions_by_views($limit_param) {
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
             "p2.display_name as question_user_name, ".
-            "t.tag_name as tag_name ".
-            "FROM (SELECT * FROM questions ORDER BY views DESC LIMIT " . $limit.") q ".
+            "GROUP_CONCAT(t.tag_name) as tags ".
+            "FROM (SELECT * FROM questions ORDER BY views DESC) q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
             "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
             "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
-            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk;";
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "GROUP BY q.question_id ".
+            "ORDER BY q.views DESC ".
+            "LIMIT " . $limit ;
 
     $result = $db->query($query);
 
@@ -94,54 +120,17 @@ function retrieve_questions_by_latest($limit_param) {
             "p.profile_id as answer_user_id,".
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
-            "p2.display_name as question_user_name ".
-            "FROM (SELECT * FROM questions ORDER BY question_id DESC LIMIT " . $limit.") q ".
-            "LEFT JOIN answers a ON a.question_fk = q.question_id " .
-            "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
-            "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id ";
-    $result = $db->query($query);
-
-    if ($result->num_rows == 0) {
-        return array();
-    } else {
-        $rows = $result->fetch_all(MYSQLI_ASSOC);
-
-        $questions = process_result_into_question_with_answer($rows);
-
-        return $questions;
-    }
-}
-
-function retrieve_questions_for_answer_page($limit_param) {
-    global $db;
-
-    if (!is_int($limit_param)) {
-        // ERROR
-        $limit = $db->escape_string($limit_param);
-    } else {
-        $limit = $limit_param;
-    }
-
-    $query = "SELECT q.question_id as question_id, ".
-            "q.title as question_title, ".
-            "q.content as question_content, ".
-            "q.comments as question_comment_count, ".
-            "q.created_timestamp as question_timestamp, ".
-            "q.friendly_url as question_friendly_url, ".
-            "a.answer_id as answer_id, ".
-            "a.content as answer_content, ".
-            "a.votes as answer_vote_count, ".
-            "a.comments as answer_comment_count, ".
-            "a.created_timestamp as answer_timestamp, ".
-            "p.profile_id as answer_user_id,".
-            "p.display_name as answer_user_name, ".
-            "p2.profile_id as question_user_id,".
-            "p2.display_name as question_user_name ".
-            "FROM (SELECT * FROM questions ORDER BY q.question_id DESC LIMIT " . $limit.") q ".
+            "p2.display_name as question_user_name, ".
+            "GROUP_CONCAT(t.tag_name) as tags ".
+            "FROM (SELECT * FROM questions ORDER BY question_id DESC) q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
             "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
-            "WHERE answer_id is NULL";
+            "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "GROUP BY q.question_id ".
+            "ORDER BY q.question_id DESC ".
+            "LIMIT " . $limit ;
 
     $result = $db->query($query);
 
@@ -180,13 +169,19 @@ function retrieve_questions_with_popular_answers($limit_param) {
             "p.profile_id as answer_user_id,".
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
-            "p2.display_name as question_user_name ".
+            "p2.display_name as question_user_name, ".
+            "GROUP_CONCAT(t.tag_name) as tags ".
             "FROM questions q ".
-            "LEFT JOIN (SELECT DISTINCT * FROM answers ORDER BY votes DESC LIMIT ".$limit.") a ".
+            "LEFT JOIN (SELECT DISTINCT * FROM answers ORDER BY votes DESC) a ".
             "ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
             "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
-            "WHERE answer_id is NOT NULL";
+            "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "WHERE answer_id is NOT NULL ".
+            "GROUP BY q.question_id ".
+            "ORDER BY a.votes DESC ".
+            "LIMIT " . $limit ;
 
     $result = $db->query($query);
 
@@ -225,13 +220,19 @@ function retrieve_questions_with_recent_answers($limit_param) {
             "p.profile_id as answer_user_id,".
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
-            "p2.display_name as question_user_name ".
+            "p2.display_name as question_user_name, ".
+            "GROUP_CONCAT(t.tag_name) as tags ".
             "FROM questions q ".
-            "LEFT JOIN (SELECT DISTINCT * FROM answers ORDER BY answer_id DESC LIMIT ".$limit.") a ".
+            "LEFT JOIN (SELECT DISTINCT * FROM answers ORDER BY answer_id DESC) a ".
             "ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
             "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
-            "WHERE answer_id is NOT NULL";
+            "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "WHERE answer_id is NOT NULL ".
+            "GROUP BY q.question_id ".
+            "ORDER BY a.answer_id DESC ".
+            "LIMIT " . $limit ;
 
     $result = $db->query($query);
 
@@ -272,15 +273,68 @@ function retrieve_questions_with_tag($tag_param, $limit_param) {
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
             "p2.display_name as question_user_name, ".
-            "t.tag_name as tag_name ".
-            "FROM (SELECT * FROM questions ORDER BY views DESC LIMIT " . $limit.") q ".
+            "GROUP_CONCAT(t.tag_name) as tags ".
+            "FROM (SELECT * FROM questions ORDER BY views DESC) q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
             "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
             "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
             "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
-            "WHERE '" . $tag. "' IN (SELECT t2.tag_name FROM tags t2 LEFT JOIN has_tags ht2 ON t2.tag_id = ht2.tag_fk)";
-            return $query;
+            "GROUP BY a.answer_id ".
+            "HAVING tags LIKE '%". $tag ."%' ".
+            "ORDER BY q.views DESC ".
+            "LIMIT " . $limit ;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        $questions = process_result_into_question_with_answer($rows);
+
+        return $questions;
+    }
+}
+
+function retrieve_questions_for_answer_page($limit_param) {
+    global $db;
+
+    if (!is_int($limit_param)) {
+        // ERROR
+        $limit = $db->escape_string($limit_param);
+    } else {
+        $limit = $limit_param;
+    }
+
+    $query = "SELECT q.question_id as question_id, ".
+            "q.title as question_title, ".
+            "q.content as question_content, ".
+            "q.comments as question_comment_count, ".
+            "q.created_timestamp as question_timestamp, ".
+            "q.friendly_url as question_friendly_url, ".
+            "a.answer_id as answer_id, ".
+            "a.content as answer_content, ".
+            "a.votes as answer_vote_count, ".
+            "a.comments as answer_comment_count, ".
+            "a.created_timestamp as answer_timestamp, ".
+            "p.profile_id as answer_user_id,".
+            "p.display_name as answer_user_name, ".
+            "p2.profile_id as question_user_id,".
+            "p2.display_name as question_user_name, ".
+            "GROUP_CONCAT(t.tag_name) as tags ".
+            "FROM (SELECT * FROM questions ORDER BY question_id DESC) q ".
+            "LEFT JOIN answers a ON a.question_fk = q.question_id " .
+            "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
+            "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
+            "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "WHERE answer_id is NULL ".
+            "GROUP BY q.question_id ".
+            "ORDER BY q.question_id DESC ".
+            "LIMIT " . $limit ;
+
     $result = $db->query($query);
 
     if ($result->num_rows == 0) {
@@ -312,11 +366,15 @@ function retrieve_question_with_answer($url_param) {
             "p.profile_id as answer_user_id,".
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
-            "p2.display_name as question_user_name ".
+            "p2.display_name as question_user_name, ".
+            "GROUP_CONCAT(t.tag_name) as tags ".
             "FROM (SELECT * FROM questions WHERE friendly_url = '". $url ."') q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
             "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
+            "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "GROUP BY q.question_id ".
             "ORDER BY answer_vote_count DESC";
 
     $result = $db->query($query);
@@ -340,6 +398,8 @@ function retrieve_question_with_answer($url_param) {
                 $question["question_user_id"] = $row["question_user_id"];
                 $question["question_user_name"] = $row["question_user_name"];
                 $question["question_timestamp"] = timestamp_to_relative_date($row["question_timestamp"]);
+                $tags = explode(",", $row["tags"]);
+                $question["tags"] = $tags;
             }
 
             $answer = array();
@@ -436,7 +496,6 @@ function process_result_into_question_with_answer($rows) {
     $current_question_id = null;
     $highest_votes = -1;
     $answer_count = 0;
-    $tag_count = 0;
     for ($i = 0; $i < count($rows); $i++) {
         $row = $rows[$i];
 
@@ -449,8 +508,7 @@ function process_result_into_question_with_answer($rows) {
             $questions[$current_question_id] = $row;
             $questions[$current_question_id]["question_timestamp"] = timestamp_to_relative_date($row["question_timestamp"]);
 
-            $tags = array();
-            $tags[$tag_count] = $row["tag_name"];
+            $tags = explode(",", $row["tags"]);
             $questions[$current_question_id]["tags"] = $tags;
         } else {
             // Not null, same question id
@@ -462,9 +520,8 @@ function process_result_into_question_with_answer($rows) {
                 $questions[$current_question_id]["question_timestamp"] = timestamp_to_relative_date($row["question_timestamp"]);
             }
 
-            // Increment tag count, save tag
-            $tag_count++;
-            $questions[$current_question_id]["tags"][$tag_count] = $row["tag_name"];
+            $tags = explode(",", $row["tags"]);
+            $questions[$current_question_id]["tags"] = $tags;
         }
 
         // Increment answer count

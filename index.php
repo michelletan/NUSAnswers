@@ -65,7 +65,6 @@ class TagHandler {
     function get($tag) {
         global $questions;
         $questions = retrieve_questions_with_tag($tag, INITIAL_NUM_QUESTIONS);
-        echo $questions;
         require VIEW_DIRECTORY . '/home.php';
     }
 }
