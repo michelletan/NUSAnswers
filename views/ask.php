@@ -41,7 +41,7 @@
                           <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-8" id=''>
                                 <!-- For posting success/failure -->
-                            </div>  
+                            </div>
                             <div class="text-right col-sm-offset-10 col-sm-2">
                               <button type="submit" id="btn-submit-question" class="btn btn-primary" >Post</button>
                             </div>
@@ -53,17 +53,12 @@
         </div>
     </div>
     <?php include_once __DIR__ . '/footer.php'; ?>
+    <script type="text/javascript">
+      document.getElementById("btn-submit-question").disabled = true;
+
+      function enableSubmit(){
+       document.getElementById("btn-submit-question").disabled = false;
+      }
+    </script>
 </body>
-<<<<<<< HEAD
-=======
-<script type="text/javascript">
-  document.getElementById("btn-submit-question").disabled = true;
-  
-  function enableSubmit(){
-   document.getElementById("btn-submit-question").disabled = false;
-  }
-</script>
-<?php include_once __DIR__ . '/footer.php'; ?>
-=======
->>>>>>> recaptcha-branch
 </html>
