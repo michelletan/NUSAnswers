@@ -176,6 +176,9 @@ function get_seo_string($vp_string){
 
     return $vp_string;
 }
+<<<<<<< HEAD
+=======
 
 submission_interface();
+>>>>>>> master
 ?>
