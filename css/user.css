@@ -148,19 +148,16 @@ body {
     font-size: 14px;
 }
 
-.glyphicon-pencil {
+.glyphicon-pencil, .glyphicon-option-horizontal {
     padding-right: 2%;
+    padding-left: 2%;
 }
 
-.glyphicon-pencil:hover, .glyphicon-trash:hover {
+.glyphicon-pencil:hover, .glyphicon-trash:hover, .glyphicon-option-horizontal:hover {
     cursor: pointer;
     background-color: #eee;
 }
 
 textarea {
     resize: none;
-}
-
-.edit {
-    padding-left: 1%;
 }

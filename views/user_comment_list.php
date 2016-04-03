@@ -11,17 +11,34 @@
                         <div class="panel-body">
                             <div class="pull-right">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-danger btn-filter" data-target="all" selected>All Questions</button>
+                                    <button type="button" class="btn btn-danger btn-filter" data-target="all" selected>All Comments</button>
                                     <button type="button" class="btn btn-success btn-filter" data-target="all-questions">Without Images</button>
                                     <button type="button" class="btn btn-warning btn-filter" data-target="all-images">With Images</button>
                                 </div>
                             </div>
-                            <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="expand-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                             <h4 class="modal-title" id="myModalLabel">Question</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4>Question title: [Question Title]</h4>
+                                            <p>Answer: [Answer Details]</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                            <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Answer</h4>
                                         </div>
                                         <div class="modal-body">
                                             <form class="ask-form form-horizontal">
@@ -207,7 +224,7 @@
             </section>
             </div>
         </div>
-    </body> 
+    </body>
     <?php include_once __DIR__ . '/footer.php'; ?>
     <script src="../js/metisMenu.min.js"></script>
     <script src="../js/Chart.min.js"></script>

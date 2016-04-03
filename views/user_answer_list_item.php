@@ -3,7 +3,9 @@
         <div class="row">
             <div class="col-md-10 col-lg-10">
                   <div class="post-answer">
-                      [Answer Content]<span class="glyphicon glyphicon-pencil edit"></span>
+                      [Answer Content]
+                      <span class="glyphicon glyphicon-pencil"></span>
+                      <span class="glyphicon glyphicon-trash"></span>
                   </div>
             </div>
             <div class="col-md-2 col-lg-2">

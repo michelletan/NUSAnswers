@@ -6,12 +6,13 @@
         <div class="row">
             <?php include_once __DIR__ . '/user_sidebar.php'; ?>
             <div class="main col-md-9 col-lg-10">
-                <h3 class="page-title">[Question Title] <span class="glyphicon glyphicon-pencil edit"></span></h3>
+                <h3 class="page-title">[Question Title] <span class="glyphicon glyphicon-pencil"></span></h3>
                 <div class="card">
                     <div class="post-content card-line">
                         <div class="post-details row center-block">
                             <div class="col-md-10 col-lg-10">[Question Details]
-                                <span class="glyphicon glyphicon-pencil edit"></span>
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="glyphicon glyphicon-trash"></span>
                             </div>
                             <div class="col-md-2 col-lg-2">
                                 <div class="post-user row center-block text-center">
@@ -75,8 +76,7 @@
         </div>
     </div>
 </body>
-<script src="../js/jquery-1.12.2.js"></script>
-<script src="../js/bootstrap.js"></script>
+<?php include_once __DIR__ . '/footer.php'; ?>
 <script src="../js/metisMenu.min.js"></script>
 <script src="../js/Chart.min.js"></script>
 </html>

@@ -11,12 +11,12 @@
                         <div class="panel-body">
                             <div class="pull-right">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-danger btn-filter" data-target="all" selected>All Questions</button>
+                                    <button type="button" class="btn btn-danger btn-filter" data-target="all" selected>All Answers</button>
                                     <button type="button" class="btn btn-success btn-filter" data-target="all-questions">Without Images</button>
                                     <button type="button" class="btn btn-warning btn-filter" data-target="all-images">With Images</button>
                                 </div>
                             </div>
-                            <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="expand-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -24,17 +24,28 @@
                                             <h4 class="modal-title" id="myModalLabel">Question</h4>
                                         </div>
                                         <div class="modal-body">
+                                            <h4>Question title: [Question Title]</h4>
+                                            <p>Answer: [Answer Details]</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                            <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Answer</h4>
+                                        </div>
+                                        <div class="modal-body">
                                             <form class="ask-form form-horizontal">
-                                                <div class="form-group">
-                                                    <label for="question-title" class="col-sm-2 control-label">Title</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="question-title" value="[Title]">
-                                                    </div> 
-                                                </div> 
                                                 <div class="form-group"> 
-                                                    <label for="question-details" class="col-sm-2 control-label">Details</label> 
+                                                    <label for="question-details" class="col-sm-2 control-label">Answer</label> 
                                                     <div class="col-sm-10"> 
-                                                        <textarea class="form-control" id="question-details">[Details]</textarea>
+                                                        <textarea class="form-control" id="question-details">[Answer Details]</textarea>
                                                     </div>
                                                 </div>
                                             </form>
@@ -83,7 +94,8 @@
                                                             </a>
                                                             <span class="pull-right questions">(Without Images)</span>
                                                         </h4>
-                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...
+                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation
+                                                            <span class="glyphicon glyphicon-option-horizontal"></span>
                                                             <span class="glyphicon glyphicon-trash pull-right"></span>
                                                             <span class="glyphicon glyphicon-pencil pull-right"></span>
                                                         </p>
@@ -108,7 +120,8 @@
                                                             </a>
                                                             <span class="pull-right images">(With Images)</span>
                                                         </h4>
-                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...
+                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation
+                                                            <span class="glyphicon glyphicon-option-horizontal"></span>
                                                             <span class="glyphicon glyphicon-trash pull-right"></span>
                                                             <span class="glyphicon glyphicon-pencil pull-right"></span>
                                                         </p>
@@ -133,7 +146,8 @@
                                                             </a>
                                                             <span class="pull-right images">(With Images)</span>
                                                         </h4>
-                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...
+                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation
+                                                            <span class="glyphicon glyphicon-option-horizontal"></span>
                                                             <span class="glyphicon glyphicon-trash pull-right"></span>
                                                             <span class="glyphicon glyphicon-pencil pull-right"></span>
                                                         </p>
@@ -158,7 +172,8 @@
                                                             </a>
                                                             <span class="pull-right questions">(Without Images)</span>
                                                         </h4>
-                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...
+                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation
+                                                            <span class="glyphicon glyphicon-option-horizontal"></span>
                                                             <span class="glyphicon glyphicon-trash pull-right"></span>
                                                             <span class="glyphicon glyphicon-pencil pull-right"></span>
                                                         </p>
@@ -183,7 +198,8 @@
                                                             </a>
                                                             <span class="pull-right images">(With Images)</span>
                                                         </h4>
-                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...
+                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation
+                                                            <span class="glyphicon glyphicon-option-horizontal"></span>
                                                             <span class="glyphicon glyphicon-trash pull-right"></span>
                                                             <span class="glyphicon glyphicon-pencil pull-right"></span>
                                                         </p>
@@ -207,9 +223,11 @@
             </section>
             </div>
         </div>
-    </body> 
-    <?php include_once __DIR__ . '/footer.php'; ?>
+    </body>
+    <script src="../js/jquery-1.12.2.js"></script>
+    <script src="../js/bootstrap.js"></script>
     <script src="../js/metisMenu.min.js"></script>
     <script src="../js/Chart.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
     <script src="../js/user_details.js"></script>
-</html>
+    </html>
