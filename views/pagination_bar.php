@@ -2,7 +2,7 @@
     <?php
         // Determine the next page's url
 
-        $url = $SERVER['PHP_SELF'];
+        $url = $_SERVER['PHP_SELF'];
         $parts = explode('/', $url);
         $num_parts = count($parts);
         if ($num_parts == 1) {

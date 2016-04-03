@@ -35,8 +35,6 @@ class PopularQuestionsHandler {
         global $page;
         $page = 1;
 
-
-
         require VIEW_DIRECTORY . '/home.php';
     }
 }
