@@ -54,6 +54,7 @@
     </div>
     <?php include_once __DIR__ . '/footer.php'; ?>
 </body>
+
 <script type="text/javascript">
   document.getElementById("btn-submit-question").disabled = true;
   
@@ -61,6 +62,6 @@
    document.getElementById("btn-submit-question").disabled = false;
   }
 </script>
+
 <?php include_once __DIR__ . '/footer.php'; ?>
-=======
 </html>
