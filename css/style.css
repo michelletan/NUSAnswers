@@ -211,10 +211,13 @@ a:hover {
 }
 
 .foldout-shown {
+    border-bottom: 1px solid #97CFD9 !important;
+    box-shadow: none !important;
     margin-bottom: 0px !important;
 }
 
 .post-foldout {
+    position: relative;
     padding: 10px 15px 10px 15px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -224,6 +227,33 @@ a:hover {
     margin-bottom: 10px;
     box-shadow: 0 4px 4px -2px #CCCCCC;
 }
+
+/*Style for comment box*/
+.comment, .comment-box {
+    padding: 5px;
+}
+
+.btn,.form-control,.well {
+    border-radius:1px;
+    box-shadow:0 0 0;
+}
+
+.form-control {
+    border-color:#d7d7d7;
+}
+
+.btn-primary {
+    border-color:transparent;
+}
+
+button {
+ outline: 0;
+}
+
+.btn span{
+ color:#666666;
+}
+/*end style for comment box*/
 
 .timestamp {
     padding-top: 10px;

@@ -79,5 +79,7 @@
             </div>
         </div>
     </div>
+    <?php include_once __DIR__ . '/footer.php'; ?>
+    <script src="../js/question.js"></script>
 </body>
-<?php include_once __DIR__ . '/footer.php'; ?>
+</html>

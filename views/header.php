@@ -12,6 +12,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/login_check.php';
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
 <link href="/css/bootstrap.css" rel="stylesheet">
 <link href="/css/animate.css" rel="stylesheet">
+<link href="/css/animation.css" rel="stylesheet">
 <link href="/css/style.css" rel="stylesheet">
 <!-- FAVICONS -->
 <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">

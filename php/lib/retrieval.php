@@ -24,6 +24,8 @@ function myinterface() {
   }
 }
 
+// METHODS FOR TAGS
+
 function retrieve_tag_names($limit_param) {
     global $db;
 
@@ -46,6 +48,8 @@ function retrieve_tag_names($limit_param) {
         return $rows;
     }
 }
+
+// METHODS FOR QUESTIONS
 
 function retrieve_questions_by_views($limit_param) {
     global $db;
@@ -420,71 +424,53 @@ function retrieve_question_with_answer($url_param) {
     }
 }
 
-function retrieve_question_without_answer($id_param) {
-  global $db;
-  $id = $db->escape_string($id_param);
-  $query = "SELECT title, content, created_timestamp, answers, comments, profile_fk " .
-           "FROM questions WHERE question_id = $id";
-  $result = $db->query($query);
-  $return_array = array();
-  if ($row = $result->fetch_assoc()) {
-    $return_array['question_found'] = true;
-    $return_array['title'] = $row['title'];
-    $return_array['content'] = $row['content'];
-    $return_array['created'] = $row['created_timestamp'];
-    $return_array['answer_count'] = $row['answers'];
-    $return_array['comment_count'] = $row['comments'];
-    $return_array['profile_id'] = $row['profile_fk'];
-  }
-  else {
-    $return_array['question_found'] = false;
-  }
-  return $return_array;
+// METHODS FOR COMMENTS
+function retrieve_comments_for_question($id_param) {
+    global $db;
+
+    if (!is_int($id_param)) {
+        // ERROR
+        $id = $db->escape_string($id_param);
+    } else {
+        $id = $id_param;
+    }
+
+    $query = "SELECT * FROM question_comments qc ".
+            "JOIN profiles p ON p.profile_id = qc.profile_fk ".
+            "WHERE qc.question_fk = ". $id;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        return $rows;
+    }
 }
 
-// function retrieve_question_with_answer($id_param) {
-//   global $db;
-//   $id = $db->escape_string($id_param);
-//   $return_array = retrieve_question_without_answer($id);
-//   if ($return_array['question_found']) {
-//     $query = "SELECT answer_id, content, created_timestamp, votes, comments, profile_fk " .
-//              "FROM answers WHERE question_fk = $id";
-//     $result = $db->query($query);
-//     $answer_array = array();
-//     if ($row = $result->fetch_assoc()) {
-//       $answer = array();
-//       $answer['answer_id'] = $row['answer_id'];
-//       $answer['content'] = $row['content'];
-//       $answer['created'] = $row['created_timestamp'];
-//       $answer['votes'] = $row['votes'];
-//       $answer['comment_count'] = $row['comments'];
-//       $answer['profile_id'] = $row['profile_fk'];
-//       $answer_array[] = $answer;
-//     }
-//     $return_array['answers'] = $answer_array;
-//   }
-//   return $return_array;
-// }
+function retrieve_comments_for_answer($id_param) {
+    global $db;
 
-function retrieve_answer($id_param) {
-  global $db;
-  $id = $db->escape_string($id_param);
-  $query = "SELECT content, created_timestamp, votes, comments, profile_fk " .
-           "FROM answers WHERE answer_id = $id";
-  $result = $db->query($query);
-  $return_array = array();
-  if ($row = $result->fetch_assoc()) {
-    $return_array['answer_found'] = true;
-    $return_array['content'] = $row['content'];
-    $return_array['created'] = $row['created_timestamp'];
-    $return_array['vote_count'] = $row['votes'];
-    $return_array['comment_count'] = $row['comments'];
-    $return_array['profile_id'] = $row['profile_fk'];
-  }
-  else {
-    $return_array['answer_found'] = false;
-  }
-  return $return_array;
+    if (!is_int($id_param)) {
+        // ERROR
+        $id = $db->escape_string($id_param);
+    } else {
+        $id = $id_param;
+    }
+
+    $query = "SELECT * FROM answer_comments ac " .
+            "JOIN profiles p ON p.profile_id = ac.profile_fk ".
+            "WHERE ac.answer_fk = ". $id;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        return $rows;
+    }
 }
 
 // Given an array of questions joined with answer rows, returns an array of

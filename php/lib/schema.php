@@ -408,6 +408,65 @@ function insert_tag_links() {
     $db->query($query);
 }
 
+function insert_question_comments() {
+    global $db;
+    $query = "INSERT INTO question_comments (content, profile_fk, question_fk) ".
+            "VALUES('Hello this is a comment!', 1, 1),".
+            "('This is a very looooooooooong looooong looooooooooong loooooooong comment.', 1, 1),".
+            "('short', 1, 1),".
+            "('FIRST', 1, 2),".
+            "('SECOND', 1, 2),".
+            "('Good question 1', 1, 3),".
+            "('Good question 1', 1, 4),".
+            "('Good question 2', 1, 4),".
+            "('Good question 1', 1, 5),".
+            "('Random question 1', 1, 6),".
+            "('Good question 1', 1, 7),".
+            "('Bad question 2', 1, 7),".
+            "('Good question 3', 1, 7),".
+            "('Good question 1', 1, 8),".
+            "('Good question 2', 1, 8),".
+            "('Good question 3', 1, 8),".
+            "('Good question 1', 1, 9),".
+            "('Good question 2', 1, 9),".
+            "('Good question 1', 1, 11),".
+            "('Good question 1', 1, 12),".
+            "('Good question 1', 1, 13),".
+            "('Good question 1', 1, 14),".
+            "('Good question 2', 1, 14),".
+            "('Good question 3', 1, 14),".
+            "('help', 1, 14);";
+    $db->query($query);
+}
+
+function insert_answer_comments() {
+    global $db;
+    $query = "INSERT INTO answer_comments (content, profile_fk, answer_fk) ".
+            "VALUES('Hello this is a comment!', 1, 1),".
+            "('This is a very looooooooooong looooong looooooooooong loooooooong comment.', 1, 1),".
+            "('short', 1, 1),".
+            "('FIRST', 1, 2),".
+            "('SECOND', 1, 2),".
+            "('Good answer 1', 1, 3),".
+            "('Good answer 1', 1, 4),".
+            "('Good answer 2', 1, 4),".
+            "('Good answer 1', 1, 5),".
+            "('Random answer', 1, 6),".
+            "('Good answer 1', 1, 7),".
+            "('Bad answer 2', 1, 7),".
+            "('Good answer 3', 1, 7),".
+            "('Good answer 1', 1, 8),".
+            "('Good answer 2', 1, 8),".
+            "('Good answer 3', 1, 8),".
+            "('Good answer 1', 1, 9),".
+            "('Good answer 2', 1, 9),".
+            "('Good answer 1', 1, 11),".
+            "('Good answer 1', 1, 12),".
+            "('Good answer 1', 1, 13),".
+            "('help', 1, 13);";
+    $db->query($query);
+}
+
 /************************* HELPER METHODS *************************/
 function drop_table_by_name($name) {
   global $db;
@@ -423,6 +482,8 @@ function setup_test_data() {
     insert_votes();
     insert_tags();
     insert_tag_links();
+    insert_question_comments();
+    insert_answer_comments();
 }
 
 drop_tables();

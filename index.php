@@ -3,6 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/Toro.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/json.php';
 
 // Reference & examples: https://github.com/anandkunal/ToroPHP
 // More examples: http://www.sitepoint.com/apify-legacy-app-toro/
@@ -111,18 +112,29 @@ class AdminLoginHandler {
 }
 
 // Handlers for API
-class SampleAPIHandler {
-    function get_xhr($name) {
-        require __DIR__ . '/json.php';
+
+class QuestionCommentAPIHandler {
+    function get_xhr($id) {
+        if ($id) {
+            // id was provided, return comments for that question
+            $comments = retrieve_comments_for_question($id);
+            return_success_response($comments);
+        } else {
+            // id was not provided, return error
+            return_bad_request_error_response();
+        }
     }
 }
 
-class QuestionAPIHandler {
+class AnswerCommentAPIHandler {
     function get_xhr($id) {
         if ($id) {
-            // id was provided, return single question
+            // id was provided, return comments for that answer
+            $comments = retrieve_comments_for_answer($id);
+            return_success_response($comments);
         } else {
-            // id was not provided, return list of questions?
+            // id was not provided, return error
+            return_bad_request_error_response();
         }
     }
 }
@@ -147,8 +159,8 @@ $html_urls = array(
 $json_url_prefix = "/api";
 
 $json_base_urls = array(
-    "/api/question/:string" => "SampleAPIHandler",
-    "/api/question/:number" => "QuestionAPIHandler"
+    "/question/comments/:number" => "QuestionCommentAPIHandler",
+    "/answer/comments/:number" => "AnswerCommentAPIHandler"
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);

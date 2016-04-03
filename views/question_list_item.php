@@ -98,14 +98,14 @@
                 <div class="col-md-3 col-lg-3"></div>
             <?php } ?>
             <?php if ($data["question_comment_count"] > 0) { ?>
-                <a class="col-md-3 col-lg-3 text-center">View Comments(<?php echo $data["question_comment_count"]; ?>)</a>
+                <a class="btn-view-comments col-md-3 col-lg-3 text-center">View Comments(<?php echo $data["question_comment_count"]; ?>)</a>
             <?php } else { ?>
-                <a class="col-md-3 col-lg-3 text-center">Comment</a>
+                <a class="btn-view-comments col-md-3 col-lg-3 text-center">Comment</a>
             <?php } ?>
             <a class="col-md-2 col-lg-2 text-center"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
         </div>
     </div>
 </div>
 <div class="post-foldout">
-    Some answers here!
+    
 </div>
