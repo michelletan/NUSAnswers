@@ -42,5 +42,6 @@
             </div>
         </div>
     </div>
+    <?php include_once __DIR__ . '/footer.php'; ?>
 </body>
-<?php include_once __DIR__ . '/footer.php'; ?>
+</html>

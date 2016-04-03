@@ -225,6 +225,33 @@ a:hover {
     box-shadow: 0 4px 4px -2px #CCCCCC;
 }
 
+/*Style for comment box*/
+.comment, .comment-box {
+    padding: 5px;
+}
+
+.btn,.form-control,.well {
+    border-radius:1px;
+    box-shadow:0 0 0;
+}
+
+.form-control {
+    border-color:#d7d7d7;
+}
+
+.btn-primary {
+    border-color:transparent;
+}
+
+button {
+ outline: 0;
+}
+
+.btn span{
+ color:#666666;
+}
+/*end style for comment box*/
+
 .timestamp {
     padding-top: 10px;
     color: #999999;
