@@ -163,7 +163,6 @@
 </body>
 <?php include_once __DIR__ . '/admin_scripts.php'; ?>
 <script src="../js/Chart.min.js"></script>
-<script src="../js/Chart.HorizontalBar.js"></script>
 <script src="../js/admin.js"></script>
 <script src="../js/admin_table.js"></script>
 </html>

@@ -13,10 +13,10 @@
                         <li class="list-group-item summary-display">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form>
+                                    <form method="post" action="tag_creation.php">
                                         <div class="form-group">
                                             <label for="tag">Tag</label>
-                                            <input type="text" class="form-control" id="tag" placeholder="Tag">
+                                            <input required type="text" class="form-control" id="tag" placeholder="Tag" name="tag-name">
                                         </div>
                                         <button type="submit" class="btn btn-info">Add Tag</button>
                                         <button type="reset" class="btn btn-default">Clear</button>

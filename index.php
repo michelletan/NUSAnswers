@@ -1,14 +1,14 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/Toro.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission.php';
+require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/lib/Toro.php';
+require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/constants.php';
+require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/lib/retrieval.php';
+require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/lib/submission.php';
 
 // Reference & examples: https://github.com/anandkunal/ToroPHP
 // More examples: http://www.sitepoint.com/apify-legacy-app-toro/
 
-define('VIEW_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/views/');
-define('API_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/api/');
+define('VIEW_DIRECTORY', 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/views/');
+define('API_DIRECTORY', 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/api/');
 
 $post_data = array();
 $post_data["post_title"] = "I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?";

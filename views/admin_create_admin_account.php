@@ -13,8 +13,21 @@
                         <li class="list-group-item summary-display">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form>
-                                        <?php include_once __DIR__ . '/admin_create_account_form_inputs.php'; ?>
+                                    <form method="post" action="admin_creation.php">
+                                        <div class="form-group">
+                                            <label for="username">Username</label>
+                                            <input required type="text" class="form-control" id="username" placeholder="Username" name="username">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password1">Password</label>
+                                            <input required type="password" class="form-control" id="password1" placeholder="Password" name="password1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password2">Re-enter Password</label>
+                                            <input required type="password" class="form-control" id="password2" placeholder="Re-enter Password" name="password2">
+                                        </div>
+                                        <button type="submit" class="btn btn-info">Add Account</button>
+                                        <button type="reset" class="btn btn-default">Clear</button>
                                     </form>
                                 </div>
                             </div>
