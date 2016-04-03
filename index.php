@@ -293,6 +293,9 @@ $json_base_urls = array(
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);
 
+// For 404 page
+ToroHook::add("404",  function() { require VIEW_DIRECTORY . '/404.php'; });
+
 Toro::serve(array_merge(
     $html_urls,
     $json_urls
