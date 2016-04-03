@@ -7,41 +7,84 @@ $(document).ready(function() {
 
     $('.btn-view-comments').click(function(e) {
         e.preventDefault();
-
+        
         // Get its parent post
         var post = $(e.currentTarget).closest('.question-list-item');
-        post.addClass('foldout-shown');
 
-        var postId = post.attr('id');
-
-        var foldout = post.next('.post-foldout');
-        foldout.show();
-        // Animate
-        foldout.animateCss('slideInDown');
-        foldout.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', changePosition);
-
-        // Retrieve comments
-        $.ajax({
-          url: "http://localhost:8000/api/question/comments/" + postId,
-          contentType: "application/json",
-          method: "GET"
-        }).done(function(data) {
-            // Show comments
-            console.log(data);
-            for (var i = 0; i < data.length; i++) {
-                var commentElement = createComment(data[i]);
-                foldout.append(commentElement);
-            }
-
-            var currentUser = {id: 1, name: "Admin"};
-
-            var commentBox = createCommentBox(currentUser);
-            foldout.append(commentBox);
-        });
-
+        if (isFoldoutShown(post)) {
+            hideFoldout(post);
+        } else {
+            showFoldout(post);
+        }
 
     });
 });
+
+function isFoldoutShown(parent) {
+    return parent.hasClass('foldout-shown');
+}
+
+function showFoldout(post) {
+    console.log("show");
+    post.removeClass('foldout-hidden');
+    post.addClass('foldout-shown');
+
+    var postId = post.attr('id');
+
+    var foldout = post.next('.post-foldout');
+    foldout.show();
+    // Animate
+    foldout.animateCss('slideInDown');
+    foldout.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+                function() { foldout.removeClass('slideInDown'); });
+
+    // Retrieve comments
+    $.ajax({
+      url: "http://localhost:8000/api/question/comments/" + postId,
+      contentType: "application/json",
+      method: "GET"
+    }).done(function(data) {
+        // Show comments
+        console.log(data);
+
+        populateFoldout(foldout, data);
+    });
+}
+
+function hideFoldout(post) {
+    console.log("hide");
+    post.removeClass('foldout-shown');
+    post.addClass('foldout-hidden');
+
+    var postId = post.attr('id');
+
+    var foldout = post.next('.post-foldout');
+    // foldout.hide();
+    // Animate
+    foldout.animateCss('slideOutUp');
+    foldout.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+                function() { foldout.removeClass('slideOutUp'); foldout.hide(); });
+}
+
+function clearFoldout(foldout) {
+    foldout.html("");
+}
+
+function populateFoldout(foldout, data) {
+    clearFoldout(foldout);
+
+    foldout.append($("<h4>Comments</h4>"));
+
+    for (var i = 0; i < data.length; i++) {
+        var commentElement = createComment(data[i]);
+        foldout.append(commentElement);
+    }
+
+    var currentUser = {id: 1, name: "Admin"};
+
+    var commentBox = createCommentBox(currentUser);
+    foldout.append(commentBox);
+}
 
 function createComment(data) {
     var comment = $("<div class='comment row'></div>");
@@ -64,11 +107,6 @@ function createCommentBox(user) {
                     "</div>";
     box.html(content);
     return box;
-}
-
-function changePosition(e) {
-    console.log(e);
-    $(e.currentTarget).show();
 }
 
 $.fn.extend({

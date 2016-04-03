@@ -211,10 +211,13 @@ a:hover {
 }
 
 .foldout-shown {
+    border-bottom: 1px solid #97CFD9 !important;
+    box-shadow: none !important;
     margin-bottom: 0px !important;
 }
 
 .post-foldout {
+    position: relative;
     padding: 10px 15px 10px 15px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
