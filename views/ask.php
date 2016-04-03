@@ -54,7 +54,12 @@
     </div>
     <?php include_once __DIR__ . '/footer.php'; ?>
 </body>
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> master
 <script type="text/javascript">
   document.getElementById("btn-submit-question").disabled = true;
   
@@ -62,6 +67,12 @@
    document.getElementById("btn-submit-question").disabled = false;
   }
 </script>
+<<<<<<< HEAD
 
 <?php include_once __DIR__ . '/footer.php'; ?>
+=======
+<?php include_once __DIR__ . '/footer.php'; ?>
+=======
+>>>>>>> recaptcha-branch
+>>>>>>> master
 </html>

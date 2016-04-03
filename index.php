@@ -35,8 +35,11 @@ class PopularQuestionsHandler {
         global $page;
         $page = 1;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> master
         require VIEW_DIRECTORY . '/home.php';
     }
 }
@@ -199,10 +202,17 @@ class AnswerPageHandler {
 
         global $has_next_page;
         $has_next_page = $data["has_next_page"];
+<<<<<<< HEAD
 
         global $page;
         $page = $page_no;
 
+=======
+
+        global $page;
+        $page = $page_no;
+
+>>>>>>> master
         require VIEW_DIRECTORY . '/home.php';
     }
 }

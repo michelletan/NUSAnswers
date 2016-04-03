@@ -10,7 +10,11 @@
                   <iframe width="854" height="480" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allowfullscreen></iframe>
                   <br>
                   <p>Oh well. Just enjoy the video... or go back to the normal site.</p>
+<<<<<<< HEAD
                   <p><a class="btn btn-primary btn-lg" href="/" role="button">I regret wandering off the beaten path</a></p>
+=======
+                  <p><a class="btn btn-primary btn-lg" href="<?php echo APP_HOME_URL;?>" role="button">I regret wandering off the beaten path</a></p>
+>>>>>>> master
                 </div>
             </div>
         </div>
