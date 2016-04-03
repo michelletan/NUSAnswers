@@ -1,6 +1,9 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/Toro.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/json.php';
 
 // Reference & examples: https://github.com/anandkunal/ToroPHP
 // More examples: http://www.sitepoint.com/apify-legacy-app-toro/
@@ -19,9 +22,148 @@ class ComingSoonHandler {
     }
 }
 
-class HomeHandler {
+class PopularQuestionsHandler {
     function get() {
-        global $post_data;
+        $data = retrieve_questions_by_views(INITIAL_NUM_QUESTIONS, 1);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = 1;
+
+
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class PopularQuestionsPageHandler {
+    function get($page_no) {
+        $data = retrieve_questions_by_views(INITIAL_NUM_QUESTIONS, $page_no);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = $page_no;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class NewQuestionsHandler {
+    function get() {
+        $data = retrieve_questions_by_latest(INITIAL_NUM_QUESTIONS, 1);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = 1;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class NewQuestionsPageHandler {
+    function get($page_no) {
+        $data = retrieve_questions_by_latest(INITIAL_NUM_QUESTIONS, $page_no);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = $page_no;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class PopularAnswersHandler {
+    function get() {
+        $data = retrieve_questions_with_popular_answers(INITIAL_NUM_QUESTIONS, 1);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = 1;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class PopularAnswersPageHandler {
+    function get($page_no) {
+        $data = retrieve_questions_with_popular_answers(INITIAL_NUM_QUESTIONS, $page_no);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = $page_no;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class NewAnswersHandler {
+    function get() {
+        $data = retrieve_questions_with_recent_answers(INITIAL_NUM_QUESTIONS, 1);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = 1;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class NewAnswersPageHandler {
+    function get($page_no) {
+        $data = retrieve_questions_with_recent_answers(INITIAL_NUM_QUESTIONS, $page_no);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = $page_no;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class TagHandler {
+    function get($tag) {
+        global $questions;
+        $questions = retrieve_questions_with_tag($tag, INITIAL_NUM_QUESTIONS);
         require VIEW_DIRECTORY . '/home.php';
     }
 }
@@ -34,19 +176,41 @@ class AskHandler {
 
 class AnswerHandler {
     function get() {
+        $data = retrieve_questions_for_answer_page(INITIAL_NUM_QUESTIONS, 1);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = 1;
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class AnswerPageHandler {
+    function get($page_no) {
+        $data = retrieve_questions_for_answer_page(INITIAL_NUM_QUESTIONS, $page_no);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = $page_no;
+
         require VIEW_DIRECTORY . '/home.php';
     }
 }
 
 class QuestionHandler {
-    function get($id) {
-        // Get question data before showing question.php
-        $data = array();
-        $data["question_title"] = "I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?";
-        $data["question_details"] = $data["question_title"];
-        $data["question_owner"] = "Michelle Tan";
-
-        global $post_data;
+    function get($url) {
+        global $data;
+        $data = retrieve_question_with_answer($url);
 
         require VIEW_DIRECTORY . '/question.php';
     }
@@ -71,28 +235,49 @@ class AdminLoginHandler {
 }
 
 // Handlers for API
-class SampleAPIHandler {
-    function get_xhr($name) {
-        require __DIR__ . '/json.php';
+
+class QuestionCommentAPIHandler {
+    function get_xhr($id) {
+        if ($id) {
+            // id was provided, return comments for that question
+            $comments = retrieve_comments_for_question($id);
+            return_success_response($comments);
+        } else {
+            // id was not provided, return error
+            return_bad_request_error_response();
+        }
     }
 }
 
-class QuestionAPIHandler {
+class AnswerCommentAPIHandler {
     function get_xhr($id) {
         if ($id) {
-            // id was provided, return single question
+            // id was provided, return comments for that answer
+            $comments = retrieve_comments_for_answer($id);
+            return_success_response($comments);
         } else {
-            // id was not provided, return list of questions?
+            // id was not provided, return error
+            return_bad_request_error_response();
         }
     }
 }
 
 $html_urls = array(
-    "/" => "HomeHandler",
+    "/" => "PopularQuestionsHandler",
+    "/popular-questions/" => "PopularQuestionsHandler",
+    "/popular-questions/:number" => "PopularQuestionsPageHandler",
+    "/new-questions/" => "NewQuestionsHandler",
+    "/new-questions/:number" => "NewQuestionsPageHandler",
+    "/popular-answers/" => "PopularAnswersHandler",
+    "/popular-answers/:number" => "PopularAnswersPageHandler",
+    "/new-answers/" => "NewAnswersHandler",
+    "/new-answers/:number" => "NewAnswersPageHandler",
     "/ask" => "AskHandler",
-    "/answer" => "AnswerHandler",
+    "/answer/" => "AnswerHandler",
+    "/answer/:number" => "AnswerPageHandler",
     "/question" => "HomeHandler",
-    "/question/:number" => "QuestionHandler",
+    "/question/:alpha" => "QuestionHandler",
+    "/tagged/:alpha" => "TagHandler",
     "/user" => "HomeHandler",
     "/user/:number" => "UserProfileHandler",
     "/login" => "LoginHandler",
@@ -102,11 +287,14 @@ $html_urls = array(
 $json_url_prefix = "/api";
 
 $json_base_urls = array(
-    "/api/question/:string" => "SampleAPIHandler",
-    "/api/question/:number" => "QuestionAPIHandler"
+    "/question/comments/:number" => "QuestionCommentAPIHandler",
+    "/answer/comments/:number" => "AnswerCommentAPIHandler"
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);
+
+// For 404 page
+ToroHook::add("404",  function() { require VIEW_DIRECTORY . '/404.php'; });
 
 Toro::serve(array_merge(
     $html_urls,

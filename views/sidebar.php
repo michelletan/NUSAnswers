@@ -8,26 +8,27 @@
             <div class="card">
                 <div class="sidebar-title">Questions</div>
                 <div class="sidebar-body">
-                    <a href="">Popular</a><br>
-                    <a href="">New</a><br>
+                    <a href="/popular-questions/">Popular</a><br>
+                    <a href="/new-questions/">New</a><br>
                     <a class="login-view" style="display:none">My Questions</a>
                 </div>
             </div>
             <div class="card">
                 <div class="sidebar-title">Answers</div>
                 <div class="sidebar-body">
-                    <a href="">Popular</a><br>
-                    <a href="">New</a><br>
+                    <a href="/popular-answers/">Popular</a><br>
+                    <a href="/new-answers/">New</a><br>
                     <a class="login-view" style="display:none">My Answers</a>
                 </div>
             </div>
             <div class="card">
                 <div class="sidebar-title">Tags</div>
                 <div class="sidebar-body">
-                    <a href="">#something</a><br>
-                    <a href="">#something</a><br>
-                    <a href="">#something</a><br>
-                    <a href="">#something</a><br>
+                    <?php
+                    $tags = retrieve_tag_names(SIDEBAR_TAG_NUMBER);
+                    foreach ($tags as $tag) { ?>
+                        <a href="/tagged/<?php echo $tag["tag_name"]; ?>/">#<?php echo $tag["tag_name"]; ?></a>
+                    <?php }?>
                 </div>
             </div>
         </div>
