@@ -1,4 +1,4 @@
-<div class="card">
+<div id="<?php echo $answer["answer_id"]; ?>" class="answer-list-item card">
     <div class="post-content card-line">
         <div class="row">
             <div class="col-md-10 col-lg-10">
@@ -32,11 +32,14 @@
         <div class="row center-block">
             <div class="timestamp col-md-7 col-lg-7">Posted: <?php echo $answer["answer_timestamp"]; ?></div>
             <?php if ($data["question_comment_count"] > 0) { ?>
-                <a class="col-md-3 col-lg-3 text-center">View Comments(<?php echo $answer["answer_comment_count"]; ?>)</a>
+                <a class="btn-view-comments col-md-3 col-lg-3 text-center">View Comments(<?php echo $answer["answer_comment_count"]; ?>)</a>
             <?php } else { ?>
-                <a class="col-md-3 col-lg-3 text-center">Comment</a>
+                <a class="btn-view-comments col-md-3 col-lg-3 text-center">Comment</a>
             <?php } ?>
             <a class="col-md-2 col-lg-2 text-center"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
         </div>
     </div>
+</div>
+<div class="post-foldout">
+
 </div>
