@@ -56,8 +56,8 @@ function retrieve_questions_by_views($limit_param) {
             "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
             "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
             "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
-            "WHERE answer_id is NOT NULL ".
             "GROUP BY q.question_id ".
+            "ORDER BY q.views DESC ".
             "LIMIT " . $limit ;
 
     $result = $db->query($query);
@@ -105,8 +105,8 @@ function retrieve_questions_by_latest($limit_param) {
             "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
             "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
             "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
-            "WHERE answer_id is NOT NULL ".
             "GROUP BY q.question_id ".
+            "ORDER BY q.question_id DESC ".
             "LIMIT " . $limit ;
 
     $result = $db->query($query);
@@ -157,6 +157,7 @@ function retrieve_questions_with_popular_answers($limit_param) {
             "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
             "WHERE answer_id is NOT NULL ".
             "GROUP BY q.question_id ".
+            "ORDER BY a.votes DESC ".
             "LIMIT " . $limit ;
 
     $result = $db->query($query);
@@ -207,6 +208,7 @@ function retrieve_questions_with_recent_answers($limit_param) {
             "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
             "WHERE answer_id is NOT NULL ".
             "GROUP BY q.question_id ".
+            "ORDER BY a.answer_id DESC ".
             "LIMIT " . $limit ;
 
     $result = $db->query($query);
@@ -255,8 +257,9 @@ function retrieve_questions_with_tag($tag_param, $limit_param) {
             "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
             "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
             "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
-            "GROUP BY q.question_id ".
-            "HAVING tags LIKE '%". $tag ."%'".
+            "GROUP BY a.answer_id ".
+            "HAVING tags LIKE '%". $tag ."%' ".
+            "ORDER BY q.views DESC ".
             "LIMIT " . $limit ;
 
     $result = $db->query($query);
@@ -306,6 +309,7 @@ function retrieve_questions_for_answer_page($limit_param) {
             "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
             "WHERE answer_id is NULL ".
             "GROUP BY q.question_id ".
+            "ORDER BY q.question_id DESC ".
             "LIMIT " . $limit ;
 
     $result = $db->query($query);
@@ -339,11 +343,15 @@ function retrieve_question_with_answer($url_param) {
             "p.profile_id as answer_user_id,".
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
-            "p2.display_name as question_user_name ".
+            "p2.display_name as question_user_name, ".
+            "GROUP_CONCAT(t.tag_name) as tags ".
             "FROM (SELECT * FROM questions WHERE friendly_url = '". $url ."') q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
             "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
+            "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "GROUP BY q.question_id ".
             "ORDER BY answer_vote_count DESC";
 
     $result = $db->query($query);
@@ -367,6 +375,8 @@ function retrieve_question_with_answer($url_param) {
                 $question["question_user_id"] = $row["question_user_id"];
                 $question["question_user_name"] = $row["question_user_name"];
                 $question["question_timestamp"] = timestamp_to_relative_date($row["question_timestamp"]);
+                $tags = explode(",", $row["tags"]);
+                $question["tags"] = $tags;
             }
 
             $answer = array();

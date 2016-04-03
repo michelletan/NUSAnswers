@@ -26,14 +26,6 @@
                         <a href="/user/<?php echo $answer["answer_user_id"]; ?>"><?php echo $answer["answer_user_name"]; ?></a>
                 </div>
             </div>
-            <!-- <div class="post-votes-box col-md-2 col-lg-2 pull-right">
-                <a class="block text-success">
-                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 103
-                </a><br><br>
-                <a class="block text-danger">
-                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 9999
-                </a>
-            </div> -->
         </div>
     </div>
     <div class="post-footer">
