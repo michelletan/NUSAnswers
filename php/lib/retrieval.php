@@ -24,6 +24,29 @@ function myinterface() {
   }
 }
 
+function retrieve_tag_names($limit_param) {
+    global $db;
+
+    if (!is_int($limit_param)) {
+        // ERROR
+        $limit = $db->escape_string($limit_param);
+    } else {
+        $limit = $limit_param;
+    }
+
+    $query = "SELECT tag_name FROM tags LIMIT ". $limit;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        return $rows;
+    }
+}
+
 function retrieve_questions_by_views($limit_param) {
     global $db;
 

@@ -24,10 +24,11 @@
             <div class="card">
                 <div class="sidebar-title">Tags</div>
                 <div class="sidebar-body">
-                    <a href="">#something</a><br>
-                    <a href="">#something</a><br>
-                    <a href="">#something</a><br>
-                    <a href="">#something</a><br>
+                    <?php
+                    $tags = retrieve_tag_names(SIDEBAR_TAG_NUMBER);
+                    foreach ($tags as $tag) { ?>
+                        <a href="/tagged/<?php echo $tag["tag_name"]; ?>">#<?php echo $tag["tag_name"]; ?></a>
+                    <?php }?>
                 </div>
             </div>
         </div>
