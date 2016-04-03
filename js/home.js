@@ -17,9 +17,10 @@ $(document).ready(function() {
         // Animate
         foldout.animateCss('slideInDown');
         foldout.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', changePosition);
-        //Retrieve answers
 
-        // Show answers
+        // Retrieve comments
+
+        // Show comments
     });
 });
 
