@@ -11,7 +11,7 @@
                 <h3 class="page-title">Post Your Question</h3>
                 <div class="card">
                     <div class="post-content">
-                        <form class="ask-form form-horizontal" action="ask_success.php"> <!-- TODO -->
+                        <form class="ask-form form-horizontal" action=""> <!-- TODO -->
                           <div class="form-group">
                             <label for="question-title" class="col-sm-2 control-label">Title</label>
                             <div class="col-sm-10">
@@ -61,14 +61,4 @@
       }
     </script>
 </body>
-
-<script type="text/javascript">
-  document.getElementById("btn-submit-question").disabled = true;
-  
-  function enableSubmit(){
-   document.getElementById("btn-submit-question").disabled = false;
-  }
-</script>
-
-<?php include_once __DIR__ . '/footer.php'; ?>
 </html>

@@ -70,15 +70,16 @@ function retrieve_questions_by_views($limit_param, $page_param) {
             "q.created_timestamp as question_timestamp, ".
             "q.friendly_url as question_friendly_url, ".
             "a.answer_id as answer_id, ".
+            "COUNT(DISTINCT a.answer_id) as answer_count, ".
             "a.content as answer_content, ".
-            "a.votes as answer_vote_count, ".
+            "MAX(a.votes) as answer_vote_count, ".
             "a.comments as answer_comment_count, ".
             "a.created_timestamp as answer_timestamp, ".
             "p.profile_id as answer_user_id,".
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
             "p2.display_name as question_user_name, ".
-            "GROUP_CONCAT(t.tag_name) as tags ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
             "FROM (SELECT * FROM questions ORDER BY views DESC) q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
@@ -142,7 +143,7 @@ function retrieve_questions_by_latest($limit_param, $page_param) {
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
             "p2.display_name as question_user_name, ".
-            "GROUP_CONCAT(t.tag_name) as tags ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
             "FROM (SELECT * FROM questions ORDER BY question_id DESC) q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
@@ -206,7 +207,7 @@ function retrieve_questions_with_popular_answers($limit_param, $page_param) {
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
             "p2.display_name as question_user_name, ".
-            "GROUP_CONCAT(t.tag_name) as tags ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
             "FROM questions q ".
             "LEFT JOIN (SELECT DISTINCT * FROM answers ORDER BY votes DESC) a ".
             "ON a.question_fk = q.question_id " .
@@ -272,7 +273,7 @@ function retrieve_questions_with_recent_answers($limit_param, $page_param) {
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
             "p2.display_name as question_user_name, ".
-            "GROUP_CONCAT(t.tag_name) as tags ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
             "FROM questions q ".
             "LEFT JOIN (SELECT DISTINCT * FROM answers ORDER BY answer_id DESC) a ".
             "ON a.question_fk = q.question_id " .
@@ -339,7 +340,7 @@ function retrieve_questions_with_tag($tag_param, $limit_param, $page_param) {
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
             "p2.display_name as question_user_name, ".
-            "GROUP_CONCAT(t.tag_name) as tags ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
             "FROM (SELECT * FROM questions ORDER BY views DESC) q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
@@ -404,7 +405,7 @@ function retrieve_questions_for_answer_page($limit_param, $page_param) {
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
             "p2.display_name as question_user_name, ".
-            "GROUP_CONCAT(t.tag_name) as tags ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
             "FROM (SELECT * FROM questions ORDER BY question_id DESC) q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
@@ -461,7 +462,7 @@ function retrieve_question_with_answer($url_param) {
             "p.display_name as answer_user_name, ".
             "p2.profile_id as question_user_id,".
             "p2.display_name as question_user_name, ".
-            "GROUP_CONCAT(t.tag_name) as tags ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
             "FROM (SELECT * FROM questions WHERE friendly_url = '". $url ."') q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
@@ -568,43 +569,17 @@ function retrieve_comments_for_answer($id_param) {
 function process_result_into_question_with_answer($rows) {
     $questions = array();
 
-    // Retrieve only the highest voted answer for each question
-    $current_question_id = null;
-    $highest_votes = -1;
-    $answer_count = 0;
     for ($i = 0; $i < count($rows); $i++) {
         $row = $rows[$i];
 
-        // Null or different question id
-        if ($current_question_id == null || $current_question_id != $row["question_id"]) {
-            $answer_count = 0;
-            $tag_count = 0;
-            $current_question_id = $row["question_id"];
-            $highest_votes = $row["answer_vote_count"];
-            $questions[$current_question_id] = $row;
-            $questions[$current_question_id]["question_timestamp"] = timestamp_to_relative_date($row["question_timestamp"]);
+        $question_id = $row["question_id"];
 
-            $tags = explode(",", $row["tags"]);
-            $questions[$current_question_id]["tags"] = $tags;
-        } else {
-            // Not null, same question id
+        $questions[$question_id] = $row;
 
-            if ($highest_votes < $row["answer_vote_count"]) {
-                $current_question_id = $row["question_id"];
-                $highest_votes = $row["answer_vote_count"];
-                $questions[$current_question_id] = $row;
-                $questions[$current_question_id]["question_timestamp"] = timestamp_to_relative_date($row["question_timestamp"]);
-            }
+        // Change tag concat string into array
+        $tags = explode(",", $row["tags"]);
+        $questions[$question_id]["tags"] = $tags;
 
-            $tags = explode(",", $row["tags"]);
-            $questions[$current_question_id]["tags"] = $tags;
-        }
-
-        // Increment answer count
-        if ($row["answer_id"] != null) {
-            $answer_count++;
-            $questions[$current_question_id]["answer_count"] = $answer_count;
-        }
     }
 
     return $questions;
