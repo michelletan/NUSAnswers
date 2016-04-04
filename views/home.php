@@ -7,8 +7,7 @@
             <?php include_once __DIR__ . '/sidebar.php'; ?>
             <div class="main col-sm-9 col-md-6 col-lg-6">
                 <?php
-                global $questions;
-                foreach ($questions as $value) {
+                foreach ($questions as $data) {
                     include __DIR__ . '/question_list_item.php';
                 }?>
                 <?php include_once __DIR__ . '/pagination_bar.php'; ?>

@@ -1,6 +1,3 @@
-<?php 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
-?>
 <div class="col-md-3 col-lg-3">
 </div>
 <div class="sidebar affix col-md-3 col-lg-3">

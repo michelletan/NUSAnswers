@@ -40,11 +40,7 @@ function showFoldout(post) {
 
     // Retrieve comments
     $.ajax({
-<<<<<<< HEAD
-      url: "http://localhost:8000/api/answer/comments/" + postId,
-=======
       url: "/api/answer/comments/" + postId,
->>>>>>> master
       contentType: "application/json",
       method: "GET"
     }).done(function(data) {
