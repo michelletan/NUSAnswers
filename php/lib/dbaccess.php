@@ -1,5 +1,5 @@
 <?php
-define("db_host", "localhost");
+define("db_host", "localhost:3306");
 define("db_uid", "nusanswers");
 // need a more secure password before deploying
 define("db_pwd", "password");
