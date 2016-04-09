@@ -13,11 +13,11 @@
             </li>
             <li>
                 <a href="#">
-                    Moderator
+                    User
                     <span class="glyphicon arrow"></span>
                 </a>
                 <ul class="collapse nav">
-                    <li><a href="/admin-view-moderator-accounts">View Moderator Accounts</a></li>
+                    <li><a href="/admin-view-users">View Users</a></li>
                 </ul>
             </li>
             <li>

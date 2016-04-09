@@ -284,9 +284,9 @@ class AdminEditAdminAccountsHandler {
     }
 }
 
-class AdminViewModeratorAccountsHandler {
+class AdminViewUsersHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_moderator_accounts.php';
+        require VIEW_DIRECTORY . '/admin_view_users.php';
     }
 }
 
@@ -438,6 +438,21 @@ class AdminDeletionAPIHandler {
     }
 }
 
+class UserDeletionAPIHandler {
+    function post() {
+        // Cascades deletion to profile of user
+        if (isset($_POST['user-id'])) {
+            foreach ($_POST['user-id'] as $user_id) {
+                $user = retrieve_user($user_id);
+                delete_profile($user['profile_fk']);
+                delete_user($user_id);
+            }
+        }
+        $redirect_address = '/admin-view-users';
+        header('Location: ' . $redirect_address);
+    }
+}
+
 class QuestionDeletionAPIHandler {
     function post() {
         if (isset($_POST['question-id'])) {
@@ -553,7 +568,7 @@ $html_urls = array(
     "/admin-create-admin-account" => "AdminCreateAdminAccountHandler",
     "/admin-view-admin-accounts" => "AdminViewAdminAccountsHandler",
     "/admin-edit-admin-account" => "AdminEditAdminAccountsHandler",
-    "/admin-view-moderator-accounts" => "AdminViewModeratorAccountsHandler",
+    "/admin-view-users" => "AdminViewUsersHandler",
     "/admin-view-questions" => "AdminViewQuestionsHandler",
     "/admin-view-question-comments" => "AdminViewQuestionCommentsHandler",
     "/admin-view-answers" => "AdminViewAnswersHandler",
@@ -573,6 +588,7 @@ $json_base_urls = array(
     "/admin-creation/" => "AdminCreationAPIHandler",
     "/admin-edit/" => "AdminEditAPIHandler",
     "/admin-deletion/" => "AdminDeletionAPIHandler",
+    "/user-deletion/" => "UserDeletionAPIHandler",
     "/question-deletion/" => "QuestionDeletionAPIHandler",
     "/question-comment-deletion/" => "QuestionCommentDeletionAPIHandler",
     "/answer-deletion/" => "AnswerDeletionAPIHandler",

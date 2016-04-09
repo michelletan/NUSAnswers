@@ -645,38 +645,38 @@ function retrieve_admin_account($id_param) {
   return $return_array;
 }
 
-function retrieve_all_moderator_records() {
+function retrieve_all_user_records() {
   global $db;
-  $query = "SELECT moderator_id, profile_fk FROM moderators;";
-  $moderators = $db->query($query);
+  $query = "SELECT user_id, profile_fk FROM users;";
+  $users = $db->query($query);
   $return_array = array();
-  while ($moderator = $moderators->fetch_assoc()) {
-    $query = "SELECT display_name FROM profiles WHERE profile_id = " . $moderator['profile_fk'];
-    $moderator_profiles = $db->query($query); 
-    $moderator_record['moderator_id'] = $moderator['moderator_id'];
-    if ($moderator_profile = $moderator_profiles->fetch_assoc()) {
-      $moderator_record['display_name'] = $moderator_profile['display_name'];
+  while ($user = $users->fetch_assoc()) {
+    $query = "SELECT display_name FROM profiles WHERE profile_id = " . $user['profile_fk'];
+    $user_profiles = $db->query($query); 
+    $user_record['user_id'] = $user['user_id'];
+    if ($user_profile = $user_profiles->fetch_assoc()) {
+      $user_record['display_name'] = $user_profile['display_name'];
     } else {
-      $moderator_record['display_name'] = "";
+      $user_record['display_name'] = "";
     }
-    $return_array[] = $moderator_record;
+    $return_array[] = $user_record;
   }
   return $return_array;
 }
 
-function retrieve_moderator($id_param) {
+function retrieve_user($id_param) {
   global $db;
   $id = $db->escape_string($id_param);
-  $query = "SELECT * FROM moderator WHERE moderator_id = '". $id ."'";
+  $query = "SELECT * FROM users WHERE user_id = '". $id ."'";
   $result = $db->query($query);
   $return_array = array();
   if ($row = $result->fetch_assoc()) {
-    $return_array['moderator_found'] = true;
-    $return_array['moderator_id'] = $row['moderator_id'];
+    $return_array['user_found'] = true;
+    $return_array['user_id'] = $row['user_id'];
     $return_array['profile_fk'] = $row['profile_fk'];
   }
   else {
-    $return_array['moderator_found'] = false;
+    $return_array['user_found'] = false;
   }
   return $return_array;
 }

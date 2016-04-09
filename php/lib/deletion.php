@@ -8,6 +8,12 @@ function delete_admin_account($admin_id_param) {
     $db->query($query);    
 }
 
+function delete_user($user_id_param) {
+    global $db;
+    $query = "DELETE FROM users WHERE user_id = '" . $user_id_param . "';";
+    $db->query($query);    
+}
+
 function delete_profile($profile_id_param) {
     global $db;
     $query = "DELETE FROM profiles WHERE profile_id = " . $profile_id_param . ";";
