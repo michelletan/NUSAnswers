@@ -6,7 +6,7 @@ if (isset($_GET['admin-id'])) {
     $admin_id = $_GET['admin-id'];
     $admin_account = retrieve_admin_account($admin_id);
 } else {
-    $redirect_address = 'http://localhost/projects/cs3226/nusanswers/views/admin_view_admin_accounts.php';
+    $redirect_address = '/admin_view_admin_accounts';
     header('Location: ' . $redirect_address);
 }
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/lib/dbaccess.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
 
 function update_admin_id($id_param, $new_id_param) {
   global $db;
