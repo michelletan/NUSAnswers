@@ -450,6 +450,18 @@ class QuestionDeletionAPIHandler {
     }
 }
 
+class QuestionCommentDeletionAPIHandler {
+    function post() {
+        if (isset($_POST['question-comment-id'])) {
+            foreach ($_POST['question-comment-id'] as $question_comment_id) {
+                delete_question_comment($question_comment_id);
+            }
+        }
+        $redirect_address = '/admin-view-question-comments';
+        header('Location: ' . $redirect_address);
+    }
+}
+
 class AnswerDeletionAPIHandler {
     function post() {
         if (isset($_POST['answer-id'])) {
@@ -458,6 +470,18 @@ class AnswerDeletionAPIHandler {
             }
         }
         $redirect_address = '/admin-view-answers';
+        header('Location: ' . $redirect_address);
+    }
+}
+
+class AnswerCommentDeletionAPIHandler {
+    function post() {
+        if (isset($_POST['answer-comment-id'])) {
+            foreach ($_POST['answer-comment-id'] as $answer_comment_id) {
+                delete_answer_comment($answer_comment_id);
+            }
+        }
+        $redirect_address = '/admin-view-answer-comments';
         header('Location: ' . $redirect_address);
     }
 }
@@ -550,7 +574,9 @@ $json_base_urls = array(
     "/admin-edit/" => "AdminEditAPIHandler",
     "/admin-deletion/" => "AdminDeletionAPIHandler",
     "/question-deletion/" => "QuestionDeletionAPIHandler",
+    "/question-comment-deletion/" => "QuestionCommentDeletionAPIHandler",
     "/answer-deletion/" => "AnswerDeletionAPIHandler",
+    "/answer-comment-deletion/" => "AnswerCommentDeletionAPIHandler",
     "/tag-creation/" => "TagCreationAPIHandler",
     "/tag-edit/" => "TagEditAPIHandler",
     "/tag-deletion/" => "TagDeletionAPIHandler",

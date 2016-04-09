@@ -26,9 +26,21 @@ function delete_question($question_id_param) {
     $db->query($query); 
 }
 
+function delete_question_comment($question_comment_id_param) {
+    global $db;
+    $query = "DELETE FROM question_comments WHERE comment_id = " . $question_comment_id_param . ";";
+    $db->query($query); 
+}
+
 function delete_answer($answer_id_param) {
     global $db;
     $query = "DELETE FROM answers WHERE answer_id = " . $answer_id_param . ";";
+    $db->query($query); 
+}
+
+function delete_answer_comment($answer_comment_id_param) {
+    global $db;
+    $query = "DELETE FROM answer_comments WHERE comment_id = " . $answer_comment_id_param . ";";
     $db->query($query); 
 }
 ?>
