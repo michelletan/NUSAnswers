@@ -2,6 +2,7 @@
 <body>
     <script src="../js/fb.js"></script>
     <?php include_once __DIR__ . '/navbar.php'; ?>
+    <main id="panel">
     <div class="container-fluid center-block">
         <div class="row row-offcanvas row-offcanvas-left">
             <?php include_once __DIR__ . '/sidebar.php'; ?>
@@ -15,6 +16,7 @@
         </div>
 
     </div>
+    </main>
     <?php include_once __DIR__ . '/footer.php'; ?>
     <script src="../js/home.js"></script>
     <script src="../js/vote-ajax.js"></script>

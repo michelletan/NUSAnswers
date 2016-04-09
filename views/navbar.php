@@ -3,20 +3,18 @@
     <div class="row">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="col-md-1 col-lg-1"></div>
-    <div class="navbar-header col-sm-1 col-md-2 col-lg-2 text-right">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+    <div class="navbar-header col-sm-1 col-md-2 col-lg-2 text-left">
+      <button class="hidden-md hidden-lg hidden-xl" type="button" id="btn-toggle-menu">
         <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
       </button>
       <img class="navbar-logo" src="/img/logo.png"/>
-      <a class="navbar-brand logo pull-right" href="<?php echo APP_HOME_URL; ?>"><span>NUS</span>Answers</a>
+      <a class="navbar-brand logo text-left pull-right" href="<?php echo APP_HOME_URL; ?>"><span>NUS</span>Answers</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <form class= "navbar-left col-md-4 col-lg-4" role="search">
+    <!-- Shown in navbar on desktop -->
+    <div class="hidden-xs hidden-sm">
+      <form class= "navbar-left col-md-4 col-lg-4 hidden-xs hidden-sm" role="search">
           <input type="text" id="nav-search-bar" class="form-control" placeholder="Search">
       </form>
       <ul class="nav navbar-nav col-md-2 col-lg-2">
@@ -35,7 +33,13 @@
           </ul>
         </li>
       </ul>
-    </div><!-- /.navbar-collapse -->
+    </div>
+    <!-- end Shown in navbar on desktop -->
     </div><!-- /.row -->
+    <nav id="mobile-menu">
+        <header>
+            <h2>Menu</h2>
+        </header>
+    </nav>
   </div><!-- /.container-fluid -->
 </nav>
