@@ -305,6 +305,9 @@ button {
     margin-top: 8px;
 }
 
+.top-buffer-20px {
+    margin-top: 20px;
+}
 
 /* Modal CSS */
 /*#login-modal .modal-dialog {
@@ -439,3 +442,4 @@ button {
   border-radius: 0px;
 }*/
 /* end Modal CSS */
+

@@ -257,6 +257,78 @@ class UserDashboardCommentsHandler {
     }
 }
 
+class AdminDashboardHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_dashboard.php';
+    }
+}
+
+class AdminCreateAdminAccountHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_create_admin_account.php';
+    }
+}
+
+class AdminViewAdminAccountsHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_view_admin_accounts.php';
+    }
+}
+
+class AdminEditAdminAccountsHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_edit_admin_account.php';
+    }
+}
+
+class AdminViewModeratorAccountsHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_view_moderator_accounts.php';
+    }
+}
+
+class AdminViewQuestionsHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_view_questions.php';
+    }
+}
+
+class AdminViewQuestionCommentsHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_view_question_comments.php';
+    }
+}
+
+class AdminViewAnswersHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_view_answers.php';
+    }
+}
+
+class AdminViewAnswerCommentsHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_view_answer_comments.php';
+    }
+}
+
+class AdminCreateTagHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_create_tag.php';
+    }
+}
+
+class AdminViewTagsHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_view_tags.php';
+    }
+}
+
+class AdminEditTagHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_edit_tag.php';
+    }
+}
+
 // Handlers for API
 
 class QuestionCommentAPIHandler {
@@ -305,6 +377,8 @@ class DownvoteAPIHandler {
     }
 }
 
+
+
 $html_urls = array(
     "/" => "PopularQuestionsHandler",
     "/popular-questions/" => "PopularQuestionsHandler",
@@ -328,7 +402,19 @@ $html_urls = array(
     "/user-dashboard" => "UserDashboardHandler",
     "/user-questions" => "UserDashboardQuestionsHandler",
     "/user-answers" => "UserDashboardAnswersHandler",
-    "/user-comments" => "UserDashboardCommentsHandler"
+    "/user-comments" => "UserDashboardCommentsHandler",
+    "/admin-dashboard" => "AdminDashboardHandler",
+    "/admin-create-admin-account" => "AdminCreateAdminAccountHandler",
+    "/admin-view-admin-accounts" => "AdminViewAdminAccountsHandler",
+    "/admin-edit-admin-account" => "AdminEditAdminAccountsHandler",
+    "/admin-view-moderator-accounts" => "AdminViewModeratorAccountsHandler",
+    "/admin-view-questions" => "AdminViewQuestionsHandler",
+    "/admin-view-question-comments" => "AdminViewQuestionCommentsHandler",
+    "/admin-view-answers" => "AdminViewAnswersHandler",
+    "/admin-view-answer-comments" => "AdminViewAnswerCommentsHandler",
+    "/admin-create-tag" => "AdminCreateTagHandler",
+    "/admin-view-tags" => "AdminViewTagsHandler",
+    "/admin-edit-tag" => "AdminEditTagHandler"
 );
 
 $json_url_prefix = "/api";
