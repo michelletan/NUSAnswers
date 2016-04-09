@@ -10,7 +10,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <img class="navbar-logo" src="/NUSAnswers/img/logo.png"/>
+      <img class="navbar-logo" src="/img/logo.png"/>
       <a class="navbar-brand logo pull-right" href="<?php echo APP_HOME_URL; ?>"><span>NUS</span>Answers</a>
     </div>
 
@@ -20,7 +20,7 @@
           <input type="text" id="nav-search-bar" class="form-control" placeholder="Search">
       </form>
       <ul class="nav navbar-nav col-md-2 col-lg-2">
-        <li><a href="ask.php"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Ask</a></li>
+        <li><a href="/ask"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Ask</a></li>
         <li><a href="/answer"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Answer</a></li>
       </ul>
       <ul class="nav navbar-nav col-md-2 col-lg-2">
