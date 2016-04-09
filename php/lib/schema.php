@@ -66,6 +66,7 @@ function create_question_table () {
            "content MEDIUMTEXT NOT NULL," .
            "created_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," .
            "views INTEGER NOT NULL DEFAULT 0, " .
+           "visible TINYINT NOT NULL DEFAULT 1, " .
            "answers INTEGER NOT NULL DEFAULT 0," .
            "comments INTEGER NOT NULL DEFAULT 0," .
            "friendly_url VARCHAR(255) NOT NULL," .
@@ -80,9 +81,10 @@ function create_answer_table () {
   $query = "CREATE TABLE answers (" .
            "answer_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
            "content MEDIUMTEXT NOT NULL," .
+           "created_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," .
+           "visible TINYINT NOT NULL DEFAULT 1, " .
            "votes INTEGER NOT NULL DEFAULT 0," .
            "comments INTEGER NOT NULL DEFAULT 0," .
-           "created_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," .
            "profile_fk INTEGER NOT NULL," .
            "question_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)," .

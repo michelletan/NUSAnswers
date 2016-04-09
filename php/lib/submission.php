@@ -1,7 +1,8 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
 
-function submission_interface() {
+/*
+function json_submission_interface() {
   $array_to_return = array();
   if (!isset($_POST['type'])) {
     $array_to_return['status'] = "Error: type of submission not defined";
@@ -45,6 +46,7 @@ function submission_interface() {
   $json_to_return = json_encode($array_to_return);
   echo ($json_to_return);
 }
+*/
 
 function submit_question_anonymously($title_param, $content_param, $tags_param) {
   global $db;
@@ -177,5 +179,5 @@ function get_seo_string($vp_string){
     return $vp_string;
 }
 
-// submission_interface();
+// json_submission_interface();
 ?>
