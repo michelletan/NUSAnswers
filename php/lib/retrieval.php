@@ -1,5 +1,7 @@
 <?php
-require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/lib/dbaccess.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/time_helper.php';
+
 
 function myinterface() {
   if (isset($_GET['post_type']) && isset($_GET['id'])) {
@@ -34,7 +36,8 @@ function retrieve_all_questions() {
   return $return_array;
 }
 
-function retrieve_questions_for_home_page($limit_param) {
+// METHODS FOR TAGS
+function retrieve_tag_names($limit_param) {
     global $db;
 
     if (!is_int($limit_param)) {
@@ -44,76 +47,442 @@ function retrieve_questions_for_home_page($limit_param) {
         $limit = $limit_param;
     }
 
-    $query = "SELECT q.question_id as question_id, ".
-            "q.title as question_title, ".
-            "q.content as question_content, ".
-            "q.comments as question_comment_count, ".
-            "a.answer_id as answer_id, ".
-            "a.content as answer_content, ".
-            "a.votes as answer_vote_count, ".
-            "a.comments as answer_comment_count, ".
-            "p.profile_id as answer_user_id,".
-            "p.display_name as answer_user_name ".
-            "FROM (SELECT * FROM questions LIMIT " . $limit.") q ".
-            "LEFT JOIN answers a ON a.question_fk = q.question_id " .
-            "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
-            "ORDER BY question_id";
+    $query = "SELECT tag_name FROM tags LIMIT ". $limit;
+
     $result = $db->query($query);
 
     if ($result->num_rows == 0) {
         return array();
     } else {
         $rows = $result->fetch_all(MYSQLI_ASSOC);
-        $questions = array();
 
-        // Retrieve only the highest voted answer for each question
-        $current_question_id = null;
-        $highest_votes = -1;
-        $answer_count = 0;
-        for ($i = 0; $i < count($rows); $i++) {
-            $row = $rows[$i];
-
-            if ($current_question_id == null || $current_question_id != $row["question_id"] || $highest_votes < $row["answer_vote_count"]) {
-                $answer_count = 0;
-                $current_question_id = $row["question_id"];
-                $highest_votes = $row["answer_vote_count"];
-                $questions[$current_question_id] = $row;
-            }
-
-            if ($current_question_id == $row["question_id"] && $row["answer_id"] != null) {
-                $answer_count++;
-                $questions[$current_question_id]["answer_count"] = $answer_count;
-            }
-        }
-
-        return $questions;
+        return $rows;
     }
 }
 
-function retrieve_question_with_answer($id_param) {
+// METHODS FOR QUESTIONS
+
+function retrieve_questions_by_views($limit_param, $page_param) {
     global $db;
 
-    if (!is_int($id_param)) {
+    if (!is_int($limit_param)) {
         // ERROR
-        $id = $db->escape_string($id_param);
+        $limit = $db->escape_string($limit_param);
+        $param = $db->escape_string($page_param);
     } else {
-        $id = $id_param;
+        $limit = $limit_param;
+        $page = $page_param;
     }
 
     $query = "SELECT q.question_id as question_id, ".
             "q.title as question_title, ".
             "q.content as question_content, ".
             "q.comments as question_comment_count, ".
+            "q.created_timestamp as question_timestamp, ".
+            "q.friendly_url as question_friendly_url, ".
+            "a.answer_id as answer_id, ".
+            "COUNT(DISTINCT a.answer_id) as answer_count, ".
+            "a.content as answer_content, ".
+            "MAX(a.votes) as answer_vote_count, ".
+            "a.comments as answer_comment_count, ".
+            "a.created_timestamp as answer_timestamp, ".
+            "p.profile_id as answer_user_id,".
+            "p.display_name as answer_user_name, ".
+            "p2.profile_id as question_user_id,".
+            "p2.display_name as question_user_name, ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
+            "FROM (SELECT * FROM questions ORDER BY views DESC) q ".
+            "LEFT JOIN answers a ON a.question_fk = q.question_id " .
+            "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
+            "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
+            "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "GROUP BY q.question_id ".
+            "ORDER BY q.views DESC ".
+            "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        $questions = process_result_into_question_with_answer($rows);
+
+        $data = array();
+
+        // If the results had an extra row over the limit, there exists a next page
+        if ($result->num_rows >= $limit) {
+            // Remove the extra result from the return
+            array_pop($questions);
+            $data["has_next_page"] = true;
+        } else {
+            $data["has_next_page"] = false;
+        }
+
+        $data["questions"] = $questions;
+
+        return $data;
+    }
+}
+
+function retrieve_questions_by_latest($limit_param, $page_param) {
+    global $db;
+
+    if (!is_int($limit_param)) {
+        // ERROR
+        $limit = $db->escape_string($limit_param);
+        $param = $db->escape_string($page_param);
+    } else {
+        $limit = $limit_param;
+        $page = $page_param;
+    }
+
+    $query = "SELECT q.question_id as question_id, ".
+            "q.title as question_title, ".
+            "q.content as question_content, ".
+            "q.comments as question_comment_count, ".
+            "q.created_timestamp as question_timestamp, ".
+            "q.friendly_url as question_friendly_url, ".
             "a.answer_id as answer_id, ".
             "a.content as answer_content, ".
             "a.votes as answer_vote_count, ".
             "a.comments as answer_comment_count, ".
+            "a.created_timestamp as answer_timestamp, ".
             "p.profile_id as answer_user_id,".
-            "p.display_name as answer_user_name ".
-            "FROM (SELECT * FROM questions WHERE question_id = ". $id .") q ".
+            "p.display_name as answer_user_name, ".
+            "p2.profile_id as question_user_id,".
+            "p2.display_name as question_user_name, ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
+            "FROM (SELECT * FROM questions ORDER BY question_id DESC) q ".
             "LEFT JOIN answers a ON a.question_fk = q.question_id " .
             "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
-            "ORDER BY question_id";
+            "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
+            "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "GROUP BY q.question_id ".
+            "ORDER BY q.question_id DESC ".
+            "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        $questions = process_result_into_question_with_answer($rows);
+
+        $data = array();
+
+        // If the results had an extra row over the limit, there exists a next page
+        if ($result->num_rows >= $limit) {
+            // Remove the extra result from the return
+            array_pop($questions);
+            $data["has_next_page"] = true;
+        } else {
+            $data["has_next_page"] = false;
+        }
+
+        $data["questions"] = $questions;
+
+        return $data;
+    }
+}
+
+function retrieve_questions_with_popular_answers($limit_param, $page_param) {
+    global $db;
+
+    if (!is_int($limit_param)) {
+        // ERROR
+        $limit = $db->escape_string($limit_param);
+        $param = $db->escape_string($page_param);
+    } else {
+        $limit = $limit_param;
+        $page = $page_param;
+    }
+
+    $query = "SELECT q.question_id as question_id, ".
+            "q.title as question_title, ".
+            "q.content as question_content, ".
+            "q.comments as question_comment_count, ".
+            "q.created_timestamp as question_timestamp, ".
+            "q.friendly_url as question_friendly_url, ".
+            "a.answer_id as answer_id, ".
+            "a.content as answer_content, ".
+            "a.votes as answer_vote_count, ".
+            "a.comments as answer_comment_count, ".
+            "a.created_timestamp as answer_timestamp, ".
+            "p.profile_id as answer_user_id,".
+            "p.display_name as answer_user_name, ".
+            "p2.profile_id as question_user_id,".
+            "p2.display_name as question_user_name, ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
+            "FROM questions q ".
+            "LEFT JOIN (SELECT DISTINCT * FROM answers ORDER BY votes DESC) a ".
+            "ON a.question_fk = q.question_id " .
+            "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
+            "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
+            "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "WHERE answer_id is NOT NULL ".
+            "GROUP BY q.question_id ".
+            "ORDER BY a.votes DESC ".
+            "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        $questions = process_result_into_question_with_answer($rows);
+
+        $data = array();
+
+        // If the results had an extra row over the limit, there exists a next page
+        if ($result->num_rows >= $limit) {
+            // Remove the extra result from the return
+            array_pop($questions);
+            $data["has_next_page"] = true;
+        } else {
+            $data["has_next_page"] = false;
+        }
+
+        $data["questions"] = $questions;
+
+        return $data;
+    }
+}
+
+function retrieve_questions_with_recent_answers($limit_param, $page_param) {
+    global $db;
+
+    if (!is_int($limit_param)) {
+        // ERROR
+        $limit = $db->escape_string($limit_param);
+        $param = $db->escape_string($page_param);
+    } else {
+        $limit = $limit_param;
+        $page = $page_param;
+    }
+
+    $query = "SELECT q.question_id as question_id, ".
+            "q.title as question_title, ".
+            "q.content as question_content, ".
+            "q.comments as question_comment_count, ".
+            "q.created_timestamp as question_timestamp, ".
+            "q.friendly_url as question_friendly_url, ".
+            "a.answer_id as answer_id, ".
+            "a.content as answer_content, ".
+            "a.votes as answer_vote_count, ".
+            "a.comments as answer_comment_count, ".
+            "a.created_timestamp as answer_timestamp, ".
+            "p.profile_id as answer_user_id,".
+            "p.display_name as answer_user_name, ".
+            "p2.profile_id as question_user_id,".
+            "p2.display_name as question_user_name, ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
+            "FROM questions q ".
+            "LEFT JOIN (SELECT DISTINCT * FROM answers ORDER BY answer_id DESC) a ".
+            "ON a.question_fk = q.question_id " .
+            "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
+            "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
+            "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "WHERE answer_id is NOT NULL ".
+            "GROUP BY q.question_id ".
+            "ORDER BY a.answer_id DESC ".
+            "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        $questions = process_result_into_question_with_answer($rows);
+
+        $data = array();
+
+        // If the results had an extra row over the limit, there exists a next page
+        if ($result->num_rows >= $limit) {
+            // Remove the extra result from the return
+            array_pop($questions);
+            $data["has_next_page"] = true;
+        } else {
+            $data["has_next_page"] = false;
+        }
+
+        $data["questions"] = $questions;
+
+        return $data;
+    }
+}
+
+function retrieve_questions_with_tag($tag_param, $limit_param, $page_param) {
+    global $db;
+
+    if (!is_int($limit_param)) {
+        // ERROR
+        $limit = $db->escape_string($limit_param);
+        $page = $db->escape_string($page_param);
+    } else {
+        $limit = $limit_param;
+        $page = $page_param;
+    }
+    $tag = $db->escape_string($tag_param);
+
+    $query = "SELECT q.question_id as question_id, ".
+            "q.title as question_title, ".
+            "q.content as question_content, ".
+            "q.comments as question_comment_count, ".
+            "q.created_timestamp as question_timestamp, ".
+            "q.friendly_url as question_friendly_url, ".
+            "a.answer_id as answer_id, ".
+            "a.content as answer_content, ".
+            "a.votes as answer_vote_count, ".
+            "a.comments as answer_comment_count, ".
+            "a.created_timestamp as answer_timestamp, ".
+            "p.profile_id as answer_user_id,".
+            "p.display_name as answer_user_name, ".
+            "p2.profile_id as question_user_id,".
+            "p2.display_name as question_user_name, ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
+            "FROM (SELECT * FROM questions ORDER BY views DESC) q ".
+            "LEFT JOIN answers a ON a.question_fk = q.question_id " .
+            "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
+            "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
+            "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "GROUP BY a.answer_id ".
+            "HAVING tags LIKE '%". $tag ."%' ".
+            "ORDER BY q.views DESC ".
+            "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        $questions = process_result_into_question_with_answer($rows);
+
+        $data = array();
+
+        // If the results had an extra row over the limit, there exists a next page
+        if ($result->num_rows >= $limit) {
+            // Remove the extra result from the return
+            array_pop($questions);
+            $data["has_next_page"] = true;
+        } else {
+            $data["has_next_page"] = false;
+        }
+
+        $data["questions"] = $questions;
+
+        return $data;
+    }
+}
+
+function retrieve_questions_for_answer_page($limit_param, $page_param) {
+    global $db;
+
+    if (!is_int($limit_param)) {
+        // ERROR
+        $limit = $db->escape_string($limit_param);
+        $param = $db->escape_string($page_param);
+    } else {
+        $limit = $limit_param;
+        $page = $page_param;
+    }
+
+    $query = "SELECT q.question_id as question_id, ".
+            "q.title as question_title, ".
+            "q.content as question_content, ".
+            "q.comments as question_comment_count, ".
+            "q.created_timestamp as question_timestamp, ".
+            "q.friendly_url as question_friendly_url, ".
+            "a.answer_id as answer_id, ".
+            "a.content as answer_content, ".
+            "a.votes as answer_vote_count, ".
+            "a.comments as answer_comment_count, ".
+            "a.created_timestamp as answer_timestamp, ".
+            "p.profile_id as answer_user_id,".
+            "p.display_name as answer_user_name, ".
+            "p2.profile_id as question_user_id,".
+            "p2.display_name as question_user_name, ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
+            "FROM (SELECT * FROM questions ORDER BY question_id DESC) q ".
+            "LEFT JOIN answers a ON a.question_fk = q.question_id " .
+            "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
+            "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
+            "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "WHERE answer_id is NULL ".
+            "GROUP BY q.question_id ".
+            "ORDER BY q.question_id DESC ".
+            "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        $questions = process_result_into_question_with_answer($rows);
+
+        $data = array();
+
+        // If the results had an extra row over the limit, there exists a next page
+        if ($result->num_rows >= $limit) {
+            // Remove the extra result from the return
+            array_pop($questions);
+            $data["has_next_page"] = true;
+        } else {
+            $data["has_next_page"] = false;
+        }
+
+        $data["questions"] = $questions;
+
+        return $data;
+    }
+}
+
+function retrieve_question_with_answer($url_param) {
+    global $db;
+
+    $url = $db->escape_string($url_param);
+
+    $query = "SELECT q.question_id as question_id, ".
+            "q.title as question_title, ".
+            "q.content as question_content, ".
+            "q.comments as question_comment_count, ".
+            "q.created_timestamp as question_timestamp, ".
+            "a.answer_id as answer_id, ".
+            "a.content as answer_content, ".
+            "a.votes as answer_vote_count, ".
+            "a.comments as answer_comment_count, ".
+            "a.created_timestamp as answer_timestamp, ".
+            "p.profile_id as answer_user_id,".
+            "p.display_name as answer_user_name, ".
+            "p2.profile_id as question_user_id,".
+            "p2.display_name as question_user_name, ".
+            "GROUP_CONCAT(DISTINCT t.tag_name) as tags ".
+            "FROM (SELECT * FROM questions WHERE friendly_url = '". $url ."') q ".
+            "LEFT JOIN answers a ON a.question_fk = q.question_id " .
+            "LEFT JOIN profiles p ON a.profile_fk = p.profile_id " .
+            "LEFT JOIN profiles p2 ON q.profile_fk = p2.profile_id " .
+            "LEFT JOIN has_tags ht ON ht.question_fk = q.question_id " .
+            "LEFT JOIN tags t ON t.tag_id = ht.tag_fk ".
+            "GROUP BY q.question_id ".
+            "ORDER BY answer_vote_count DESC";
+
     $result = $db->query($query);
 
     if ($result->num_rows == 0) {
@@ -131,62 +500,56 @@ function retrieve_question_with_answer($id_param) {
                 $question["question_id"] = $row["question_id"];
                 $question["question_title"] = $row["question_title"];
                 $question["question_content"] = $row["question_content"];
-                $question["question_title"] = $row["question_title"];
-                $question["question_id"] = $row["question_id"];
-                $question["question_title"] = $row["question_title"];
+                $question["question_comment_count"] = $row["question_comment_count"];
+                $question["question_user_id"] = $row["question_user_id"];
+                $question["question_user_name"] = $row["question_user_name"];
+                $question["question_timestamp"] = timestamp_to_relative_date($row["question_timestamp"]);
+                $tags = explode(",", $row["tags"]);
+                $question["tags"] = $tags;
             }
 
+            $answer = array();
+            $answer["answer_id"] = $row["answer_id"];
+            $answer["answer_content"] = $row["answer_content"];
+            $answer["answer_vote_count"] = $row["answer_vote_count"];
+            $answer["answer_comment_count"] = $row["answer_comment_count"];
+            $answer["answer_user_id"] = $row["answer_user_id"];
+            $answer["answer_user_name"] = $row["answer_user_name"];
+            $answer["answer_timestamp"] = timestamp_to_relative_date($row["answer_timestamp"]);
+
+            $answers[$i] = $answer;
         }
 
-        return $questions;
+        $question["answers"] = $answers;
+
+        return $question;
     }
 }
 
-function retrieve_question_without_answer($id_param) {
-  global $db;
-  $id = $db->escape_string($id_param);
-  $query = "SELECT title, content, created_timestamp, answers, comments, profile_fk " .
-           "FROM questions WHERE question_id = $id";
-  $result = $db->query($query);
-  $return_array = array();
-  if ($row = $result->fetch_assoc()) {
-    $return_array['question_found'] = true;
-    $return_array['title'] = $row['title'];
-    $return_array['content'] = $row['content'];
-    $return_array['created'] = $row['created_timestamp'];
-    $return_array['answer_count'] = $row['answers'];
-    $return_array['comment_count'] = $row['comments'];
-    $return_array['profile_id'] = $row['profile_fk'];
-  }
-  else {
-    $return_array['question_found'] = false;
-  }
-  return $return_array;
-}
+// METHODS FOR COMMENTS
+function retrieve_comments_for_question($id_param) {
+    global $db;
 
-// function retrieve_question_with_answer($id_param) {
-//   global $db;
-//   $id = $db->escape_string($id_param);
-//   $return_array = retrieve_question_without_answer($id);
-//   if ($return_array['question_found']) {
-//     $query = "SELECT answer_id, content, created_timestamp, votes, comments, profile_fk " .
-//              "FROM answers WHERE question_fk = $id";
-//     $result = $db->query($query);
-//     $answer_array = array();
-//     if ($row = $result->fetch_assoc()) {
-//       $answer = array();
-//       $answer['answer_id'] = $row['answer_id'];
-//       $answer['content'] = $row['content'];
-//       $answer['created'] = $row['created_timestamp'];
-//       $answer['votes'] = $row['votes'];
-//       $answer['comment_count'] = $row['comments'];
-//       $answer['profile_id'] = $row['profile_fk'];
-//       $answer_array[] = $answer;
-//     }
-//     $return_array['answers'] = $answer_array;
-//   }
-//   return $return_array;
-// }
+    if (!is_int($id_param)) {
+        // ERROR
+        $id = $db->escape_string($id_param);
+    } else {
+        $id = $id_param;
+    }
+
+    $query = "SELECT * FROM question_comments qc ".
+            "JOIN profiles p ON p.profile_id = qc.profile_fk ".
+            "WHERE qc.question_fk = ". $id;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        return $rows;
+    }
+}
 
 function retrieve_all_question_comments() {
   global $db;
@@ -361,6 +724,51 @@ function retrieve_all_tags() {
     $return_array[] = $tag;
   }
   return $return_array;
+}
+
+function retrieve_comments_for_answer($id_param) {
+    global $db;
+
+    if (!is_int($id_param)) {
+        // ERROR
+        $id = $db->escape_string($id_param);
+    } else {
+        $id = $id_param;
+    }
+
+    $query = "SELECT * FROM answer_comments ac " .
+            "JOIN profiles p ON p.profile_id = ac.profile_fk ".
+            "WHERE ac.answer_fk = ". $id;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        return $rows;
+    }
+}
+
+// Given an array of questions joined with answer rows, returns an array of
+// distinct questions with their highest voted answer.
+function process_result_into_question_with_answer($rows) {
+    $questions = array();
+
+    for ($i = 0; $i < count($rows); $i++) {
+        $row = $rows[$i];
+
+        $question_id = $row["question_id"];
+
+        $questions[$question_id] = $row;
+
+        // Change tag concat string into array
+        $tags = explode(",", $row["tags"]);
+        $questions[$question_id]["tags"] = $tags;
+
+    }
+
+    return $questions;
 }
 
 ?>

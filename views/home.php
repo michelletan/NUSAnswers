@@ -7,14 +7,16 @@
             <?php include_once __DIR__ . '/sidebar.php'; ?>
             <div class="main col-sm-9 col-md-6 col-lg-6">
                 <?php
-                $questions = retrieve_questions_for_home_page(INITIAL_NUM_QUESTIONS);
-                for ($i = 1; $i <= count($questions); $i++) {
-                    $data = $questions[$i];
+                foreach ($questions as $data) {
                     include __DIR__ . '/question_list_item.php';
                 }?>
-
+                <?php include_once __DIR__ . '/pagination_bar.php'; ?>
             </div>
         </div>
+
     </div>
+    <?php include_once __DIR__ . '/footer.php'; ?>
+    <script src="../js/home.js"></script>
+    <script src="../js/vote-ajax.js"></script>
 </body>
-<?php include_once __DIR__ . '/footer.php'; ?>
+</html>
