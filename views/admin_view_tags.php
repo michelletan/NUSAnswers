@@ -18,7 +18,7 @@ include_once __DIR__ . '/admin_header.php'; ?>
                         </li>
                         <li class="list-group-item summary-display">
                             <table id="tags-table" class="table table-filter">
-                                <form id="tags-form" method="post" action="tag_deletion.php">
+                                <form id="tags-form" method="post" action="/api/tag-deletion/">
                                     <thead>
                                         <tr>
                                             <th>

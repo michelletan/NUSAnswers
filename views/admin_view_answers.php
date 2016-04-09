@@ -18,7 +18,7 @@ include_once __DIR__ . '/admin_header.php'; ?>
                         </li>
                         <li class="list-group-item summary-display">
                             <table id="answers-table" class="table table-filter">
-                                <form id="answers-form" method="post" action="answer_deletion.php">
+                                <form id="answers-form" method="post" action="/api/answer-deletion/">
                                     <thead>
                                         <tr>
                                             <th>

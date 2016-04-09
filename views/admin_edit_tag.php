@@ -24,7 +24,7 @@ if (isset($_GET['tag-id'])) {
                         <li class="list-group-item summary-display">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form method="post" action="tag_edit.php">
+                                    <form method="post" action="/api/tag-edit/">
                                         <input hidden name="tag-id" value="<?php echo $tag['tag_id']?>">
                                         <div class="form-group">
                                             <label for="tag">Tag Name</label>

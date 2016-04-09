@@ -25,7 +25,7 @@ if (isset($_GET['admin-id'])) {
                         <li class="list-group-item summary-display">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form method="post" action="admin_edit.php">
+                                    <form method="post" action="/api/admin-edit/">
                                         <input hidden name="admin-id" value="<?php echo $admin_account['admin_id']?>">
                                         <div class="form-group">
                                             <label for="username">Username</label>

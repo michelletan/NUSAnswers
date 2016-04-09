@@ -13,7 +13,7 @@
                         <li class="list-group-item summary-display">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form method="post" action="admin_creation.php">
+                                    <form method="post" action="/api/admin-creation/">
                                         <div class="form-group">
                                             <label for="username">Username</label>
                                             <input required type="text" class="form-control" id="username" placeholder="Username" name="username">

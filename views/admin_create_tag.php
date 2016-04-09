@@ -13,7 +13,7 @@
                         <li class="list-group-item summary-display">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <form method="post" action="tag_creation.php">
+                                    <form method="post" action="/api/tag-creation/">
                                         <div class="form-group">
                                             <label for="tag">Tag</label>
                                             <input required type="text" class="form-control" id="tag" placeholder="Tag" name="tag-name">

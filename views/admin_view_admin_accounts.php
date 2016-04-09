@@ -25,7 +25,7 @@ include_once __DIR__ . '/admin_header.php';
                         </li>
                         <li class="list-group-item summary-display">
                             <table id="admin-accounts-table" class="table table-filter">
-                                <form id="admin-accounts-form" method="post" action="admin_deletion.php">
+                                <form id="admin-accounts-form" method="post" action="/api/admin-deletion/">
                                     <thead>
                                         <tr>
                                             <th>
