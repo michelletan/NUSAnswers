@@ -41,8 +41,8 @@ include_once __DIR__ . '/admin_header.php'; ?>
                                         <tr data-status="good">
                                             <td>
                                                 <div class="ckbox">
-                                                    <input id="<?php echo $question_comment['question_comment_id']?>-checkbox" type="checkbox" name="question-comment-id[]" value="<?php echo $question_comment['question_comment_id']?>">
-                                                    <label for="<?php echo $question_comment['question_comment_id']?>-checkbox"></label>
+                                                    <input id="<?php echo $question_comment['comment_id']?>-checkbox" type="checkbox" name="question-comment-id[]" value="<?php echo $question_comment['comment_id']?>">
+                                                    <label for="<?php echo $question_comment['comment_id']?>-checkbox"></label>
                                                 </div>
                                             </td>
                                             <td>
@@ -54,7 +54,7 @@ include_once __DIR__ . '/admin_header.php'; ?>
                                                 <div class="media">
                                                     <div class="media-body">                                                        
                                                         <h4 class="title">
-                                                            <?php echo $question_comment['question_comment_id']?>                                                            
+                                                            <?php echo $question_comment['comment_id']?>                                                            
                                                         </h4>                                     
                                                         <p><?php echo $question_comment['content']?></p>
                                                     </div>

@@ -41,8 +41,8 @@ include_once __DIR__ . '/admin_header.php'; ?>
                                         <tr data-status="good">
                                             <td>
                                                 <div class="ckbox">
-                                                    <input id="<?php echo $answer_comment['answer_comment_id']?>-checkbox" type="checkbox" name="answer-comment-id[]" value="<?php echo $answer_comment['answer_comment_id']?>">
-                                                    <label for="<?php echo $answer_comment['answer_comment_id']?>-checkbox"></label>
+                                                    <input id="<?php echo $answer_comment['comment_id']?>-checkbox" type="checkbox" name="answer-comment-id[]" value="<?php echo $answer_comment['comment_id']?>">
+                                                    <label for="<?php echo $answer_comment['comment_id']?>-checkbox"></label>
                                                 </div>
                                             </td>
                                             <td>
@@ -54,7 +54,7 @@ include_once __DIR__ . '/admin_header.php'; ?>
                                                 <div class="media">
                                                     <div class="media-body">                                                        
                                                         <h4 class="title">
-                                                            <?php echo $answer_comment['answer_comment_id']?>                                                            
+                                                            <?php echo $answer_comment['comment_id']?>                                                            
                                                         </h4>                                     
                                                         <p><?php echo $answer_comment['content']?></p>
                                                     </div>

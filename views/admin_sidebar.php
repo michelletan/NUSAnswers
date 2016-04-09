@@ -7,8 +7,8 @@
                     <span class="glyphicon arrow"></span>
                 </a>
                 <ul class="collapse nav">
-                    <li class=""><a href="admin_create_admin_account.php">Create Admin Account</a></li>
-                    <li class=""><a href="admin_view_admin_accounts.php">View Admin Accounts</a></li>
+                    <li class=""><a href="/admin-create-admin-account">Create Admin Account</a></li>
+                    <li class=""><a href="/admin-view-admin-accounts">View Admin Accounts</a></li>
                 </ul>
             </li>
             <li>
@@ -17,7 +17,7 @@
                     <span class="glyphicon arrow"></span>
                 </a>
                 <ul class="collapse nav">
-                    <li><a href="admin_view_moderator_accounts.php">View Moderator Accounts</a></li>
+                    <li><a href="/admin-view-moderator-accounts">View Moderator Accounts</a></li>
                 </ul>
             </li>
             <li>
@@ -26,8 +26,8 @@
                     <span class="glyphicon arrow"></span>
                 </a>
                 <ul class="collapse nav">
-                    <li><a href="admin_view_questions.php">View Questions</a></li>
-                    <li><a href="admin_view_question_comments.php">View Question Comments</a></li>
+                    <li><a href="/admin-view-questions">View Questions</a></li>
+                    <li><a href="/admin-view-question-comments">View Question Comments</a></li>
                 </ul>
             </li>
             <li>
@@ -36,8 +36,8 @@
                     <span class="glyphicon arrow"></span>
                 </a>
                 <ul class="collapse nav">
-                    <li><a href="admin_view_answers.php">View Answers</a></li>
-                    <li><a href="admin_view_answer_comments.php">View Answer Comments</a></li>
+                    <li><a href="/admin-view-answers">View Answers</a></li>
+                    <li><a href="/admin-view-answer-comments">View Answer Comments</a></li>
                 </ul>
             </li>
             <li>
@@ -46,8 +46,8 @@
                     <span class="glyphicon arrow"></span>
                 </a>
                 <ul class="collapse nav">
-                    <li><a href="admin_create_tag.php">Create Tag</a></li>
-                    <li><a href="admin_view_tags.php">View Tags</a></li>
+                    <li><a href="/admin-create-tag">Create Tag</a></li>
+                    <li><a href="/admin-view-tags">View Tags</a></li>
                 </ul>
             </li>
         </ul>

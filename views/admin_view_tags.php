@@ -55,7 +55,7 @@ include_once __DIR__ . '/admin_header.php'; ?>
                                                     <div class="media">
                                                         <div class="media-body">                                                        
                                                             <h4 class="title">
-                                                                <a href="admin_edit_tag.php?tag-id=<?php echo $tag['tag_id']?>" ><?php echo $tag['tag_name']?></a>
+                                                                <a href="/admin-edit-tag?tag-id=<?php echo $tag['tag_id']?>" ><?php echo $tag['tag_name']?></a>
                                                             </h4>                                     
                                                             <p><?php echo $tag['tag_name']?></p>
                                                         </div>
