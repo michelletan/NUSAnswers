@@ -233,6 +233,30 @@ class AdminLoginHandler {
     }
 }
 
+class UserDashboardHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/user_dashboard.php';
+    }
+}
+
+class UserDashboardQuestionsHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/user_question_list.php';
+    }
+}
+
+class UserDashboardAnswersHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/user_answer_list.php';
+    }
+}
+
+class UserDashboardCommentsHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/user_comment_list.php';
+    }
+}
+
 // Handlers for API
 
 class QuestionCommentAPIHandler {
@@ -301,6 +325,10 @@ $html_urls = array(
     "/user/:number" => "UserProfileHandler",
     "/login" => "LoginHandler",
     "/admin/login" => "AdminLoginHandler",
+    "/user-dashboard" => "UserDashboardHandler",
+    "/user-questions" => "UserDashboardQuestionsHandler",
+    "/user-answers" => "UserDashboardAnswersHandler",
+    "/user-comments" => "UserDashboardCommentsHandler"
 );
 
 $json_url_prefix = "/api";

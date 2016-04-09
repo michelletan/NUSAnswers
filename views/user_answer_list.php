@@ -210,13 +210,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <ul class="pagination pull-right">
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -224,10 +217,8 @@
             </div>
         </div>
     </body>
-    <script src="../js/jquery-1.12.2.js"></script>
-    <script src="../js/bootstrap.js"></script>
+    <?php include_once __DIR__ . '/footer.php'; ?>
     <script src="../js/metisMenu.min.js"></script>
     <script src="../js/Chart.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
     <script src="../js/user_details.js"></script>
     </html>

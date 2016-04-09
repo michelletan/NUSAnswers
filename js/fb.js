@@ -27,7 +27,7 @@ function logout() {
 
 window.fbAsyncInit = function() {
 	FB.init({
-	appId      : '1656020387994115', // CREATE AND INSERT OWN APP ID TO TEST!
+	appId      : '581406865343052', // CREATE AND INSERT OWN APP ID TO TEST!
 	cookie     : true,  // enable cookies to allow the server to access 
 	                    // the session
   status     : true,

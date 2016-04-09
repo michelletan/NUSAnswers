@@ -29,7 +29,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="username"><?php $is_logged_in = true; ?>Username <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <?php if ($is_admin) {?><li><a href="#">Admin Dashboard</a></li><?php } ?>
-            <li><a href="#">User Dashboard</a></li>
+            <li><a href="/user-dashboard">User Dashboard</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="javascript:logout();">Logout</a></li>
           </ul>

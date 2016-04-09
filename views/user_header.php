@@ -1,6 +1,6 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/NUSAnswers/php/constants.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/NUSAnswers/php/login_check.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/login_check.php';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
@@ -12,6 +12,5 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/NUSAnswers/php/login_check.php';
 <link href="../css/bootstrap.css" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/metisMenu.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="../css/user.css">
 </head>
