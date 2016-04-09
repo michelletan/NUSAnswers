@@ -56,13 +56,13 @@
                 <div class="row center-block">
                     <div class="post-vote center-block">
                         <div class="center-block text-center">
-                            <a><span class="glyphicon glyphicon-chevron-up"></span><a>
+                            <a onclick="upvoteAnswer(<?php echo $data['answer_id']?>)"><span class="glyphicon glyphicon-chevron-up"></span><a>
                         </div>
-                        <div class="post-vote-count text-center">
+                        <div id="answer-<?php echo $data['answer_id']?>-vote-count" class="post-vote-count text-center">
                             <?php echo $data["answer_vote_count"]?>
                         </div>
                         <div class="center-block text-center">
-                            <a><span class="glyphicon glyphicon-chevron-down"></span></a>
+                            <a onclick="downvoteAnswer(<?php echo $data['answer_id']?>)"><span class="glyphicon glyphicon-chevron-down"></span></a>
                         </div>
 
                     </div>
