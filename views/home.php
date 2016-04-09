@@ -17,6 +17,6 @@
     </div>
     <?php include_once __DIR__ . '/footer.php'; ?>
     <script src="../js/home.js"></script>
-    <script src="../js/home-ajax.js"></script>
+    <script src="../js/vote-ajax.js"></script>
 </body>
 </html>

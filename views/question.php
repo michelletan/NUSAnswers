@@ -89,5 +89,6 @@
     </div>
     <?php include_once __DIR__ . '/footer.php'; ?>
     <script src="../js/question.js"></script>
+    <script src="../js/vote-ajax.js"></script>
 </body>
 </html>
