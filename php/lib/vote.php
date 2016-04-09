@@ -6,7 +6,7 @@ function upvote_answer($answer_id_param) {
 }
 
 function downvote_answer($answer_id_param) {
-    return vote_answer($answer_id_param, 0);
+    return vote_answer($answer_id_param, -1);
 }
 
 function vote_answer($answer_id, $type) {
@@ -18,7 +18,7 @@ function vote_answer($answer_id, $type) {
         $num_votes_changed = $row['votes'];
         if ($type === 1) {
             $num_votes_changed = $num_votes_changed + 1;
-        } else if ($type === 0) {
+        } else if ($type === -1) {
             $num_votes_changed = $num_votes_changed - 1;
         }
         $query = "UPDATE answers SET votes = " . $num_votes_changed . " WHERE answer_id = " . $answer_id;
