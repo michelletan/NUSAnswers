@@ -1,9 +1,9 @@
 <?php
-require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/lib/dbaccess.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
 
-function create_admin_account($admin_id_param, $hashed_password_param, $role_param, $profile_fk_param) {
+function create_admin_account($admin_id_param, $hashed_password_param, $profile_fk_param) {
     global $db;
-    $query = "INSERT INTO admins VALUES('" . $admin_id_param . "', '" . $hashed_password_param . "', " . $role_param . ", " . $profile_fk_param . ");";
+    $query = "INSERT INTO admins VALUES('" . $admin_id_param . "', '" . $hashed_password_param . "', " . $profile_fk_param . ");";
     $db->query($query);
 }
 
