@@ -4,6 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/json.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/vote.php';
 
 // Reference & examples: https://github.com/anandkunal/ToroPHP
 // More examples: http://www.sitepoint.com/apify-legacy-app-toro/
@@ -260,6 +261,26 @@ class AnswerCommentAPIHandler {
     }
 }
 
+class UpvoteAPIHandler {
+    function post() {
+        if (isset($_POST["answer_id"])) {
+            $answer_id = $_POST["answer_id"];
+            $new_num_votes = upvote_answer($answer_id);
+            echo $new_num_votes;
+        }
+    }
+}
+
+class DownvoteAPIHandler {
+    function post() {
+        if (isset($_POST["answer_id"])) {
+            $answer_id = $_POST["answer_id"];
+            $new_num_votes = downvote_answer($answer_id);
+            echo $new_num_votes;
+        }
+    }
+}
+
 $html_urls = array(
     "/" => "PopularQuestionsHandler",
     "/popular-questions/" => "PopularQuestionsHandler",
@@ -279,14 +300,16 @@ $html_urls = array(
     "/user" => "HomeHandler",
     "/user/:number" => "UserProfileHandler",
     "/login" => "LoginHandler",
-    "/admin/login" => "AdminLoginHandler"
+    "/admin/login" => "AdminLoginHandler",
 );
 
 $json_url_prefix = "/api";
 
 $json_base_urls = array(
     "/question/comments/:number" => "QuestionCommentAPIHandler",
-    "/answer/comments/:number" => "AnswerCommentAPIHandler"
+    "/answer/comments/:number" => "AnswerCommentAPIHandler",
+    "/upvote/" => "UpvoteAPIHandler",
+    "/downvote/" => "DownvoteAPIHandler"
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);
