@@ -1,7 +1,7 @@
 <div class="sidebar col-md-3 col-lg-2">
     <div class="affix hidden-xs hidden-sm col-md-3 col-lg-2">
         <ul class="metismenu nav" id="menu">
-            <li><a href="admin_dashboard.php"><span class="glyphicon glyphicon-stats"></span> Charts</a><li>
+            <li><a href="/admin-dashboard"><span class="glyphicon glyphicon-stats"></span> Charts</a><li>
                 <a href="#">
                     Admin
                     <span class="glyphicon arrow"></span>
