@@ -334,6 +334,13 @@ class AdminViewQuestionsHandler {
     }
 }
 
+class AdminEditQuestionHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_edit_question.php';
+    }
+}
+
+
 class AdminViewQuestionCommentsHandler {
     function get() {
         require VIEW_DIRECTORY . '/admin_view_question_comments.php';
@@ -533,6 +540,21 @@ class UserEditAPIHandler {
     }
 }
 
+class QuestionEditAPIHandler {
+    function post() {
+        if (isset($_POST['question-id']) && isset($_POST['title']) && isset($_POST['content'])) {
+            $question_id = trim($_POST['question-id']);
+            $title = trim($_POST['title']);
+            $content = trim($_POST['content']);
+            if ($question_id !== "" && $title !== "") {
+                update_question($question_id, $title, $content);
+            }
+        }
+        $redirect_address = '/admin-edit-question?question-id=' . $question_id;
+        header('Location: ' . $redirect_address);
+    }
+}
+
 class QuestionDeletionAPIHandler {
     function post() {
         if (isset($_POST['question-id'])) {
@@ -670,6 +692,7 @@ $html_urls = array(
     "/admin-view-users" => "AdminViewUsersHandler",
     "/admin-edit-user" => "AdminEditUserHandler",
     "/admin-view-questions" => "AdminViewQuestionsHandler",
+    "/admin-edit-question" => "AdminEditQuestionHandler",
     "/admin-view-question-comments" => "AdminViewQuestionCommentsHandler",
     "/admin-view-answers" => "AdminViewAnswersHandler",
     "/admin-view-answer-comments" => "AdminViewAnswerCommentsHandler",
@@ -690,6 +713,7 @@ $json_base_urls = array(
     "/admin-deletion/" => "AdminDeletionAPIHandler",
     "/user-deletion/" => "UserDeletionAPIHandler",
     "/user-edit/" => "UserEditAPIHandler",
+    "/question-edit/" => "QuestionEditAPIHandler",
     "/question-deletion/" => "QuestionDeletionAPIHandler",
     "/question-comment-deletion/" => "QuestionCommentDeletionAPIHandler",
     "/answer-deletion/" => "AnswerDeletionAPIHandler",
