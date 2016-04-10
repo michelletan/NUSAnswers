@@ -43,27 +43,12 @@ function retrieve_questions_by_latest($limit_param, $page_param) {
 function retrieve_questions_by_user($name_param) {
     global $db;
     $name = $db->escape_string($name_param);
-    $query = "SELECT * FROM profiles WHERE display_name = '". $name ."'";
-    $result = $db->query($query);
-    $return_array = array();
-
-    if ($row = $result->fetch_assoc()) {
-        $profile_id = $row['profile_id'];
     
-        $query = "SELECT * FROM questions WHERE profile_fk = '1'";
-        $questions = $db->query($query);
+    $query = "SELECT * FROM questions q ". "JOIN profiles p ON p.profile_id = q.profile_fk ". "WHERE profile_id = '1'"; //change: WHERE p.display_name = $name
+    $questions = $db->query($query);
 
-        while ($question = $questions->fetch_assoc()) {
-        /*    $query = "SELECT * FROM question_images WHERE question_id = '" . $question['question_id'] . "'";
-            $result = $db->query($query);
-            if($row = $result->fetch_assoc()) {
-                $return_array[] = array($question, 1);
-            } else {
-                $return_array[] = array($question, 0);
-            }*/
-
-            $return_array[] = $question;
-        }
+    while ($question = $questions->fetch_assoc()) {
+        $return_array[] = $question;
     }
         
     return $return_array;
