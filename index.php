@@ -244,8 +244,6 @@ class QuestionHandler {
 
         global $answers;
         $answers = $data["answers"];
-        // 
-        // echo var_dump($answers);
 
         require VIEW_DIRECTORY . '/question.php';
     }
@@ -569,7 +567,7 @@ class TagDeletionAPIHandler {
                 echo $tag_id;
             }
         }
-        
+
     }
 }
 
