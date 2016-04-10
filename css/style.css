@@ -295,6 +295,16 @@ button {
     padding-left: 0px;
 }
 
+#btn-toggle-menu {
+    color: white;
+    background-color: transparent;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
 #answer-text {
     width:100%;
     height: 100px;
@@ -304,6 +314,49 @@ button {
 #nav-search-bar {
     margin-top: 8px;
 }
+
+/*#mobile-menu {
+    margin-top: 50px;
+    background-color: #666666;
+}*/
+
+/* Slideout CSS */
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.slideout-menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+  width: 256px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: none;
+}
+
+.slideout-panel {
+  position: relative;
+  z-index: 1;
+}
+
+.slideout-open,
+.slideout-open body,
+.slideout-open .slideout-panel {
+  overflow: hidden;
+}
+
+.slideout-open .slideout-menu {
+  display: block;
+  margin-top: 50px;
+  background-color: #666666;
+}
+
+/* end Slideout CSS */
 
 .top-buffer-20px {
     margin-top: 20px;
@@ -442,4 +495,3 @@ button {
   border-radius: 0px;
 }*/
 /* end Modal CSS */
-
