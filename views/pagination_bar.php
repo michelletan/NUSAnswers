@@ -1,7 +1,6 @@
 <nav>
     <?php
         // Determine the next page's url
-
         $url = $_SERVER[REQUEST_URI];
         $parts = explode('/', $url);
         $num_parts = count($parts);
