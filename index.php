@@ -2,9 +2,9 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/Toro.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/creation.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/update.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/deletion.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_creation.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_update.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_deletion.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/json.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/vote.php';
@@ -593,10 +593,10 @@ class TagDeletionAPIHandler {
         if (isset($_POST['tag-id'])) {
             foreach ($_POST['tag-id'] as $tag_id) {
                 delete_tag($tag_id);
-                echo $tag_id;
             }
         }
-
+        $redirect_address = '/admin-view-tags';
+        header('Location: ' . $redirect_address);
     }
 }
 
