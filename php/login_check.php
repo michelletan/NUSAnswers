@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/php/Facebook/src/Facebook/autoload.php';
+/*	require_once $_SERVER['DOCUMENT_ROOT'] . '/php/Facebook/src/Facebook/autoload.php';
 
 	$fb = new Facebook\Facebook([
     	'app_id' => '581406865343052',
@@ -10,6 +10,6 @@
 
   	$helper = $fb->getJavascriptHelper();
   	$access_token = $helper->getAccessToken();
-
+*/
 	$is_logged_in = false;
 ?>

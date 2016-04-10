@@ -8,6 +8,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/deletion.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/json.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/vote.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/user_changes.php';
 
 // Reference & examples: https://github.com/anandkunal/ToroPHP
 // More examples: http://www.sitepoint.com/apify-legacy-app-toro/
@@ -380,6 +381,25 @@ class DownvoteAPIHandler {
     }
 }
 
+class UserSaveChangesAPIHandler {
+    function post() {
+        if((isset($_POST["question_id"]) && isset($_POST["question_title"])) && isset($_POST["question_details"])) {
+            $question_id = $_POST["question_id"];
+            $question_title = $_POST["question_title"];
+            $question_details = $_POST["question_details"];
+            $has_saved = save_changes_by_user($question_id, $question_title, $question_details);
+        }
+    }
+}
+
+class UserDeleteQuestionAPIHandler {
+    function post() {
+        if(isset($_POST["question_id"])) {
+            $question_id = $_POST["question_id"];
+            $has_deleted = delete_question($question_id);
+        }
+    }
+}
 // Handlers for Admin API
 
 class AdminCreationAPIHandler {
@@ -596,6 +616,8 @@ $json_base_urls = array(
     "/tag-creation/" => "TagCreationAPIHandler",
     "/tag-edit/" => "TagEditAPIHandler",
     "/tag-deletion/" => "TagDeletionAPIHandler",
+    "/edit/" => "UserSaveChangesAPIHandler",
+    "/delete/" => "UserDeleteQuestionAPIHandler"
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);
