@@ -31,8 +31,8 @@
     <div class="post-footer">
         <div class="row center-block">
             <div class="timestamp col-md-7 col-lg-7">Posted: <?php echo $answer["created_date"]; ?></div>
-            <?php if ($answer["answer_comment_count"] > 0) { ?>
-                <a class="btn-view-comments col-md-3 col-lg-3 text-center">View Comments(<?php echo $answer["answer_comment_count"]; ?>)</a>
+            <?php if ($answer["comment_count"] > 0) { ?>
+                <a class="btn-view-comments col-md-3 col-lg-3 text-center">View Comments (<?php echo $answer["comment_count"]; ?>)</a>
             <?php } else { ?>
                 <a class="btn-view-comments col-md-3 col-lg-3 text-center">Comment</a>
             <?php } ?>
