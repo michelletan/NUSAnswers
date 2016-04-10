@@ -272,7 +272,7 @@ function insert_admin() {
     $query = "INSERT INTO profiles (display_name) VALUES ('Admin');";
     $db->query($query);
 
-    $query = "INSERT INTO admins VALUES ('admin', '$1$3DMv7ZUC$DLcAsnk9SekkdtCfkaSxz.', 1);";
+    $query = "INSERT INTO admins VALUES ('admin@example.com', 'papAq5PwY/QQM', 1);";
     $db->query($query);
 }
 
