@@ -3,5 +3,6 @@
 <script type="text/javascript" src="/js/jquery.jscroll.js"></script>
 <script type="text/javascript" src="/js/slideout.js"></script>
 <script type="text/javascript" src="/js/jquery-comments.js"></script>
+<script type="text/javascript" src="/js/moment.js"></script>
 <script type="text/javascript" src="/js/navbar.js"></script>
 <?php //qinclude_once("analyticstracking.php") ?>

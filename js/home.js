@@ -86,6 +86,9 @@ function populateFoldout(foldout, data) {
         },
         getComments: function(success, error) {
             success(data);
+        },
+        timeFormatter: function(time) {
+            return moment(time).fromNow();
         }
     });
 }
