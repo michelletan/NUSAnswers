@@ -41,7 +41,7 @@
             <!-- end Shown in navbar on desktop -->
         </div>
         <!-- /.row -->
-        <nav id="mobile-menu">
+        <nav id="mobile-menu" class="col-xs-3 col-sm-3 col-md-3 hidden-lg hidden-xl">
             <header>
                 <h2>Menu</h2>
             </header>
