@@ -1,10 +1,6 @@
 $(document).ready(function() {
     $('.post-foldout').hide();
 
-    $('[data-toggle=offcanvas]').click(function() {
-        $('.row-offcanvas').toggleClass('active');
-    });
-
     $('.btn-view-comments').click(function(e) {
         e.preventDefault();
 
@@ -19,6 +15,7 @@ $(document).ready(function() {
 
     });
 
+    // Initialise infinite scrolling
     $('.main').jscroll({
         debug: true,
         loadingHtml: '<img src="/img/balls.gif" alt="Loading" /> Loading...',
@@ -33,19 +30,19 @@ function isFoldoutShown(parent) {
     return parent.hasClass('foldout-shown');
 }
 
+function getComments(questionId) {
+
+}
+
 function showFoldout(post) {
-    console.log("show");
     post.removeClass('foldout-hidden');
     post.addClass('foldout-shown');
 
     var postId = post.attr('id');
 
     var foldout = post.next('.post-foldout');
+    foldout.append($("<h4>Comments</h4>"));
     foldout.show();
-    // Animate
-    foldout.animateCss('slideInDown');
-    foldout.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
-                function() { foldout.removeClass('slideInDown'); });
 
     // Retrieve comments
     $.ajax({
@@ -54,25 +51,18 @@ function showFoldout(post) {
       method: "GET"
     }).done(function(data) {
         // Show comments
-        console.log(data);
-
         populateFoldout(foldout, data);
     });
 }
 
 function hideFoldout(post) {
-    console.log("hide");
     post.removeClass('foldout-shown');
     post.addClass('foldout-hidden');
 
     var postId = post.attr('id');
 
     var foldout = post.next('.post-foldout');
-    // foldout.hide();
-    // Animate
-    foldout.animateCss('slideOutUp');
-    foldout.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
-                function() { foldout.removeClass('slideOutUp'); foldout.hide(); });
+    foldout.hide();
 }
 
 function clearFoldout(foldout) {
@@ -80,20 +70,41 @@ function clearFoldout(foldout) {
 }
 
 function populateFoldout(foldout, data) {
-    clearFoldout(foldout);
-
-    foldout.append($("<h4>Comments</h4>"));
-
-    for (var i = 0; i < data.length; i++) {
-        var commentElement = createComment(data[i]);
-        foldout.append(commentElement);
-    }
-
-    var currentUser = {id: 1, name: "Admin"};
-
-    var commentBox = createCommentBox(currentUser);
-    foldout.append(commentBox);
+    // Initialise comments container
+    foldout.comments({
+        enableEditing: false,
+        enableUpvoting: false,
+        enableDeleting: false,
+        enableAttachments: false,
+        profilePictureURL: '/img/profile02.png',
+        fieldMappings: {
+            id: 'comment_id',
+            created: 'created_timestamp',
+            content: 'content',
+            parent: 'parent',
+            fullname: 'display_name'
+        },
+        getComments: function(success, error) {
+            success(data);
+        }
+    });
 }
+
+// function populateFoldout(foldout, data) {
+//     // clearFoldout(foldout);
+//
+//     foldout.append($("<h4>Comments</h4>"));
+//
+//     for (var i = 0; i < data.length; i++) {
+//         var commentElement = createComment(data[i]);
+//         foldout.append(commentElement);
+//     }
+//
+//     var currentUser = {id: 1, name: "Admin"};
+//
+//     var commentBox = createCommentBox(currentUser);
+//     foldout.append(commentBox);
+// }
 
 function createComment(data) {
     var comment = $("<div class='comment row'></div>");
