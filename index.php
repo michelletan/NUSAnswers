@@ -1,6 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/Toro.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/login_check.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_creation.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_update.php';
@@ -381,6 +382,8 @@ class AdminLoginAPIHandler {
     if (isset($_POST['admin-id']) && isset($_POST['password'])) {
       $admin_info = admin_login($_POST['admin-id'], $_POST['password']);
       if ($admin_info) {
+        set_active_profile($admin_info['profile-id']);
+        set_active_role(USER_ROLE_ADMIN);
         $redirect_address = '/admin-dashboard';
       }
     }
