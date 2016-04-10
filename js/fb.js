@@ -13,17 +13,20 @@ function login() {
 
 function logout() {
   FB.logout(function(response) {
+    window.location.reload();
     $("#non-login-view").show();
     $(".login-view").hide();
   }, {scope: 'email'});
 }
 
-/*function share() {
+function share(url) {
   FB.ui({
     method: 'share',
-    href: '[URL]',
-  }, function(response) {});
-} */
+    href: 'http://localhost:8000' + url
+  }, function(response) {
+    document.getElementById("share").innerHTML = "Shared!";
+  });
+}
 
 window.fbAsyncInit = function() {
 	FB.init({
@@ -64,6 +67,6 @@ window.fbAsyncInit = function() {
 	var js, fjs = d.getElementsByTagName(s)[0];
 	if (d.getElementById(id)) return;
 	js = d.createElement(s); js.id = id;
-	js.src = "//connect.facebook.net/en_US/sdk.js";
+	js.src = "//connect.facebook.net/en_US/all.js";
 	fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));

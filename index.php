@@ -164,8 +164,34 @@ class NewAnswersPageHandler {
 
 class TagHandler {
     function get($tag) {
+        $data = retrieve_questions_with_tag($tag, INITIAL_NUM_QUESTIONS, 1);
+
         global $questions;
-        $questions = retrieve_questions_with_tag($tag, INITIAL_NUM_QUESTIONS);
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = 1;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class TagPageHandler {
+    function get($tag, $page_no) {
+        $data = retrieve_questions_with_tag($tag, INITIAL_NUM_QUESTIONS, $page_no);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = $page_no;
+
         require VIEW_DIRECTORY . '/home.php';
     }
 }
@@ -178,7 +204,7 @@ class AskHandler {
 
 class AnswerHandler {
     function get() {
-        $data = retrieve_questions_for_answer_page(INITIAL_NUM_QUESTIONS, 1);
+        $data = retrieve_questions_without_answers(INITIAL_NUM_QUESTIONS, 1);
 
         global $questions;
         $questions = $data["questions"];
@@ -194,7 +220,7 @@ class AnswerHandler {
 
 class AnswerPageHandler {
     function get($page_no) {
-        $data = retrieve_questions_for_answer_page(INITIAL_NUM_QUESTIONS, $page_no);
+        $data = retrieve_questions_without_answers(INITIAL_NUM_QUESTIONS, $page_no);
 
         global $questions;
         $questions = $data["questions"];
@@ -211,8 +237,13 @@ class AnswerPageHandler {
 
 class QuestionHandler {
     function get($url) {
-        global $data;
-        $data = retrieve_question_with_answer($url);
+        $data = retrieve_question_with_answers($url);
+
+        global $question;
+        $question = $data["question"];
+
+        global $answers;
+        $answers = $data["answers"];
 
         require VIEW_DIRECTORY . '/question.php';
     }
@@ -565,30 +596,49 @@ class TagDeletionAPIHandler {
                 echo $tag_id;
             }
         }
-        
+
     }
 }
 
 $html_urls = array(
     "/" => "PopularQuestionsHandler",
+
+    "/popular-questions" => "PopularQuestionsHandler",
     "/popular-questions/" => "PopularQuestionsHandler",
     "/popular-questions/:number" => "PopularQuestionsPageHandler",
+
+    "/new-questions" => "NewQuestionsHandler",
     "/new-questions/" => "NewQuestionsHandler",
     "/new-questions/:number" => "NewQuestionsPageHandler",
+
+    "/popular-answers" => "PopularAnswersHandler",
     "/popular-answers/" => "PopularAnswersHandler",
     "/popular-answers/:number" => "PopularAnswersPageHandler",
+
+    "/new-answers" => "NewAnswersHandler",
     "/new-answers/" => "NewAnswersHandler",
     "/new-answers/:number" => "NewAnswersPageHandler",
+
     "/ask" => "AskHandler",
+    "/ask/" => "AskHandler",
+
+    "/answer" => "AnswerHandler",
     "/answer/" => "AnswerHandler",
     "/answer/:number" => "AnswerPageHandler",
+
     "/question" => "HomeHandler",
+    "/question/" => "HomeHandler",
     "/question/:alpha" => "QuestionHandler",
+
     "/tagged/:alpha" => "TagHandler",
+    "/tagged/:alpha/:number" => "TagPageHandler",
+
     "/user" => "HomeHandler",
     "/user/:number" => "UserProfileHandler",
+
     "/login" => "LoginHandler",
     "/admin/login" => "AdminLoginHandler",
+
     "/user-dashboard" => "UserDashboardHandler",
     "/user-questions" => "UserDashboardQuestionsHandler",
     "/user-answers" => "UserDashboardAnswersHandler",

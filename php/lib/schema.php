@@ -31,7 +31,7 @@ function create_profile_table () {
 function create_user_table () {
   global $db;
   $query = "CREATE TABLE users (" .
-           "user_id VARCHAR(32) PRIMARY KEY," .
+           "user_id VARCHAR(128) PRIMARY KEY," .
            "role INTEGER NOT NULL," .
            "profile_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
@@ -42,7 +42,7 @@ function create_user_table () {
 function create_admin_table () {
   global $db;
   $query = "CREATE TABLE admins (" .
-           "admin_id VARCHAR(32) PRIMARY KEY," .
+           "admin_id VARCHAR(128) PRIMARY KEY," .
            "hashed_password VARCHAR(256) NOT NULL," .
            "profile_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
@@ -178,7 +178,7 @@ function create_has_tag_table () {
            "question_fk INTEGER NOT NULL," .
            "tag_fk INTEGER NOT NULL," .
            "FOREIGN KEY(question_fk) REFERENCES questions(question_id) ON DELETE CASCADE," .
-           "FOREIGN KEY(tag_fk) REFERENCES tags(tag_id)," .
+           "FOREIGN KEY(tag_fk) REFERENCES tags(tag_id) ON DELETE CASCADE," .
            "PRIMARY KEY(question_fk, tag_fk)" .
            ")";
   $db->query($query);

@@ -1,5 +1,5 @@
 <?php
-require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/lib/dbaccess.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
 
 // Remember to cascade admin account deletion to the profile of the admin account when using this method
 function delete_admin_account($admin_id_param) {

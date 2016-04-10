@@ -1,6 +1,6 @@
 <?php
-require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/constants.php';
-require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/login_check.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/login_check.php';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
