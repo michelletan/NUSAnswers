@@ -51,7 +51,7 @@ function showFoldout(post) {
       method: "GET"
     }).done(function(data) {
         // Show comments
-        populateFoldout(foldout, data);
+        populateFoldout(foldout, data, postId);
     });
 }
 
@@ -69,7 +69,7 @@ function clearFoldout(foldout) {
     foldout.html("");
 }
 
-function populateFoldout(foldout, data) {
+function populateFoldout(foldout, data, postId) {
     // Initialise comments container
     foldout.comments({
         enableEditing: false,
@@ -82,10 +82,27 @@ function populateFoldout(foldout, data) {
             created: 'created_timestamp',
             content: 'content',
             parent: 'parent',
-            fullname: 'display_name'
+            fullname: 'display_name',
+            profilePictureURL: 'image_url'
         },
         getComments: function(success, error) {
             success(data);
+        },
+        postComment: function(commentJSON, success, error) {
+            $.ajax({
+                type: 'post',
+                url: '/api/question/comments/post',
+                data: {
+                    question_id: postId,
+                    content: commentJSON.content,
+                    parent: commentJSON.parent
+                },
+                success: function(comment) {
+                    console.log(comment);
+                    success(comment);
+                },
+                error: error
+            });
         },
         timeFormatter: function(time) {
             return moment(time).fromNow();
