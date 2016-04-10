@@ -673,6 +673,7 @@ function retrieve_user($id_param) {
   if ($row = $result->fetch_assoc()) {
     $return_array['user_found'] = true;
     $return_array['user_id'] = $row['user_id'];
+    $return_array['role'] = $row['role'];
     $return_array['profile_fk'] = $row['profile_fk'];
   }
   else {

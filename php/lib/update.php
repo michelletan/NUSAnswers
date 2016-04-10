@@ -28,5 +28,21 @@ function update_tag($id_param, $new_tag_name_param) {
   $db->query($query);
 }
 
+function update_user($id_param, $role_param) {
+  global $db;
+  $id = $db->escape_string($id_param);
+  $role = $db->escape_string($role_param);
+  $query = "UPDATE users SET role = '" . $role . "' WHERE user_id = '". $id ."';";
+  $db->query($query);
+}
+
+function update_profile($id_param, $display_name_param) {
+  global $db;
+  $id = $db->escape_string($id_param);
+  $display_name = $db->escape_string($display_name_param);
+  $query = "UPDATE profiles SET display_name = '" . $display_name . "' WHERE profile_id = '". $id ."';";
+  $db->query($query);
+}
+
 
 ?>

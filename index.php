@@ -290,6 +290,12 @@ class AdminViewUsersHandler {
     }
 }
 
+class AdminEditUserHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_edit_user.php';
+    }
+}
+
 class AdminViewQuestionsHandler {
     function get() {
         require VIEW_DIRECTORY . '/admin_view_questions.php';
@@ -453,6 +459,26 @@ class UserDeletionAPIHandler {
     }
 }
 
+class UserEditAPIHandler {
+    function post() {
+        if (isset($_POST['user-id']) && isset($_POST['display-name'])) {
+            $user_id = trim($_POST['user-id']);
+            $display_name = trim($_POST['display-name']);
+            if ($user_id !== "" && $display_name !== "") {
+                if (isset($_POST['role'])) {
+                    update_user($user_id, 1);
+                } else {
+                    update_user($user_id, 0);
+                }
+                $user = retrieve_user($user_id);
+                update_profile($user['profile_fk'], $display_name);
+            }
+        }
+        $redirect_address = '/admin-edit-user?user-id=' . $user_id;
+        header('Location: ' . $redirect_address);
+    }
+}
+
 class QuestionDeletionAPIHandler {
     function post() {
         if (isset($_POST['question-id'])) {
@@ -569,6 +595,7 @@ $html_urls = array(
     "/admin-view-admin-accounts" => "AdminViewAdminAccountsHandler",
     "/admin-edit-admin-account" => "AdminEditAdminAccountsHandler",
     "/admin-view-users" => "AdminViewUsersHandler",
+    "/admin-edit-user" => "AdminEditUserHandler",
     "/admin-view-questions" => "AdminViewQuestionsHandler",
     "/admin-view-question-comments" => "AdminViewQuestionCommentsHandler",
     "/admin-view-answers" => "AdminViewAnswersHandler",
@@ -589,6 +616,7 @@ $json_base_urls = array(
     "/admin-edit/" => "AdminEditAPIHandler",
     "/admin-deletion/" => "AdminDeletionAPIHandler",
     "/user-deletion/" => "UserDeletionAPIHandler",
+    "/user-edit/" => "UserEditAPIHandler",
     "/question-deletion/" => "QuestionDeletionAPIHandler",
     "/question-comment-deletion/" => "QuestionCommentDeletionAPIHandler",
     "/answer-deletion/" => "AnswerDeletionAPIHandler",
