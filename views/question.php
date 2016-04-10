@@ -1,12 +1,13 @@
 <?php include_once __DIR__ . '/header.php'; ?>
 <body>
     <?php include_once __DIR__ . '/navbar.php'; ?>
+    <main id="panel">
     <div class="container-fluid center-block">
         <div class="row">
             <?php include_once __DIR__ . '/sidebar.php'; ?>
             <div class="main col-md-6 col-lg-6">
                 <h3 class="page-title"><?php if ($question) { echo $question["title"]; } else { echo "Default question title"; }?></h3>
-                <div class="card">
+                <div id="<?php if ($question) { echo $question["question_id"]; } ?>" class="card">
                     <div class="post-content card-line">
                         <div class="post-details row center-block">
                             <div class="col-md-10 col-lg-10">
@@ -37,14 +38,17 @@
                     <div class="post-footer">
                         <div class="row center-block">
                             <div class="timestamp col-md-7 col-lg-7">Posted: <?php echo $question["created_date"]; ?></div>
-                            <?php if ($data["question_comment_count"] > 0) { ?>
-                                <a class="col-md-3 col-lg-3 text-center">View Comments(<?php echo $question["question_comment_count"]; ?>)</a>
+                            <?php if ($question["comment_count"] > 0) { ?>
+                                <a class="btn-view-comments col-md-3 col-lg-3 text-center">View Comments (<?php echo $question["comment_count"]; ?>)</a>
                             <?php } else { ?>
-                                <a class="col-md-3 col-lg-3 text-center">Comment</a>
+                                <a class="btn-view-comments col-md-3 col-lg-3 text-center">Comment</a>
                             <?php } ?>
                             <a class="col-md-2 col-lg-2 text-center" onclick="share('/question/<?php echo $data["question_friendly_url"]?>')" id="share"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
                         </div>
                     </div>
+                </div>
+                <div class="post-foldout">
+
                 </div>
                 <h4 class="heading">Your Answer</h4>
                 <div class="card">
@@ -86,8 +90,9 @@
             </div>
         </div>
     </div>
+    </main>
     <?php include_once __DIR__ . '/footer.php'; ?>
-    <script src="../js/question.js"></script>
-    <script src="../js/vote-ajax.js"></script>
+    <script src="/js/question.js"></script>
+    <script src="/js/vote-ajax.js"></script>
 </body>
 </html>

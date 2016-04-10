@@ -93,12 +93,12 @@
         <div class="row center-block">
             <div class="timestamp col-md-4 col-lg-4">Posted: <?php echo $question["created_date"]; ?></div>
             <?php if ($question["answer_count"] > 0) { ?>
-                <a href="/question/<?php echo $question["friendly_url"]?>" class="btn-view-answers col-md-3 col-lg-3 text-center">View Answers(<?php echo $question["answer_count"]; ?>)</a>
+                <a href="/question/<?php echo $question["friendly_url"]?>" class="btn-view-answers col-md-3 col-lg-3 text-center">View Answers (<?php echo $question["answer_count"]; ?>)</a>
             <?php } else { ?>
                 <div class="col-md-3 col-lg-3"></div>
             <?php } ?>
             <?php if ($question["comment_count"] > 0) { ?>
-                <a class="btn-view-comments col-md-3 col-lg-3 text-center">View Comments(<?php echo $question["comment_count"]; ?>)</a>
+                <a class="btn-view-comments col-md-3 col-lg-3 text-center">View Comments (<?php echo $question["comment_count"]; ?>)</a>
             <?php } else { ?>
                 <a class="btn-view-comments col-md-3 col-lg-3 text-center">Comment</a>
             <?php } ?>

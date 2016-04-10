@@ -1,5 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission_comments.php';
 
 /*
 function json_submission_interface() {
