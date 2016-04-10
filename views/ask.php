@@ -2,12 +2,12 @@
 <body>
     <!-- Include CAPTCHA script -->
     <script src='https://www.google.com/recaptcha/api.js'></script>
-
     <?php include_once __DIR__ . '/navbar.php'; ?>
-    <main id="panel">
+
     <div class="container-fluid center-block">
         <div class="row">
             <?php include_once __DIR__ . '/sidebar.php'; ?>
+            <main id="panel">
             <div class="main col-md-6 col-lg-6">
                 <h3 class="page-title">Post Your Question</h3>
                 <div class="card">
@@ -51,9 +51,10 @@
                     </div>
                 </div>
             </div>
+            </main>
         </div>
     </div>
-    </main>
+
     <?php include_once __DIR__ . '/footer.php'; ?>
     <script type="text/javascript">
       document.getElementById("btn-submit-question").disabled = true;
