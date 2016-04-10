@@ -348,10 +348,15 @@ class AdminEditQuestionHandler {
     }
 }
 
-
 class AdminViewQuestionCommentsHandler {
     function get() {
         require VIEW_DIRECTORY . '/admin_view_question_comments.php';
+    }
+}
+
+class AdminEditQuestionCommentHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_edit_question_comment.php';
     }
 }
 
@@ -361,9 +366,21 @@ class AdminViewAnswersHandler {
     }
 }
 
+class AdminEditAnswerHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_edit_answer.php';
+    }
+}
+
 class AdminViewAnswerCommentsHandler {
     function get() {
         require VIEW_DIRECTORY . '/admin_view_answer_comments.php';
+    }
+}
+
+class AdminEditAnswerCommentHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_edit_answer_comment.php';
     }
 }
 
@@ -620,6 +637,20 @@ class QuestionDeletionAPIHandler {
     }
 }
 
+class QuestionCommentEditAPIHandler {
+    function post() {
+        if (isset($_POST['comment-id']) && isset($_POST['content'])) {
+            $comment_id = trim($_POST['comment-id']);
+            $content = trim($_POST['content']);
+            if ($comment_id !== "" && $content !== "") {
+                update_question_comment($comment_id, $content);
+            }
+        }
+        $redirect_address = '/admin-edit-question-comment?comment-id=' . $comment_id;
+        header('Location: ' . $redirect_address);
+    }
+}
+
 class QuestionCommentDeletionAPIHandler {
     function post() {
         if (isset($_POST['question-comment-id'])) {
@@ -632,6 +663,24 @@ class QuestionCommentDeletionAPIHandler {
     }
 }
 
+class AnswerEditAPIHandler {
+    function post() {
+        if (isset($_POST['answer-id']) && isset($_POST['content'])) {
+            $answer_id = trim($_POST['answer-id']);
+            $content = trim($_POST['content']);
+            if ($answer_id !== "" && $content !== "") {
+                if (isset($_POST['visible'])) {
+                    update_answer($answer_id, $content, 1);
+                } else {
+                    update_answer($answer_id, $content, 0);
+                }
+            }
+        }
+        $redirect_address = '/admin-edit-answer?answer-id=' . $answer_id;
+        header('Location: ' . $redirect_address);
+    }
+}
+
 class AnswerDeletionAPIHandler {
     function post() {
         if (isset($_POST['answer-id'])) {
@@ -640,6 +689,20 @@ class AnswerDeletionAPIHandler {
             }
         }
         $redirect_address = '/admin-view-answers';
+        header('Location: ' . $redirect_address);
+    }
+}
+
+class AnswerCommentEditAPIHandler {
+    function post() {
+        if (isset($_POST['comment-id']) && isset($_POST['content'])) {
+            $comment_id = trim($_POST['comment-id']);
+            $content = trim($_POST['content']);
+            if ($comment_id !== "" && $content !== "") {
+                update_answer_comment($comment_id, $content);
+            }
+        }
+        $redirect_address = '/admin-edit-answer-comment?comment-id=' . $comment_id;
         header('Location: ' . $redirect_address);
     }
 }
@@ -752,9 +815,12 @@ $html_urls = array(
     "/admin-view-questions" => "AdminViewQuestionsHandler",
     "/admin-edit-question" => "AdminEditQuestionHandler",
     "/admin-view-question-comments" => "AdminViewQuestionCommentsHandler",
+    "/admin-edit-question-comment" => "AdminEditQuestionCommentHandler",
 
     "/admin-view-answers" => "AdminViewAnswersHandler",
+    "/admin-edit-answer" => "AdminEditAnswerHandler",
     "/admin-view-answer-comments" => "AdminViewAnswerCommentsHandler",
+    "/admin-edit-answer-comment" => "AdminEditAnswerCommentHandler",
 
     "/admin-create-tag" => "AdminCreateTagHandler",
     "/admin-view-tags" => "AdminViewTagsHandler",
@@ -783,9 +849,12 @@ $json_base_urls = array(
 
     "/question-edit/" => "QuestionEditAPIHandler",
     "/question-deletion/" => "QuestionDeletionAPIHandler",
+    "/question-comment-edit/" => "QuestionCommentEditAPIHandler",
     "/question-comment-deletion/" => "QuestionCommentDeletionAPIHandler",
-
+    
+    "/answer-edit/" => "AnswerEditAPIHandler",
     "/answer-deletion/" => "AnswerDeletionAPIHandler",
+    "/answer-comment-edit/" => "AnswerCommentEditAPIHandler",
     "/answer-comment-deletion/" => "AnswerCommentDeletionAPIHandler",
 
     "/tag-creation/" => "TagCreationAPIHandler",

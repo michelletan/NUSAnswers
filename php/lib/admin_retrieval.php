@@ -20,6 +20,23 @@ function retrieve_question($id_param) {
   return $return_array;
 }
 
+function retrieve_question_comment($id_param) {
+  global $db;
+  $id = $db->escape_string($id_param);
+  $query = "SELECT * FROM question_comments WHERE comment_id = " . $id;
+  $result = $db->query($query);
+  $return_array = array();
+  if ($row = $result->fetch_assoc()) {
+    $return_array['question_comment_found'] = true;
+    $return_array['comment_id'] = $row['comment_id'];
+    $return_array['content'] = $row['content'];
+  }
+  else {
+    $return_array['question_comment_found'] = false;
+  }
+  return $return_array;
+}
+
 function retrieve_all_questions() {
   global $db;
   $query = "SELECT * FROM questions;";
@@ -45,13 +62,14 @@ function retrieve_all_question_comments() {
 function retrieve_answer($id_param) {
   global $db;
   $id = $db->escape_string($id_param);
-  $query = "SELECT content, created_timestamp, votes, comments, profile_fk " .
-           "FROM answers WHERE answer_id = $id";
+  $query = "SELECT * FROM answers WHERE answer_id = $id";
   $result = $db->query($query);
   $return_array = array();
   if ($row = $result->fetch_assoc()) {
     $return_array['answer_found'] = true;
+    $return_array['answer_id'] = $row['answer_id'];
     $return_array['content'] = $row['content'];
+    $return_array['visible'] = $row['visible'];
     $return_array['created'] = $row['created_timestamp'];
     $return_array['vote_count'] = $row['votes'];
     $return_array['comment_count'] = $row['comments'];
@@ -59,6 +77,23 @@ function retrieve_answer($id_param) {
   }
   else {
     $return_array['answer_found'] = false;
+  }
+  return $return_array;
+}
+
+function retrieve_answer_comment($id_param) {
+  global $db;
+  $id = $db->escape_string($id_param);
+  $query = "SELECT * FROM answer_comments WHERE comment_id = " . $id;
+  $result = $db->query($query);
+  $return_array = array();
+  if ($row = $result->fetch_assoc()) {
+    $return_array['answer_comment_found'] = true;
+    $return_array['comment_id'] = $row['comment_id'];
+    $return_array['content'] = $row['content'];
+  }
+  else {
+    $return_array['answer_comment_found'] = false;
   }
   return $return_array;
 }
