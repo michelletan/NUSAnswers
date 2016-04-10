@@ -2,6 +2,24 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/time_helper.php';
 
+function retrieve_question($id_param) {
+  global $db;
+  $id = $db->escape_string($id_param);
+  $query = "SELECT * FROM questions WHERE question_id = " . $id;
+  $result = $db->query($query);
+  $return_array = array();
+  if ($row = $result->fetch_assoc()) {
+    $return_array['question_found'] = true;
+    $return_array['question_id'] = $row['question_id'];
+    $return_array['title'] = $row['title'];
+    $return_array['content'] = $row['content'];
+  }
+  else {
+    $return_array['question_found'] = false;
+  }
+  return $return_array;
+}
+
 function retrieve_all_questions() {
   global $db;
   $query = "SELECT * FROM questions;";
