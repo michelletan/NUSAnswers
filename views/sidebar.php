@@ -1,6 +1,6 @@
 <div class="col-md-3 col-lg-3">
 </div>
-<div class="sidebar affix col-md-3 col-lg-3">
+<div class="sidebar affix hidden-xs hidden-sm col-md-3 col-lg-3 col-xl-3">
     <div class="row">
         <div class="col-md-2 col-lg-2">
         </div>
