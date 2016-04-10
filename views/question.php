@@ -1,6 +1,7 @@
 <?php include_once __DIR__ . '/header.php'; ?>
 <body>
     <?php include_once __DIR__ . '/navbar.php'; ?>
+    <main id="panel">
     <div class="container-fluid center-block">
         <div class="row">
             <?php include_once __DIR__ . '/sidebar.php'; ?>
@@ -89,6 +90,7 @@
             </div>
         </div>
     </div>
+    </main>
     <?php include_once __DIR__ . '/footer.php'; ?>
     <script src="/js/question.js"></script>
     <script src="/js/vote-ajax.js"></script>

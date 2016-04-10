@@ -11,7 +11,7 @@
                         <span class="glyphicon glyphicon-menu-hamburger"></span>
                         </button>
                     </div>
-                        <img class="navbar-logo pull-left" src="/img/logo.png"/><a class="navbar-brand logo" href="<?php echo APP_HOME_URL; ?>"><span>NUS</span>Answers</a>
+                    <a class="logo pull-right" href="<?php echo APP_HOME_URL; ?>"><img class="navbar-logo" src="/img/logo.png"/><span>NUS</span>Answers</a>
                 </div>
             </div>
             <!-- Shown in navbar on desktop -->
@@ -41,10 +41,44 @@
             <!-- end Shown in navbar on desktop -->
         </div>
         <!-- /.row -->
-        <nav id="mobile-menu" class="col-xs-3 col-sm-3 col-md-3 hidden-lg hidden-xl">
-            <header>
-                <h2>Menu</h2>
-            </header>
+        <nav id="mobile-menu" class="col-xs-3 col-sm-3 col-md-3">
+            <div class="col-md-10 col-lg-10">
+                <div class="card">
+                    <div class="sidebar-body">
+                        <form class= "navbar-left col-xs-12 col-sm-12 col-md-4 col-lg-4" role="search">
+                            <input type="text" id="nav-search-bar" class="form-control" placeholder="Search">
+                        </form>
+                        <a href="/ask/"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Ask</a><br>
+                        <a href="/answer/"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Answer</a><br>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="sidebar-title">Questions</div>
+                    <div class="sidebar-body">
+                        <a href="/popular-questions/">Popular</a><br>
+                        <a href="/new-questions/">New</a><br>
+                        <a class="login-view" style="display:none">My Questions</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="sidebar-title">Answers</div>
+                    <div class="sidebar-body">
+                        <a href="/popular-answers/">Popular</a><br>
+                        <a href="/new-answers/">New</a><br>
+                        <a class="login-view" style="display:none">My Answers</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="sidebar-title">Tags</div>
+                    <div class="sidebar-body">
+                        <?php
+                        $tags = retrieve_tag_names(SIDEBAR_TAG_NUMBER);
+                        foreach ($tags as $tag) { ?>
+                            <a href="/tagged/<?php echo $tag["tag_name"]; ?>/">#<?php echo $tag["tag_name"]; ?></a>
+                        <?php }?>
+                    </div>
+                </div>
+            </div>
         </nav>
     </div>
 </nav>

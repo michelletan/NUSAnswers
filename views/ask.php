@@ -4,6 +4,7 @@
     <script src='https://www.google.com/recaptcha/api.js'></script>
 
     <?php include_once __DIR__ . '/navbar.php'; ?>
+    <main id="panel">
     <div class="container-fluid center-block">
         <div class="row">
             <?php include_once __DIR__ . '/sidebar.php'; ?>
@@ -52,6 +53,7 @@
             </div>
         </div>
     </div>
+    </main>
     <?php include_once __DIR__ . '/footer.php'; ?>
     <script type="text/javascript">
       document.getElementById("btn-submit-question").disabled = true;

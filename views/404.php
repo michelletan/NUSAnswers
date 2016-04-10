@@ -2,6 +2,7 @@
 <body>
     <script src="../js/fb.js"></script>
     <?php include_once __DIR__ . '/navbar.php'; ?>
+    <main id="panel">
     <div class="container-fluid center-block">
         <div class="row center-block text-center">
             <div class="col-sm-12 col-md-12 col-lg-12">
@@ -16,6 +17,7 @@
         </div>
 
     </div>
+    </main>
     <?php include_once __DIR__ . '/footer.php'; ?>
 </body>
 </html>
