@@ -1,5 +1,5 @@
 <?php 
-require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/lib/retrieval.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
 include_once __DIR__ . '/admin_header.php'; 
 ?>
 <body>

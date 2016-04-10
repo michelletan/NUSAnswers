@@ -41,7 +41,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                            <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
                                         </div>
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
@@ -57,7 +57,7 @@
                                             Do you want to delete this question?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-default">Yes</button>
+                                            <button type="button" class="btn btn-default" id="delete">Yes</button>
                                             <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
                                         </div>
                                     </div><!-- /.modal-content -->
@@ -66,131 +66,33 @@
                             <div class="table-container">
                                 <table class="table table-filter" id="questionsAndAnswers">
                                     <tbody>
+                                        <?php 
+                                            $questions = retrieve_questions_by_user('Curien'); // to be replaced by display name
+                                            foreach($questions as $question) {
+                                        ?>
                                         <tr data-status="all-questions">
-                                            <td>
-                                                <div class="ckbox">
-                                                    <input type="checkbox" id="checkbox1">
-                                                    <label for="checkbox1"></label>
-                                                </div>
-                                            </td>
                                             <td>
                                                 <div class="media">
                                                     <div class="media-body">
-                                                        <span class="media-meta pull-right">Febrero 13, 2016</span>
+                                                        <span class="media-meta pull-right"><?php echo $question['created_timestamp']; ?></span>
                                                         <h4 class="title">
-                                                            <a href="user_question_list_item.php">
-                                                                Lorem Impsum
+                                                            <a href="/question/<?php echo $question["friendly_url"]?>" id="title">
+                                                                <?php echo $question['title']; ?>
                                                             </a>
                                                             <span class="pull-right questions">(Without Images)</span>
                                                         </h4>
-                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...
-                                                            <span class="glyphicon glyphicon-trash pull-right"></span>
-                                                            <span class="glyphicon glyphicon-pencil pull-right"></span>
+                                                        <p class="summary" id="content">
+                                                            <?php 
+                                                                echo $question['content'];
+                                                            ?>
                                                         </p>
+                                                        <span class="glyphicon glyphicon-trash pull-right" id="<?php echo $question['question_id']; ?>" onclick="deleteQuestion(this.id)"></span>
+                                                        <span class="glyphicon glyphicon-pencil pull-right" id="<?php echo $question['question_id']; ?>" onclick="editQuestion(this.id, '<?php echo $question['title']; ?>', '<?php echo $question['content']; ?>')"></span>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr data-status="all-images">
-                                            <td>
-                                                <div class="ckbox">
-                                                    <input type="checkbox" id="checkbox2">
-                                                    <label for="checkbox2"></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="media">
-                                                    <div class="media-body">
-                                                        <span class="media-meta pull-right">Febrero 13, 2016</span>
-                                                        <h4 class="title">
-                                                            <a href="user_question_list_item.php">
-                                                                Lorem Impsum
-                                                            </a>
-                                                            <span class="pull-right images">(With Images)</span>
-                                                        </h4>
-                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...
-                                                            <span class="glyphicon glyphicon-trash pull-right"></span>
-                                                            <span class="glyphicon glyphicon-pencil pull-right"></span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr data-status="all-images">
-                                            <td>
-                                                <div class="ckbox">
-                                                    <input type="checkbox" id="checkbox3">
-                                                    <label for="checkbox3"></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="media">
-                                                    <div class="media-body">
-                                                        <span class="media-meta pull-right">Febrero 13, 2016</span>
-                                                        <h4 class="title">
-                                                            <a href="user_question_list_item.php">
-                                                                Lorem Impsum
-                                                            </a>
-                                                            <span class="pull-right images">(With Images)</span>
-                                                        </h4>
-                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...
-                                                            <span class="glyphicon glyphicon-trash pull-right"></span>
-                                                            <span class="glyphicon glyphicon-pencil pull-right"></span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr data-status="all-questions">
-                                            <td>
-                                                <div class="ckbox">
-                                                    <input type="checkbox" id="checkbox4">
-                                                    <label for="checkbox4"></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="media">
-                                                    <div class="media-body">
-                                                        <span class="media-meta pull-right">Febrero 13, 2016</span>
-                                                        <h4 class="title">
-                                                            <a href="user_question_list_item.php">
-                                                                Lorem Impsum
-                                                            </a>
-                                                            <span class="pull-right questions">(Without Images)</span>
-                                                        </h4>
-                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...
-                                                            <span class="glyphicon glyphicon-trash pull-right"></span>
-                                                            <span class="glyphicon glyphicon-pencil pull-right"></span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr data-status="all-images">
-                                            <td>
-                                                <div class="ckbox">
-                                                    <input type="checkbox" id="checkbox5">
-                                                    <label for="checkbox5"></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="media">
-                                                    <div class="media-body">
-                                                        <span class="media-meta pull-right">Febrero 13, 2016</span>
-                                                        <h4 class="title">
-                                                            <a href="user_question_list_item.php">
-                                                                Lorem Impsum
-                                                            </a>
-                                                            <span class="pull-right images">(With Images)</span>
-                                                        </h4>
-                                                        <p class="summary">Ut enim ad minim veniam, quis nostrud exercitation...
-                                                            <span class="glyphicon glyphicon-trash pull-right"></span>
-                                                            <span class="glyphicon glyphicon-pencil pull-right"></span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>

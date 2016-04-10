@@ -1,13 +1,13 @@
 <?php 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
+require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/lib/retrieval.php';
 include_once __DIR__ . '/admin_header.php'; 
 
-if (isset($_GET['admin-id'])) {
-    $admin_id = $_GET['admin-id'];
-    $admin_account = retrieve_admin_account($admin_id);
-    $admin_profile = retrieve_profile($admin_account['profile_fk']);
+if (isset($_GET['user-id'])) {
+    $user_id = $_GET['user-id'];
+    $user = retrieve_user($user_id);
+    $user_profile = retrieve_profile($user['profile_fk']);
 } else {
-    $redirect_address = '/admin_view_admin_accounts';
+    $redirect_address = '/admin_view_users';
     header('Location: ' . $redirect_address);
 }
 ?>
@@ -20,38 +20,35 @@ if (isset($_GET['admin-id'])) {
             <div class="main col-md-9 col-lg-10">
                 <div class="top-buffer-20px panel panel-default">
                     <ul class="list-group">
-                        <form method="post" action="/api/admin-edit/">
-                            <input hidden name="admin-id" value="<?php echo $admin_account['admin_id']?>">
+                        <form method="post" action="/api/user-edit/">
+                            <input hidden name="user-id" value="<?php echo $user['user_id']?>">
                             <li class="list-group-item">
-                                <h4>Edit Admin Account</h4>
+                                <h4>Edit User Details</h4>
                             </li>
                             <li class="list-group-item summary-display">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="username">Admin ID</label>
-                                            <input required type="text" class="form-control" id="new-admin-id" placeholder="Admin ID" name="new-admin-id" value="<?php echo $admin_account['admin_id']?>">
+                                            <label>User ID</label>
+                                            <input disabled type="text" class="form-control" id="username" placeholder="Username" name="username" value="<?php echo $user['user_id']?>">
                                         </div>
-                                        <div class="form-group">
-                                            <label for="password1">New Password</label>
-                                            <input type="password" class="form-control" id="password1" placeholder="Password" name="password1">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password2">Re-enter Password</label>
-                                            <input type="password" class="form-control" id="password2" placeholder="Re-enter Password" name="password2">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="role" <?php $user['role'] == 1 ? $checked = "checked" : $checked = ""; echo $checked;?>> Is Moderator?
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
-                                <h4>Edit Admin Profile</h4>
+                                <h4>Edit User Profile</h4>
                             </li>
                             <li class="list-group-item summary-display">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Display Name</label>
-                                            <input required type="text" class="form-control" id="display-name" placeholder="Display Name" name="display-name" value="<?php echo $admin_profile['display_name']?>">
+                                            <input required type="text" class="form-control" id="display-name" placeholder="Display Name" name="display-name" value="<?php echo $user_profile['display_name']?>">
                                         </div>
                                         <button type="submit" class="btn btn-info">Save Changes</button>
                                         <button type="reset" class="btn btn-default">Reset</button>

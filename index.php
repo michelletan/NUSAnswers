@@ -2,12 +2,13 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/Toro.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/creation.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/update.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/deletion.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_creation.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_update.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_deletion.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/json.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/vote.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/user_changes.php';
 
 // Reference & examples: https://github.com/anandkunal/ToroPHP
 // More examples: http://www.sitepoint.com/apify-legacy-app-toro/
@@ -321,6 +322,12 @@ class AdminViewUsersHandler {
     }
 }
 
+class AdminEditUserHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_edit_user.php';
+    }
+}
+
 class AdminViewQuestionsHandler {
     function get() {
         require VIEW_DIRECTORY . '/admin_view_questions.php';
@@ -411,19 +418,38 @@ class DownvoteAPIHandler {
     }
 }
 
+class UserSaveChangesAPIHandler {
+    function post() {
+        if((isset($_POST["question_id"]) && isset($_POST["question_title"])) && isset($_POST["question_details"])) {
+            $question_id = $_POST["question_id"];
+            $question_title = $_POST["question_title"];
+            $question_details = $_POST["question_details"];
+            $has_saved = save_changes_by_user($question_id, $question_title, $question_details);
+        }
+    }
+}
+
+class UserDeleteQuestionAPIHandler {
+    function post() {
+        if(isset($_POST["question_id"])) {
+            $question_id = $_POST["question_id"];
+            $has_deleted = delete_question($question_id);
+        }
+    }
+}
 // Handlers for Admin API
 
 class AdminCreationAPIHandler {
     function post() {
         // Creates an admin profile and an admin account
-        if (isset($_POST['username']) && isset($_POST['password1']) && isset($_POST['password2'])) {
-            $username = trim($_POST['username']);
+        if (isset($_POST['admin-id']) && isset($_POST['password1']) && isset($_POST['password2'])) {
+            $admin_id = trim($_POST['admin-id']);
             $password1 = trim($_POST['password1']);
             $password2 = trim($_POST['password2']);
-            if ($username !== "" && $password1 !== "" && $password2 !== "" && $password1 === $password2) {
-                $profile_fk = create_profile($username);
+            if ($admin_id !== "" && $password1 !== "" && $password2 !== "" && $password1 === $password2) {
+                $profile_fk = create_profile($admin_id);
                 $hashed_password = crypt($password1, $password1);
-                create_admin_account($username, $hashed_password, $profile_fk);
+                create_admin_account($admin_id, $hashed_password, $profile_fk);
             }
         }
         $redirect_address = '/admin-create-admin-account';
@@ -433,23 +459,26 @@ class AdminCreationAPIHandler {
 
 class AdminEditAPIHandler {
     function post() {
-        if (isset($_POST['username']) && isset($_POST['admin-id'])) {
+        if (isset($_POST['admin-id']) && isset($_POST['new-admin-id']) && isset($_POST['display-name'])) {
             $admin_id = trim($_POST['admin-id']);
-            $username = trim($_POST['username']);
-            if ($username !== "") {
+            $new_admin_id = trim($_POST['new-admin-id']);
+            $display_name = trim($_POST['display-name']);
+            if ($new_admin_id !== "" && $display_name !== "") {
                 if (isset($_POST['password1']) && isset($_POST['password2']) && $_POST['password1'] !== "" && $_POST['password2'] !== "") {
                     $password1 = trim($_POST['password1']);
                     $password2 = trim($_POST['password2']);
                     if ($password1 !== "" && $password2 !== "" && $password1 === $password2) {
                         $hashed_password = crypt($password1, $password1);
-                        update_admin_account($admin_id, $username, $hashed_password);
+                        update_admin_account($admin_id, $new_admin_id, $hashed_password);
                     }
                 } else {
-                    update_admin_id($admin_id, $username);
+                    $admin = retrieve_admin_account($admin_id);
+                    update_admin_id($admin_id, $new_admin_id);
                 }
+                update_profile($admin['profile_fk'], $display_name);
             }
         }
-        $redirect_address = '/admin-edit-admin-account?admin-id=' . $username;
+        $redirect_address = '/admin-edit-admin-account?admin-id=' . $new_admin_id;
         header('Location: ' . $redirect_address);
     }
 }
@@ -480,6 +509,26 @@ class UserDeletionAPIHandler {
             }
         }
         $redirect_address = '/admin-view-users';
+        header('Location: ' . $redirect_address);
+    }
+}
+
+class UserEditAPIHandler {
+    function post() {
+        if (isset($_POST['user-id']) && isset($_POST['display-name'])) {
+            $user_id = trim($_POST['user-id']);
+            $display_name = trim($_POST['display-name']);
+            if ($user_id !== "" && $display_name !== "") {
+                if (isset($_POST['role'])) {
+                    update_user($user_id, 1);
+                } else {
+                    update_user($user_id, 0);
+                }
+                $user = retrieve_user($user_id);
+                update_profile($user['profile_fk'], $display_name);
+            }
+        }
+        $redirect_address = '/admin-edit-user?user-id=' . $user_id;
         header('Location: ' . $redirect_address);
     }
 }
@@ -564,10 +613,10 @@ class TagDeletionAPIHandler {
         if (isset($_POST['tag-id'])) {
             foreach ($_POST['tag-id'] as $tag_id) {
                 delete_tag($tag_id);
-                echo $tag_id;
             }
         }
-
+        $redirect_address = '/admin-view-tags';
+        header('Location: ' . $redirect_address);
     }
 }
 
@@ -619,6 +668,7 @@ $html_urls = array(
     "/admin-view-admin-accounts" => "AdminViewAdminAccountsHandler",
     "/admin-edit-admin-account" => "AdminEditAdminAccountsHandler",
     "/admin-view-users" => "AdminViewUsersHandler",
+    "/admin-edit-user" => "AdminEditUserHandler",
     "/admin-view-questions" => "AdminViewQuestionsHandler",
     "/admin-view-question-comments" => "AdminViewQuestionCommentsHandler",
     "/admin-view-answers" => "AdminViewAnswersHandler",
@@ -639,6 +689,7 @@ $json_base_urls = array(
     "/admin-edit/" => "AdminEditAPIHandler",
     "/admin-deletion/" => "AdminDeletionAPIHandler",
     "/user-deletion/" => "UserDeletionAPIHandler",
+    "/user-edit/" => "UserEditAPIHandler",
     "/question-deletion/" => "QuestionDeletionAPIHandler",
     "/question-comment-deletion/" => "QuestionCommentDeletionAPIHandler",
     "/answer-deletion/" => "AnswerDeletionAPIHandler",
@@ -646,6 +697,8 @@ $json_base_urls = array(
     "/tag-creation/" => "TagCreationAPIHandler",
     "/tag-edit/" => "TagEditAPIHandler",
     "/tag-deletion/" => "TagDeletionAPIHandler",
+    "/edit/" => "UserSaveChangesAPIHandler",
+    "/delete/" => "UserDeleteQuestionAPIHandler"
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);

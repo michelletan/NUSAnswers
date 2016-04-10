@@ -159,5 +159,5 @@ body {
 }
 
 textarea {
-    resize: none;
+    overflow: hidden;
 }
