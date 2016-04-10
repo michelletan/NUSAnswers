@@ -34,6 +34,11 @@ if (isset($_GET['question-id'])) {
                                             <label for="content">Content</label>
                                             <textarea class="form-control" id="content" placeholder="Content" name="content"><?php echo $question['content']?></textarea>
                                         </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="visible" <?php $question['visible'] == 1 ? $checked = "checked" : $checked = ""; echo $checked;?>> Is Visible?
+                                            </label>
+                                        </div>
                                         <button type="submit" class="btn btn-info">Save Changes</button>
                                         <button type="reset" class="btn btn-default">Reset</button>
                                     </form>

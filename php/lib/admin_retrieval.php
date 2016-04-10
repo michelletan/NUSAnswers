@@ -13,6 +13,7 @@ function retrieve_question($id_param) {
     $return_array['question_id'] = $row['question_id'];
     $return_array['title'] = $row['title'];
     $return_array['content'] = $row['content'];
+    $return_array['visible'] = $row['visible'];
   }
   else {
     $return_array['question_found'] = false;

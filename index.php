@@ -617,7 +617,11 @@ class QuestionEditAPIHandler {
             $title = trim($_POST['title']);
             $content = trim($_POST['content']);
             if ($question_id !== "" && $title !== "") {
-                update_question($question_id, $title, $content);
+                if (isset($_POST['visible'])) {
+                    update_question($question_id, $title, $content, 1);
+                } else {
+                    update_question($question_id, $title, $content, 0);
+                }
             }
         }
         $redirect_address = '/admin-edit-question?question-id=' . $question_id;
