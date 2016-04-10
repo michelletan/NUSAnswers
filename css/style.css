@@ -358,6 +358,9 @@ body {
 
 /* end Slideout CSS */
 
+.top-buffer-20px {
+    margin-top: 20px;
+}
 
 /* Modal CSS */
 /*#login-modal .modal-dialog {

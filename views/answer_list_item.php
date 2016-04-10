@@ -36,7 +36,7 @@
             <?php } else { ?>
                 <a class="btn-view-comments col-md-3 col-lg-3 text-center">Comment</a>
             <?php } ?>
-            <a class="col-md-2 col-lg-2 text-center"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
+            <a class="col-md-2 col-lg-2 text-center" onclick="share('/question/<?php echo $data["question_friendly_url"]?>')" id="share"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
         </div>
     </div>
 </div>

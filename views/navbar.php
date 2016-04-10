@@ -47,5 +47,4 @@
             </header>
         </nav>
     </div>
-    <!-- /.container-fluid -->
 </nav>
