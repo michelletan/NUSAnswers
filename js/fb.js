@@ -23,7 +23,9 @@ function share(url) {
   FB.ui({
     method: 'share',
     href: 'http://localhost:8000' + url
-  }, function(response) {});
+  }, function(response) {
+    document.getElementById("share").innerHTML = "Shared!";
+  });
 }
 
 window.fbAsyncInit = function() {
