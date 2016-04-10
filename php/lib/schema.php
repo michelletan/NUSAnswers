@@ -24,6 +24,7 @@ function create_profile_table () {
   $query = "CREATE TABLE profiles (" .
            "profile_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
            "display_name VARCHAR(32) NOT NULL" .
+           "image_url VARCHAR(255) NOT NULL DEFAULT '/img/profile02.png'" .
            ")";
   $db->query($query);
 }
@@ -101,6 +102,7 @@ function create_question_comment_table () {
            "created_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," .
            "profile_fk INTEGER NOT NULL," .
            "question_fk INTEGER NOT NULL," .
+           "parent INTEGER NULL, " .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)," .
            "FOREIGN KEY(question_fk) REFERENCES questions(question_id) ON DELETE CASCADE" .
            ")";
@@ -115,6 +117,7 @@ function create_answer_comment_table () {
            "created_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," .
            "profile_fk INTEGER NOT NULL," .
            "answer_fk INTEGER NOT NULL," .
+           "parent INTEGER NULL, " .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)," .
            "FOREIGN KEY(answer_fk) REFERENCES answers(answer_id) ON DELETE CASCADE" .
            ")";

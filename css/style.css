@@ -228,6 +228,10 @@ a:hover {
     box-shadow: 0 4px 4px -2px #CCCCCC;
 }
 
+.post-foldout .main {
+    margin-top: 0px;
+}
+
 /*Style for comment box*/
 .comment, .comment-box {
     padding: 5px;
