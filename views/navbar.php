@@ -2,8 +2,8 @@
     <div class="container-fluid center-block">
         <div class="row">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="col-md-1 col-lg-1"></div>
-            <div class="navbar-header col-sm-1 col-md-2 col-lg-2">
+            <div class="hidden-xs hidden-sm col-md-1 col-lg-1 col-xl-1"></div>
+            <div class="navbar-header col-sm-12 col-sm-12 col-md-12 col-lg-2">
                 <div class="row">
                     <div class="col-xs-1 col-sm-1 hidden-md hidden-lg hidden-xl">
                         <button type="button" id="btn-toggle-menu">
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <!-- Shown in navbar on desktop -->
-            <div class="hidden-xs hidden-sm">
+            <div class="hidden-xs hidden-sm hidden-md">
                 <form class= "navbar-left col-md-4 col-lg-4 hidden-xs hidden-sm" role="search">
                     <input type="text" id="nav-search-bar" class="form-control" placeholder="Search">
                 </form>
@@ -41,7 +41,11 @@
             <!-- end Shown in navbar on desktop -->
         </div>
         <!-- /.row -->
-        <nav id="mobile-menu" class="col-xs-3 col-sm-3 col-md-3">
+    </div>
+</nav>
+<nav id="mobile-menu" class="col-xs-5 col-sm-5 hidden-md hidden-lg hidden-xl">
+    <div class="container-fluid center-block">
+        <div class="row">
             <div class="col-md-10 col-lg-10">
                 <div class="card">
                     <div class="sidebar-body">
@@ -79,6 +83,6 @@
                     </div>
                 </div>
             </div>
-        </nav>
+        </div>
     </div>
 </nav>

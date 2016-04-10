@@ -326,6 +326,10 @@ button {
     margin-top: 8px;
 }
 
+#mobile-menu {
+    margin-top: 70px;
+}
+
 /* Resize reCaptcha */
 @media screen and (max-height: 575px){
 #rc-imageselect, .g-recaptcha {
