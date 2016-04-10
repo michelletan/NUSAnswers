@@ -1,8 +1,5 @@
+var questionID = -1;
 $(document).ready(function() {
-    $('.ckbox label').on('click', function () {
-      $(this).parents('tr').toggleClass('selected');
-    });
-
     $('.btn-filter').on('click', function () {
       var $target = $(this).data('target');
       if ($target != 'all') {
@@ -13,16 +10,36 @@ $(document).ready(function() {
       }
     });
 
-    $('.glyphicon').on('click', function() { 
-      var className = $(this).attr("class");
-      if(className.indexOf("glyphicon-pencil") != -1) {
-        $("#edit-modal").modal("show");
-      } else if(className.indexOf("glyphicon-trash") != -1) {
-        $("#delete-modal").modal("show");
-      } else if(className.indexOf("glyphicon-option-horizontal") != -1){
-        $("#expand-modal").modal("show");
-      } else {
-
-      }
+    $("#saveChanges").on('click', function() {
+      $.ajax({
+        url: "http://localhost:8000/api/edit/",  
+        method: "post",
+        data: {question_id: questionID, question_title: document.getElementById("question-title").value, question_details: document.getElementById("question-details").innerHTML},
+        success:function(data) {
+          window.location.reload();
+        }
+      });
     });
 });
+
+function editQuestion(id, questionTitle, questionContent) {
+  $("#edit-modal").modal("show");
+    document.getElementById("question-title").value = questionTitle;
+    document.getElementById("question-details").innerHTML = questionContent;
+    questionID = id;
+}
+
+function deleteQuestion(id) {
+  $("#delete-modal").modal("show");
+  $("#delete").on('click', function() {
+    $.ajax({
+      url: "http://localhost:8000/api/delete/",
+      method: "post",
+      data: {question_id: id},
+      success:function(data) {
+        console.log(data);
+        window.location.reload();
+      }
+    });
+  });
+}
