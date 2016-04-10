@@ -16,8 +16,8 @@
             </div>
             <!-- Shown in navbar on desktop -->
             <div class="hidden-xs hidden-sm">
-                <form class= "navbar-left col-md-4 col-lg-4 hidden-xs hidden-sm" role="search">
-                    <input type="text" id="nav-search-bar" class="form-control" placeholder="Search">
+                <form method="get" action="/search" class= "navbar-left col-md-4 col-lg-4 hidden-xs hidden-sm" role="search">
+                    <input type="text" id="nav-search-bar" class="form-control" placeholder="Search" name="q">
                 </form>
                 <ul class="nav navbar-nav col-md-2 col-lg-2">
                     <li><a href="/ask/"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Ask</a></li>

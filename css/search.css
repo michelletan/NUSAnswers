@@ -1,0 +1,32 @@
+.gsc-orderby-container,
+.gcsc-branding,
+.gsc-url-top  {
+    display: none;
+}
+
+div.gs-snippet {
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 14px;
+}
+
+.gsc-thumbnail-inside {
+    padding-left: 0;
+    margin-bottom: 10px;
+}
+
+div.gs-title,
+a.gs-title {
+    font-family: 'Open Sans', sans-serif;
+    color: #00A8C6 !important;
+    text-decoration: none !important;
+    font-weight: bold;
+}
+
+a.gs-title>b {
+    color: #00A8C6 !important;
+    text-decoration: none !important;
+}
+
+.gsc-result {
+    border-bottom: 1px solid #F38630 !important;
+}

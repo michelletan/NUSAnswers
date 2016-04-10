@@ -256,6 +256,12 @@ class UserProfileHandler {
     }
 }
 
+class SearchHandler {
+    function get($id) {
+        require VIEW_DIRECTORY . '/search.php';
+    }
+}
+
 class LoginHandler {
     function get() {
         require VIEW_DIRECTORY . '/login_user.php';
@@ -677,6 +683,8 @@ $html_urls = array(
 
     "/user" => "HomeHandler",
     "/user/:number" => "UserProfileHandler",
+    
+    "/search" => "SearchHandler",
 
     "/login" => "LoginHandler",
     "/admin/login" => "AdminLoginHandler",
