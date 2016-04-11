@@ -280,17 +280,23 @@ class UserDashboardQuestionsHandler {
     }
 }
 
+class UserDashboardQuestionCommentsHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/user_question_comments_list.php';
+    }
+}
+
 class UserDashboardAnswersHandler {
     function get() {
         require VIEW_DIRECTORY . '/user_answer_list.php';
     }
 }
 
-class UserDashboardCommentsHandler {
+/*class UserDashboardAnswerCommentsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/user_comment_list.php';
+        require VIEW_DIRECTORY . '/user_answer_comments_list.php';
     }
-}
+}*/
 
 class AdminDashboardHandler {
     function get() {
@@ -412,13 +418,13 @@ class DownvoteAPIHandler {
     }
 }
 
-class UserSaveChangesAPIHandler {
+class UserSaveQuestionChangesAPIHandler {
     function post() {
         if((isset($_POST["question_id"]) && isset($_POST["question_title"])) && isset($_POST["question_details"])) {
             $question_id = $_POST["question_id"];
             $question_title = $_POST["question_title"];
             $question_details = $_POST["question_details"];
-            $has_saved = save_changes_by_user($question_id, $question_title, $question_details);
+            $has_saved = save_question_changes_by_user($question_id, $question_title, $question_details);
         }
     }
 }
@@ -428,6 +434,25 @@ class UserDeleteQuestionAPIHandler {
         if(isset($_POST["question_id"])) {
             $question_id = $_POST["question_id"];
             $has_deleted = delete_question($question_id);
+        }
+    }
+}
+
+class UserSaveQuestionCommentChangesAPIHandler {
+    function post() {
+        if(isset($_POST["comment_id"]) &&  isset($_POST["comment_details"])) {
+            $comment_id = $_POST["comment_id"];
+            $comment_details = $_POST["comment_details"];
+            $has_saved = save_comment_changes_by_user($comment_id, $comment_details);
+        }
+    }
+}
+
+class UserDeleteQuestionCommentAPIHandler {
+    function post() {
+        if(isset($_POST["comment_id"])) {
+            $comment_id = $_POST["comment_id"];
+            $has_deleted = delete_comment($comment_id);
         }
     }
 }
@@ -632,8 +657,9 @@ $html_urls = array(
 
     "/user-dashboard" => "UserDashboardHandler",
     "/user-questions" => "UserDashboardQuestionsHandler",
+    "/user-question-comments" => "UserDashboardQuestionCommentsHandler",
     "/user-answers" => "UserDashboardAnswersHandler",
-    "/user-comments" => "UserDashboardCommentsHandler",
+    "/user-answer-comments" => "UserDashboardAnswerCommentsHandler",
     "/admin-dashboard" => "AdminDashboardHandler",
     "/admin-create-admin-account" => "AdminCreateAdminAccountHandler",
     "/admin-view-admin-accounts" => "AdminViewAdminAccountsHandler",
@@ -666,8 +692,10 @@ $json_base_urls = array(
     "/tag-creation/" => "TagCreationAPIHandler",
     "/tag-edit/" => "TagEditAPIHandler",
     "/tag-deletion/" => "TagDeletionAPIHandler",
-    "/edit/" => "UserSaveChangesAPIHandler",
-    "/delete/" => "UserDeleteQuestionAPIHandler"
+    "/user-question-edit/" => "UserSaveQuestionChangesAPIHandler",
+    "/user-question-delete/" => "UserDeleteQuestionAPIHandler",
+    "/user-question-comment-edit/" => "UserSaveQuestionCommentChangesAPIHandler",
+    "/user-question-comment-delete/" => "UserDeleteQuestionCommentAPIHandler"
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);

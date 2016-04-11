@@ -44,7 +44,9 @@ function retrieve_questions_by_user($name_param) {
     global $db;
     $name = $db->escape_string($name_param);
     
-    $query = "SELECT * FROM questions q ". "JOIN profiles p ON p.profile_id = q.profile_fk ". "WHERE profile_id = '1'"; //change: WHERE p.display_name = $name
+    $query = "SELECT * FROM questions q " . 
+            "JOIN profiles p ON p.profile_id = q.profile_fk " . 
+            "WHERE p.profile_id = 1"; //change: WHERE p.display_name = $name
     $questions = $db->query($query);
 
     while ($question = $questions->fetch_assoc()) {

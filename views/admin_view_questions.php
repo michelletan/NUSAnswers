@@ -36,7 +36,7 @@ include_once __DIR__ . '/admin_header.php'; ?>
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $questions = retrieve_questions_by_user('Curien');
+                                            $questions = retrieve_all_questions();
                                             foreach ($questions as $question) {
                                         ?>
                                             <tr data-status="good">
