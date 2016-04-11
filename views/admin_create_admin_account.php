@@ -15,8 +15,8 @@
                                 <div class="col-md-6">
                                     <form method="post" action="/api/admin-creation/">
                                         <div class="form-group">
-                                            <label for="admin-id">Admin ID</label>
-                                            <input required type="text" class="form-control" id="admin-id" placeholder="Admin ID" name="admin-id">
+                                            <label for="login-id">Login ID</label>
+                                            <input required type="text" class="form-control" id="login-id" placeholder="Login ID" name="login-id">
                                         </div>
                                         <div class="form-group">
                                             <label for="password1">Password</label>

@@ -4,7 +4,7 @@ include_once __DIR__ . '/admin_header.php';
 
 if (isset($_GET['admin-id'])) {
     $admin_id = $_GET['admin-id'];
-    $admin_account = retrieve_admin_account(htmlspecialchars($admin_id));
+    $admin_account = retrieve_admin_account($admin_id);
     $admin_profile = retrieve_profile($admin_account['profile_fk']);
 } else {
     $redirect_address = '/admin_view_admin_accounts';
@@ -29,8 +29,8 @@ if (isset($_GET['admin-id'])) {
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="username">Admin ID</label>
-                                            <input required type="text" class="form-control" id="new-admin-id" placeholder="Admin ID" name="new-admin-id" value="<?php echo $admin_account['admin_id']?>">
+                                            <label for="username">Login ID</label>
+                                            <input required type="text" class="form-control" id="login-id" placeholder="Login ID" name="login-id" value="<?php echo $admin_account['login_id']?>">
                                         </div>
                                         <div class="form-group">
                                             <label for="password1">New Password</label>

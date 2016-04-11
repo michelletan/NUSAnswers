@@ -125,13 +125,14 @@ function retrieve_all_answer_comments() {
 
 function retrieve_all_admin_records() {
   global $db;
-  $query = "SELECT admin_id, profile_fk FROM admins;";
+  $query = "SELECT admin_id, login_id, profile_fk FROM admins;";
   $admin_accounts = $db->query($query);
   $return_array = array();
   while ($admin_account = $admin_accounts->fetch_assoc()) {
     $query = "SELECT display_name FROM profiles WHERE profile_id = " . $admin_account['profile_fk'];
     $admin_profiles = $db->query($query); 
     $admin_record['admin_id'] = $admin_account['admin_id'];
+    $admin_record['login_id'] = $admin_account['login_id'];
     if ($admin_profile = $admin_profiles->fetch_assoc()) {
       $admin_record['display_name'] = $admin_profile['display_name'];
     } else {
@@ -151,6 +152,7 @@ function retrieve_admin_account($id_param) {
   if ($row = $result->fetch_assoc()) {
     $return_array['admin_account_found'] = true;
     $return_array['admin_id'] = $row['admin_id'];
+    $return_array['login_id'] = $row['login_id'];
     $return_array['hashed_password'] = $row['hashed_password'];
     $return_array['role'] = $row['role'];
     $return_array['profile_fk'] = $row['profile_fk'];

@@ -545,14 +545,14 @@ class UserDeleteQuestionCommentAPIHandler {
 class AdminCreationAPIHandler {
     function post() {
         // Creates an admin profile and an admin account
-        if (isset($_POST['admin-id']) && isset($_POST['password1']) && isset($_POST['password2'])) {
-            $admin_id = htmlspecialchars(trim($_POST['admin-id']));
+        if (isset($_POST['login-id']) && isset($_POST['password1']) && isset($_POST['password2'])) {
+            $login_id = htmlspecialchars(trim($_POST['login-id']));
             $password1 = trim($_POST['password1']);
             $password2 = trim($_POST['password2']);
-            if ($admin_id !== "" && $password1 !== "" && $password2 !== "" && $password1 === $password2) {
-                $profile_fk = create_profile($admin_id);
+            if ($login_id !== "" && $password1 !== "" && $password2 !== "" && $password1 === $password2) {
+                $profile_fk = create_profile($login_id);
                 $hashed_password = crypt($password1, $password1);
-                create_admin_account($admin_id, $hashed_password, $profile_fk);
+                create_admin_account($login_id, $hashed_password, $profile_fk);
             }
         }
         $redirect_address = '/admin-create-admin-account';
@@ -562,26 +562,26 @@ class AdminCreationAPIHandler {
 
 class AdminEditAPIHandler {
     function post() {
-        if (isset($_POST['admin-id']) && isset($_POST['new-admin-id']) && isset($_POST['display-name'])) {
+        if (isset($_POST['admin-id']) && isset($_POST['login-id']) && isset($_POST['display-name'])) {
             $admin_id = trim($_POST['admin-id']);
-            $new_admin_id = htmlspecialchars(trim($_POST['new-admin-id']));
+            $login_id = htmlspecialchars(trim($_POST['login-id']));
             $display_name = htmlspecialchars(trim($_POST['display-name']));
-            if ($new_admin_id !== "" && $display_name !== "") {
+            if ($login_id !== "" && $display_name !== "") {
                 if (isset($_POST['password1']) && isset($_POST['password2']) && $_POST['password1'] !== "" && $_POST['password2'] !== "") {
                     $password1 = trim($_POST['password1']);
                     $password2 = trim($_POST['password2']);
                     if ($password1 !== "" && $password2 !== "" && $password1 === $password2) {
                         $hashed_password = crypt($password1, $password1);
-                        update_admin_account($admin_id, $new_admin_id, $hashed_password);
+                        update_admin_account($admin_id, $login_id, $hashed_password);
                     }
                 } else {
                     $admin = retrieve_admin_account($admin_id);
-                    update_admin_id($admin_id, $new_admin_id);
+                    update_admin_id($admin_id, $login_id);
                 }
                 update_profile($admin['profile_fk'], $display_name);
             }
         }
-        $redirect_address = '/admin-edit-admin-account?admin-id=' . $new_admin_id;
+        $redirect_address = '/admin-edit-admin-account?admin-id=' . $admin_id;
         header('Location: ' . $redirect_address);
     }
 }
