@@ -2,21 +2,21 @@ $(document).ready(function() {
 
     $('.post-foldout').hide();
 
-    $('.btn-view-comments').click(function(e) {
-        e.preventDefault();
+    $('.main').click(function(e) {
+        if ($(e.target).hasClass("btn-view-comments")) {
+            e.preventDefault();
 
-        // Get its parent post
-        var post = $(e.currentTarget).closest('.card');
-        console.log(post);
+            // Get its parent post
+            var post = $(e.target).closest('.card');
 
-        var isQuestion = !post.hasClass('answer-list-item');
+            var isQuestion = !post.hasClass('answer-list-item');
 
-        if (isFoldoutShown(post)) {
-            hideFoldout(post);
-        } else {
-            showFoldout(post, isQuestion);
+            if (isFoldoutShown(post)) {
+                hideFoldout(post);
+            } else {
+                showFoldout(post, isQuestion);
+            }
         }
-
     });
 });
 
@@ -84,7 +84,7 @@ function populateFoldout(foldout, data, postId, isQuestion) {
                 type: 'post',
                 url: '/api/' + (isQuestion ? 'question' : 'answer') +'/comments/post',
                 data: {
-                    question_id: postId,
+                    id: postId,
                     content: commentJSON.content,
                     parent: commentJSON.parent
                 },
