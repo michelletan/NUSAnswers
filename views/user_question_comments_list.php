@@ -65,7 +65,7 @@
                                                 $comment = $item[0];
                                                 $ques = $item[1];
                                         ?>
-                                        <tr data-status="all-questions">
+                                        <tr>
                                             <td>
                                                 <div class="media">
                                                     <div class="media-body">
@@ -81,7 +81,7 @@
                                                             ?>
                                                         </p>
                                                         <span class="glyphicon glyphicon-trash pull-right" id="<?php echo $comment['comment_id']; ?>" onclick="deleteQuestionComment(this.id)"></span>
-                                                        <span class="glyphicon glyphicon-pencil pull-right" id="<?php echo $comment['comment_id']; ?>" onclick="editQuestionComment(this.id, '<?php echo $ques["title"]; ?>', '<?php echo $comment['content']; ?>')"></span>
+                                                        <span class="glyphicon glyphicon-pencil pull-right" id="<?php echo $comment['comment_id']; ?>" onclick="editQuestionComment(this.id, '<?php echo $ques['title']; ?>', '<?php echo $comment['content']; ?>')"></span>
                                                     </div>
                                                 </div>
                                             </td>
