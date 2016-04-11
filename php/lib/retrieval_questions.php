@@ -47,12 +47,13 @@ function retrieve_questions_by_user($name_param) {
     $query = "SELECT * FROM questions q " . 
             "JOIN profiles p ON p.profile_id = q.profile_fk " . 
             "WHERE p.profile_id = 1"; //change: WHERE p.display_name = $name
+
     $questions = $db->query($query);
 
     while ($question = $questions->fetch_assoc()) {
         $return_array[] = $question;
     }
-        
+
     return $return_array;
 }
 
@@ -215,6 +216,7 @@ function retrieve_best_answer_tags_users_for_question($question_row) {
     // Retrieve answers, tags, user profiles
     $answer = retrieve_highest_voted_answer_for_question($question_id);
     $tags = retrieve_tags_for_question($question_id);
+    $comment_count = retrieve_comment_count_for_question($question_id);
     $question_user = retrieve_profile_by_id($question["profile_fk"]);
 
     if (count($answer) > 0) {
@@ -231,6 +233,9 @@ function retrieve_best_answer_tags_users_for_question($question_row) {
 
     // Add answer count to question
     $question["answer_count"] = $answer["answer_count"];
+
+    // Add comment count to question
+    $question["comment_count"] = $comment_count;
 
     // Change timestamp to relative one
     $question["created_date"] = timestamp_to_relative_date($question["created_timestamp"]);
@@ -250,9 +255,8 @@ function retrieve_answers_tags_users_for_question($question_row) {
     // Retrieve answers, tags, user profiles
     $answers = retrieve_answers_for_question_order_by_votes($question_id);
     $tags = retrieve_tags_for_question($question_id);
+    $comment_count = retrieve_comment_count_for_question($question_id);
     $question_user = retrieve_profile_by_id($question["profile_fk"]);
-
-
 
     // Retrieve profiles for each answer and question
     for ($i = 0; $i < count($answers); $i++) {
@@ -260,7 +264,9 @@ function retrieve_answers_tags_users_for_question($question_row) {
 
         $answer["created_date"] = timestamp_to_relative_date($answer["created_timestamp"]);
         $answer_user = retrieve_profile_by_id($answer["answer_user_id"]);
+        $comment_count = retrieve_comment_count_for_answer($answer["answer_id"]);
         $answer["user"] = $answer_user[0];
+        $answer["comment_count"] = $comment_count;
 
         $answers[$i] = $answer;
     }
@@ -271,6 +277,9 @@ function retrieve_answers_tags_users_for_question($question_row) {
 
     // Add answer count to question
     $question["answer_count"] = $answer["answer_count"];
+
+    // Add comment count to question
+    $question["comment_count"] = $comment_count;
 
     // Change timestamp to relative one
     $question["created_date"] = timestamp_to_relative_date($question["created_timestamp"]);

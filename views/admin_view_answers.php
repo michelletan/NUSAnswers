@@ -55,7 +55,7 @@ include_once __DIR__ . '/admin_header.php'; ?>
                                                     <div class="media">
                                                         <div class="media-body">                                                        
                                                             <h4 class="title">
-                                                                <a href=""><?php echo $answer['answer_id']?></a>
+                                                                <a href="/admin-edit-answer?answer-id=<?php echo $answer['answer_id']?>"><?php echo $answer['answer_id']?></a>
                                                             </h4>                                     
                                                             <p><?php echo $answer['content']?></p>
                                                         </div>

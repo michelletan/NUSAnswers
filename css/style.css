@@ -27,11 +27,18 @@ a:hover {
     cursor: pointer;
 }
 
+img.navbar-logo {
+    margin-top: 0px;
+}
+
 .logo {
+    display: block;
     font-family: 'Ubuntu', sans-serif;
     font-weight: 400;
     font-size: 20px;
     color: #F9F2E7;
+    margin-right: 10px;
+    padding-top: 10px;
 }
 
 .logo span {
@@ -228,6 +235,10 @@ a:hover {
     box-shadow: 0 4px 4px -2px #CCCCCC;
 }
 
+.post-foldout .main {
+    margin-top: 0px;
+}
+
 /*Style for comment box*/
 .comment, .comment-box {
     padding: 5px;
@@ -315,10 +326,18 @@ button {
     margin-top: 8px;
 }
 
-/*#mobile-menu {
-    margin-top: 50px;
-    background-color: #666666;
-}*/
+#mobile-menu {
+    margin-top: 70px;
+}
+
+/* Resize reCaptcha */
+@media screen and (max-height: 575px){
+#rc-imageselect, .g-recaptcha {
+    transform:scale(0.85);
+    -webkit-transform:scale(0.85);
+    transform-origin:0 0;
+    -webkit-transform-origin:0 0;
+}
 
 /* Slideout CSS */
 body {
@@ -352,8 +371,9 @@ body {
 
 .slideout-open .slideout-menu {
   display: block;
-  margin-top: 50px;
-  background-color: #666666;
+  padding: 0px;
+  margin-top: 70px;
+  /*background-color: #666666;*/
 }
 
 /* end Slideout CSS */

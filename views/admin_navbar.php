@@ -19,10 +19,10 @@
           <input type="text" id="nav-search-bar" class="form-control" placeholder="Search">
       </form>
       <ul class="nav navbar-nav col-md-2 col-lg-2">
-        <?php if (!$is_logged_in) {?>
+        <?php if (true) {?>
             <li><a href="#">Login</a></li>
         <?php } ?>
-        <?php if ($is_logged_in) {?>
+        <?php if (true) {?>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username <span class="caret"></span></a>
               <ul class="dropdown-menu">

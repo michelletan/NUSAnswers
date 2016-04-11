@@ -1,10 +1,12 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/Toro.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/login_check.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/creation.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/update.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/deletion.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_creation.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_update.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_deletion.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/login_admin.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/json.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/vote.php';
@@ -256,6 +258,12 @@ class UserProfileHandler {
     }
 }
 
+class SearchHandler {
+    function get($id) {
+        require VIEW_DIRECTORY . '/search.php';
+    }
+}
+
 class LoginHandler {
     function get() {
         require VIEW_DIRECTORY . '/login_user.php';
@@ -328,9 +336,21 @@ class AdminViewUsersHandler {
     }
 }
 
+class AdminEditUserHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_edit_user.php';
+    }
+}
+
 class AdminViewQuestionsHandler {
     function get() {
         require VIEW_DIRECTORY . '/admin_view_questions.php';
+    }
+}
+
+class AdminEditQuestionHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_edit_question.php';
     }
 }
 
@@ -340,15 +360,33 @@ class AdminViewQuestionCommentsHandler {
     }
 }
 
+class AdminEditQuestionCommentHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_edit_question_comment.php';
+    }
+}
+
 class AdminViewAnswersHandler {
     function get() {
         require VIEW_DIRECTORY . '/admin_view_answers.php';
     }
 }
 
+class AdminEditAnswerHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_edit_answer.php';
+    }
+}
+
 class AdminViewAnswerCommentsHandler {
     function get() {
         require VIEW_DIRECTORY . '/admin_view_answer_comments.php';
+    }
+}
+
+class AdminEditAnswerCommentHandler {
+    function get() {
+        require VIEW_DIRECTORY . '/admin_edit_answer_comment.php';
     }
 }
 
@@ -371,6 +409,24 @@ class AdminEditTagHandler {
 }
 
 // Handlers for API
+
+// Handlers for Login API
+
+class AdminLoginAPIHandler {
+  function post() {
+    $redirect_address = "/admin/login";
+    if (isset($_POST['admin-id']) && isset($_POST['password'])) {
+      $admin_info = admin_login($_POST['admin-id'], $_POST['password']);
+      if ($admin_info) {
+        set_active_profile($admin_info['profile-id']);
+        set_active_role(USER_ROLE_ADMIN);
+        $redirect_address = '/admin-dashboard';
+      }
+    }
+    header('Location: ' . $redirect_address);
+  }
+}
+
 
 class QuestionCommentAPIHandler {
     function get_xhr($id) {
@@ -395,6 +451,33 @@ class AnswerCommentAPIHandler {
             // id was not provided, return error
             return_bad_request_error_response();
         }
+    }
+}
+
+class QuestionCommentPostAPIHandler {
+    function post() {
+        if (isset($_POST["question_id"]) && isset($_POST["content"])) {
+            $question_id = $_POST["question_id"];
+            $content = $_POST["content"];
+            $parent = isset($_POST["parent"]) ? $_POST["parent"] : null;
+
+            $comment = submit_comment_for_question($question_id, $content, $parent);
+
+            if (count($comment) > 0) {
+                return_success_response($comment[0]);
+            } else {
+                return_internal_server_error_response();
+            }
+        } else {
+            return_bad_request_error_response();
+        }
+    }
+}
+
+class AnswerCommentPostAPIHandler {
+    function post() {
+        $success = submit_comment_for_answer();
+        echo $success;
     }
 }
 
@@ -461,14 +544,14 @@ class UserDeleteQuestionCommentAPIHandler {
 class AdminCreationAPIHandler {
     function post() {
         // Creates an admin profile and an admin account
-        if (isset($_POST['username']) && isset($_POST['password1']) && isset($_POST['password2'])) {
-            $username = trim($_POST['username']);
+        if (isset($_POST['admin-id']) && isset($_POST['password1']) && isset($_POST['password2'])) {
+            $admin_id = trim($_POST['admin-id']);
             $password1 = trim($_POST['password1']);
             $password2 = trim($_POST['password2']);
-            if ($username !== "" && $password1 !== "" && $password2 !== "" && $password1 === $password2) {
-                $profile_fk = create_profile($username);
+            if ($admin_id !== "" && $password1 !== "" && $password2 !== "" && $password1 === $password2) {
+                $profile_fk = create_profile($admin_id);
                 $hashed_password = crypt($password1, $password1);
-                create_admin_account($username, $hashed_password, $profile_fk);
+                create_admin_account($admin_id, $hashed_password, $profile_fk);
             }
         }
         $redirect_address = '/admin-create-admin-account';
@@ -478,23 +561,26 @@ class AdminCreationAPIHandler {
 
 class AdminEditAPIHandler {
     function post() {
-        if (isset($_POST['username']) && isset($_POST['admin-id'])) {
+        if (isset($_POST['admin-id']) && isset($_POST['new-admin-id']) && isset($_POST['display-name'])) {
             $admin_id = trim($_POST['admin-id']);
-            $username = trim($_POST['username']);
-            if ($username !== "") {
+            $new_admin_id = trim($_POST['new-admin-id']);
+            $display_name = trim($_POST['display-name']);
+            if ($new_admin_id !== "" && $display_name !== "") {
                 if (isset($_POST['password1']) && isset($_POST['password2']) && $_POST['password1'] !== "" && $_POST['password2'] !== "") {
                     $password1 = trim($_POST['password1']);
                     $password2 = trim($_POST['password2']);
                     if ($password1 !== "" && $password2 !== "" && $password1 === $password2) {
                         $hashed_password = crypt($password1, $password1);
-                        update_admin_account($admin_id, $username, $hashed_password);
+                        update_admin_account($admin_id, $new_admin_id, $hashed_password);
                     }
                 } else {
-                    update_admin_id($admin_id, $username);
+                    $admin = retrieve_admin_account($admin_id);
+                    update_admin_id($admin_id, $new_admin_id);
                 }
+                update_profile($admin['profile_fk'], $display_name);
             }
         }
-        $redirect_address = '/admin-edit-admin-account?admin-id=' . $username;
+        $redirect_address = '/admin-edit-admin-account?admin-id=' . $new_admin_id;
         header('Location: ' . $redirect_address);
     }
 }
@@ -529,6 +615,45 @@ class UserDeletionAPIHandler {
     }
 }
 
+class UserEditAPIHandler {
+    function post() {
+        if (isset($_POST['user-id']) && isset($_POST['display-name'])) {
+            $user_id = trim($_POST['user-id']);
+            $display_name = trim($_POST['display-name']);
+            if ($user_id !== "" && $display_name !== "") {
+                if (isset($_POST['role'])) {
+                    update_user($user_id, 1);
+                } else {
+                    update_user($user_id, 0);
+                }
+                $user = retrieve_user($user_id);
+                update_profile($user['profile_fk'], $display_name);
+            }
+        }
+        $redirect_address = '/admin-edit-user?user-id=' . $user_id;
+        header('Location: ' . $redirect_address);
+    }
+}
+
+class QuestionEditAPIHandler {
+    function post() {
+        if (isset($_POST['question-id']) && isset($_POST['title']) && isset($_POST['content'])) {
+            $question_id = trim($_POST['question-id']);
+            $title = trim($_POST['title']);
+            $content = trim($_POST['content']);
+            if ($question_id !== "" && $title !== "") {
+                if (isset($_POST['visible'])) {
+                    update_question($question_id, $title, $content, 1);
+                } else {
+                    update_question($question_id, $title, $content, 0);
+                }
+            }
+        }
+        $redirect_address = '/admin-edit-question?question-id=' . $question_id;
+        header('Location: ' . $redirect_address);
+    }
+}
+
 class QuestionDeletionAPIHandler {
     function post() {
         if (isset($_POST['question-id'])) {
@@ -537,6 +662,20 @@ class QuestionDeletionAPIHandler {
             }
         }
         $redirect_address = '/admin-view-questions';
+        header('Location: ' . $redirect_address);
+    }
+}
+
+class QuestionCommentEditAPIHandler {
+    function post() {
+        if (isset($_POST['comment-id']) && isset($_POST['content'])) {
+            $comment_id = trim($_POST['comment-id']);
+            $content = trim($_POST['content']);
+            if ($comment_id !== "" && $content !== "") {
+                update_question_comment($comment_id, $content);
+            }
+        }
+        $redirect_address = '/admin-edit-question-comment?comment-id=' . $comment_id;
         header('Location: ' . $redirect_address);
     }
 }
@@ -553,6 +692,24 @@ class QuestionCommentDeletionAPIHandler {
     }
 }
 
+class AnswerEditAPIHandler {
+    function post() {
+        if (isset($_POST['answer-id']) && isset($_POST['content'])) {
+            $answer_id = trim($_POST['answer-id']);
+            $content = trim($_POST['content']);
+            if ($answer_id !== "" && $content !== "") {
+                if (isset($_POST['visible'])) {
+                    update_answer($answer_id, $content, 1);
+                } else {
+                    update_answer($answer_id, $content, 0);
+                }
+            }
+        }
+        $redirect_address = '/admin-edit-answer?answer-id=' . $answer_id;
+        header('Location: ' . $redirect_address);
+    }
+}
+
 class AnswerDeletionAPIHandler {
     function post() {
         if (isset($_POST['answer-id'])) {
@@ -561,6 +718,20 @@ class AnswerDeletionAPIHandler {
             }
         }
         $redirect_address = '/admin-view-answers';
+        header('Location: ' . $redirect_address);
+    }
+}
+
+class AnswerCommentEditAPIHandler {
+    function post() {
+        if (isset($_POST['comment-id']) && isset($_POST['content'])) {
+            $comment_id = trim($_POST['comment-id']);
+            $content = trim($_POST['content']);
+            if ($comment_id !== "" && $content !== "") {
+                update_answer_comment($comment_id, $content);
+            }
+        }
+        $redirect_address = '/admin-edit-answer-comment?comment-id=' . $comment_id;
         header('Location: ' . $redirect_address);
     }
 }
@@ -609,10 +780,10 @@ class TagDeletionAPIHandler {
         if (isset($_POST['tag-id'])) {
             foreach ($_POST['tag-id'] as $tag_id) {
                 delete_tag($tag_id);
-                echo $tag_id;
             }
         }
-
+        $redirect_address = '/admin-view-tags';
+        header('Location: ' . $redirect_address);
     }
 }
 
@@ -651,6 +822,8 @@ $html_urls = array(
 
     "/user" => "HomeHandler",
     "/user/:number" => "UserProfileHandler",
+    
+    "/search" => "SearchHandler",
 
     "/login" => "LoginHandler",
     "/admin/login" => "AdminLoginHandler",
@@ -664,11 +837,20 @@ $html_urls = array(
     "/admin-create-admin-account" => "AdminCreateAdminAccountHandler",
     "/admin-view-admin-accounts" => "AdminViewAdminAccountsHandler",
     "/admin-edit-admin-account" => "AdminEditAdminAccountsHandler",
+
     "/admin-view-users" => "AdminViewUsersHandler",
+    "/admin-edit-user" => "AdminEditUserHandler",
+
     "/admin-view-questions" => "AdminViewQuestionsHandler",
+    "/admin-edit-question" => "AdminEditQuestionHandler",
     "/admin-view-question-comments" => "AdminViewQuestionCommentsHandler",
+    "/admin-edit-question-comment" => "AdminEditQuestionCommentHandler",
+
     "/admin-view-answers" => "AdminViewAnswersHandler",
+    "/admin-edit-answer" => "AdminEditAnswerHandler",
     "/admin-view-answer-comments" => "AdminViewAnswerCommentsHandler",
+    "/admin-edit-answer-comment" => "AdminEditAnswerCommentHandler",
+
     "/admin-create-tag" => "AdminCreateTagHandler",
     "/admin-view-tags" => "AdminViewTagsHandler",
     "/admin-edit-tag" => "AdminEditTagHandler"
@@ -677,25 +859,46 @@ $html_urls = array(
 $json_url_prefix = "/api";
 
 $json_base_urls = array(
+    "/login/admin" => "AdminLoginAPIHandler",
     "/question/comments/:number" => "QuestionCommentAPIHandler",
     "/answer/comments/:number" => "AnswerCommentAPIHandler",
+
+    "/question/comments/post" => "QuestionCommentPostAPIHandler",
+    "/answer/comments/post" => "AnswerCommentPostAPIHandler",
+
     "/upvote/" => "UpvoteAPIHandler",
     "/downvote/" => "DownvoteAPIHandler",
+
     "/admin-creation/" => "AdminCreationAPIHandler",
     "/admin-edit/" => "AdminEditAPIHandler",
     "/admin-deletion/" => "AdminDeletionAPIHandler",
+
     "/user-deletion/" => "UserDeletionAPIHandler",
+    "/user-edit/" => "UserEditAPIHandler",
+
+    "/question-edit/" => "QuestionEditAPIHandler",
     "/question-deletion/" => "QuestionDeletionAPIHandler",
+    "/question-comment-edit/" => "QuestionCommentEditAPIHandler",
     "/question-comment-deletion/" => "QuestionCommentDeletionAPIHandler",
+    
+    "/answer-edit/" => "AnswerEditAPIHandler",
     "/answer-deletion/" => "AnswerDeletionAPIHandler",
+    "/answer-comment-edit/" => "AnswerCommentEditAPIHandler",
     "/answer-comment-deletion/" => "AnswerCommentDeletionAPIHandler",
+
     "/tag-creation/" => "TagCreationAPIHandler",
     "/tag-edit/" => "TagEditAPIHandler",
     "/tag-deletion/" => "TagDeletionAPIHandler",
+<<<<<<< HEAD
     "/user-question-edit/" => "UserSaveQuestionChangesAPIHandler",
     "/user-question-delete/" => "UserDeleteQuestionAPIHandler",
     "/user-question-comment-edit/" => "UserSaveQuestionCommentChangesAPIHandler",
     "/user-question-comment-delete/" => "UserDeleteQuestionCommentAPIHandler"
+=======
+
+    "/edit/" => "UserSaveChangesAPIHandler",
+    "/delete/" => "UserDeleteQuestionAPIHandler"
+>>>>>>> e4bfe92d07aea9011caaeb61ed8edbced42844ab
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);
