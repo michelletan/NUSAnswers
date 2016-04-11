@@ -301,11 +301,11 @@ class UserDashboardAnswersHandler {
     }
 }
 
-/*class UserDashboardAnswerCommentsHandler {
+class UserDashboardAnswerCommentsHandler {
     function get() {
         require VIEW_DIRECTORY . '/user_answer_comments_list.php';
     }
-}*/
+}
 
 class AdminDashboardHandler {
     function get() {
@@ -533,8 +533,19 @@ class AdminLogoutAPIHandler {
 class AnswerSubmitFromQuestionAPIhandler {
   function post() {
     $redirect_address = "/question/" . $_POST['question-friendly-url'];
-    $query_result = submit_answer($_POST['question-id'], $_POST['answer-content'], 1);
+    $query_question_id = htmlspecialchars($_POST['question-id']);
+    $query_answer_contents = htmlspecialchars($_POST['answer-content']);
+    $query_result = submit_answer($query_question_id, $query_answer_contents, 1);
     header('Location: ' . $redirect_address);
+  }
+}
+
+class AnswerSubmitFromHomeAPIhandler {
+  function post() {
+    $query_question_id = htmlspecialchars($_POST['question_id']);
+    $query_answer_contents = htmlspecialchars($_POST['answer_content']);
+    $query_result = submit_answer($query_question_id, $query_answer_contents, 1);
+    echo $query_result ? 'true' : 'false';
   }
 }
 
@@ -709,7 +720,6 @@ class UserSaveAnswerChangesAPIHandler {
             $answer_id = htmlspecialchars($_POST["answer_id"]);
             $answer_details = htmlspecialchars($_POST["answer_details"]);
             $has_saved = save_answer_changes_by_user($answer_id, $answer_details);
-            echo $has_saved;
         }
     }
 }
@@ -719,6 +729,25 @@ class UserDeleteAnswerAPIHandler {
         if(isset($_POST["answer_id"])) {
             $answer_id = htmlspecialchars($_POST["answer_id"]);
             $has_deleted = delete_answer($answer_id);
+        }
+    }
+}
+
+class UserSaveAnswerCommentChangesAPIHandler {
+    function post() {
+        if(isset($_POST["comment_id"]) &&  isset($_POST["comment_content"])) {
+            $comment_id = htmlspecialchars($_POST["comment_id"]);
+            $comment_details = htmlspecialchars($_POST["comment_content"]);
+            $has_saved = save_answer_comment_changes_by_user($comment_id, $comment_details);
+        }
+    }
+}
+
+class UserDeleteAnswerCommentAPIHandler {
+    function post() {
+        if(isset($_POST["comment_id"])) {
+            $comment_id = htmlspecialchars($_POST["comment_id"]);
+            $has_deleted = delete_answer_comment($comment_id);
         }
     }
 }
@@ -1098,6 +1127,7 @@ $json_base_urls = array(
     "/answer/comments/post" => "AnswerCommentPostAPIHandler",
 
     "/answer/submit/question" => "AnswerSubmitFromQuestionAPIhandler",
+    "/answer/submit/home" => "AnswerSubmitFromHomeAPIhandler",
 
     "/upvote/" => "UpvoteAPIHandler",
     "/downvote/" => "DownvoteAPIHandler",
@@ -1130,7 +1160,9 @@ $json_base_urls = array(
     "/user-question-comment-edit/" => "UserSaveQuestionCommentChangesAPIHandler",
     "/user-question-comment-delete/" => "UserDeleteQuestionCommentAPIHandler",
     "/user-answer-edit/" => "UserSaveAnswerChangesAPIHandler",
-    "/user-answer-delete/" => "UserDeleteAnswerAPIHandler"
+    "/user-answer-delete/" => "UserDeleteAnswerAPIHandler",
+    "/user-answer-comment-edit/" => "UserSaveAnswerCommentChangesAPIHandler",
+    "/user-answer-comment-delete/" => "UserDeleteAnswerCommentAPIHandler"
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);

@@ -73,7 +73,7 @@ function retrieve_answers_by_user($name_param) {
     }
 }
 
-/*
+
 function retrieve_comments_for_answer_by_user($name_param) {
     global $db;
     $name = $db->escape_string($name_param);
@@ -91,13 +91,17 @@ function retrieve_comments_for_answer_by_user($name_param) {
             $query = "SELECT * FROM answers WHERE answer_id = '" . $row["answer_fk"] . "'";
             $res = $db->query($query);
 
-            while($ques = $res->fetch_assoc()) {
-                $return_array[] = array($row, $ques);
+            while($ans = $res->fetch_assoc()) {
+                $query = "SELECT * FROM questions WHERE question_id = '" . $ans["question_fk"] . "'";
+                $res = $db->query($query);
+
+                while($ques = $res->fetch_assoc()) {
+                    $return_array[] = array($row, $ans, $ques);
+                }
             }
         }
 
         return $return_array;
     }
 }
-*/
 ?>

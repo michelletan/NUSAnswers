@@ -39,4 +39,17 @@ function save_answer_changes_by_user($answer_id_param, $answer_details) {
         return 0;
     }
 }
+
+function save_answer_comment_changes_by_user($comment_id_param, $comment_details) {
+    global $db;
+
+    $query = "UPDATE answer_comments SET content = '" . $comment_details . "' WHERE comment_id = " . $comment_id_param;
+    $db->query($query);
+
+    if($db->affected_rows >= 0){ 
+        return 1;
+    } else {
+        return 0;
+    }
+}
 ?>

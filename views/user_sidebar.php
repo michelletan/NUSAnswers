@@ -34,7 +34,7 @@
                             </a>
                             <ul class="collapse nav">
                                 <li class=""><a href="/user-answers">View Answers</a></li>
-                                <li class=""><a href="#">View Answers Comments</a></li>
+                                <li class=""><a href="/user-answer-comments">View Answers Comments</a></li>
                             </ul>
                         </li>
                     </ul>
