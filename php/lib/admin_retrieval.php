@@ -125,13 +125,14 @@ function retrieve_all_answer_comments() {
 
 function retrieve_all_admin_records() {
   global $db;
-  $query = "SELECT admin_id, profile_fk FROM admins;";
+  $query = "SELECT admin_id, login_id, profile_fk FROM admins;";
   $admin_accounts = $db->query($query);
   $return_array = array();
   while ($admin_account = $admin_accounts->fetch_assoc()) {
     $query = "SELECT display_name FROM profiles WHERE profile_id = " . $admin_account['profile_fk'];
     $admin_profiles = $db->query($query); 
     $admin_record['admin_id'] = $admin_account['admin_id'];
+    $admin_record['login_id'] = $admin_account['login_id'];
     if ($admin_profile = $admin_profiles->fetch_assoc()) {
       $admin_record['display_name'] = $admin_profile['display_name'];
     } else {
@@ -151,8 +152,8 @@ function retrieve_admin_account($id_param) {
   if ($row = $result->fetch_assoc()) {
     $return_array['admin_account_found'] = true;
     $return_array['admin_id'] = $row['admin_id'];
+    $return_array['login_id'] = $row['login_id'];
     $return_array['hashed_password'] = $row['hashed_password'];
-    $return_array['role'] = $row['role'];
     $return_array['profile_fk'] = $row['profile_fk'];
   }
   else {
@@ -163,13 +164,14 @@ function retrieve_admin_account($id_param) {
 
 function retrieve_all_user_records() {
   global $db;
-  $query = "SELECT user_id, profile_fk FROM users;";
+  $query = "SELECT user_id, login_id, profile_fk FROM users;";
   $users = $db->query($query);
   $return_array = array();
   while ($user = $users->fetch_assoc()) {
     $query = "SELECT display_name FROM profiles WHERE profile_id = " . $user['profile_fk'];
     $user_profiles = $db->query($query); 
     $user_record['user_id'] = $user['user_id'];
+    $user_record['login_id'] = $user['login_id'];
     if ($user_profile = $user_profiles->fetch_assoc()) {
       $user_record['display_name'] = $user_profile['display_name'];
     } else {
@@ -189,6 +191,7 @@ function retrieve_user($id_param) {
   if ($row = $result->fetch_assoc()) {
     $return_array['user_found'] = true;
     $return_array['user_id'] = $row['user_id'];
+    $return_array['login_id'] = $row['login_id'];
     $return_array['role'] = $row['role'];
     $return_array['profile_fk'] = $row['profile_fk'];
   }
@@ -241,5 +244,42 @@ function retrieve_all_tags() {
     $return_array[] = $tag;
   }
   return $return_array;
+}
+
+function retrieve_table_num_rows($table_name_param) {
+  global $db;
+  $table_name = $db->escape_string($table_name_param);
+  $query = "SELECT COUNT(*) as quantity FROM " . $table_name . ";";
+  $result = $db->query($query);
+  if ($row = $result->fetch_assoc()) {
+    $num_rows = $row['quantity'];
+  } else {
+    $num_rows = 0;
+  }
+  return $num_rows;
+}
+
+function retrieve_answers_quantity() {
+  return retrieve_table_num_rows("answers");
+}
+
+function retrieve_questions_quantity() {
+  return retrieve_table_num_rows("questions");
+}
+
+function retrieve_users_quantity() {
+  return retrieve_table_num_rows("users");
+}
+
+function retrieve_upvotes_quantity() {
+  global $db;
+  $query = "SELECT COUNT(*) as quantity FROM votes WHERE vote_type = 1;";
+  $result = $db->query($query);
+  if ($row = $result->fetch_assoc()) {
+    $upvotes_quantity = $row['quantity'];
+  } else {
+    $upvotes_quantity = 0;
+  }
+  return $upvotes_quantity;
 }
 ?>

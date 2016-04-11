@@ -309,6 +309,10 @@ class UserDashboardAnswersHandler {
 
 class AdminDashboardHandler {
     function get() {
+        $answers_quantity = retrieve_answers_quantity();
+        $questions_quantity = retrieve_questions_quantity();
+        $users_quantity = retrieve_users_quantity();
+        $upvotes_quantity = retrieve_upvotes_quantity();
         require VIEW_DIRECTORY . '/admin_dashboard.php';
     }
 }
@@ -515,9 +519,9 @@ class DownvoteAPIHandler {
 class UserSaveQuestionChangesAPIHandler {
     function post() {
         if((isset($_POST["question_id"]) && isset($_POST["question_title"])) && isset($_POST["question_details"])) {
-            $question_id = $_POST["question_id"];
-            $question_title = $_POST["question_title"];
-            $question_details = $_POST["question_details"];
+            $question_id = htmlspecialchars($_POST["question_id"]);
+            $question_title = htmlspecialchars($_POST["question_title"]);
+            $question_details = htmlspecialchars($_POST["question_details"]);
             $has_saved = save_question_changes_by_user($question_id, $question_title, $question_details);
         }
     }
@@ -526,7 +530,7 @@ class UserSaveQuestionChangesAPIHandler {
 class UserDeleteQuestionAPIHandler {
     function post() {
         if(isset($_POST["question_id"])) {
-            $question_id = $_POST["question_id"];
+            $question_id = htmlspecialchars($_POST["question_id"]);
             $has_deleted = delete_question($question_id);
         }
     }
@@ -534,10 +538,11 @@ class UserDeleteQuestionAPIHandler {
 
 class UserSaveQuestionCommentChangesAPIHandler {
     function post() {
-        if(isset($_POST["comment_id"]) &&  isset($_POST["comment_details"])) {
-            $comment_id = $_POST["comment_id"];
-            $comment_details = $_POST["comment_details"];
-            $has_saved = save_comment_changes_by_user($comment_id, $comment_details);
+        if(isset($_POST["comment_id"]) &&  isset($_POST["comment_content"])) {
+            $comment_id = htmlspecialchars($_POST["comment_id"]);
+            $comment_details = htmlspecialchars($_POST["comment_content"]);
+            $has_saved = save_question_comment_changes_by_user($comment_id, $comment_details);
+            echo $has_saved;
         }
     }
 }
@@ -545,7 +550,7 @@ class UserSaveQuestionCommentChangesAPIHandler {
 class UserDeleteQuestionCommentAPIHandler {
     function post() {
         if(isset($_POST["comment_id"])) {
-            $comment_id = $_POST["comment_id"];
+            $comment_id = htmlspecialchars($_POST["comment_id"]);
             $has_deleted = delete_comment($comment_id);
         }
     }
@@ -555,14 +560,14 @@ class UserDeleteQuestionCommentAPIHandler {
 class AdminCreationAPIHandler {
     function post() {
         // Creates an admin profile and an admin account
-        if (isset($_POST['admin-id']) && isset($_POST['password1']) && isset($_POST['password2'])) {
-            $admin_id = trim($_POST['admin-id']);
+        if (isset($_POST['login-id']) && isset($_POST['password1']) && isset($_POST['password2'])) {
+            $login_id = htmlspecialchars(trim($_POST['login-id']));
             $password1 = trim($_POST['password1']);
             $password2 = trim($_POST['password2']);
-            if ($admin_id !== "" && $password1 !== "" && $password2 !== "" && $password1 === $password2) {
-                $profile_fk = create_profile($admin_id);
+            if ($login_id !== "" && $password1 !== "" && $password2 !== "" && $password1 === $password2) {
+                $profile_fk = create_profile($login_id);
                 $hashed_password = crypt($password1, $password1);
-                create_admin_account($admin_id, $hashed_password, $profile_fk);
+                create_admin_account($login_id, $hashed_password, $profile_fk);
             }
         }
         $redirect_address = '/admin-create-admin-account';
@@ -572,26 +577,26 @@ class AdminCreationAPIHandler {
 
 class AdminEditAPIHandler {
     function post() {
-        if (isset($_POST['admin-id']) && isset($_POST['new-admin-id']) && isset($_POST['display-name'])) {
+        if (isset($_POST['admin-id']) && isset($_POST['login-id']) && isset($_POST['display-name'])) {
             $admin_id = trim($_POST['admin-id']);
-            $new_admin_id = trim($_POST['new-admin-id']);
-            $display_name = trim($_POST['display-name']);
-            if ($new_admin_id !== "" && $display_name !== "") {
+            $login_id = htmlspecialchars(trim($_POST['login-id']));
+            $display_name = htmlspecialchars(trim($_POST['display-name']));
+            if ($login_id !== "" && $display_name !== "") {
                 if (isset($_POST['password1']) && isset($_POST['password2']) && $_POST['password1'] !== "" && $_POST['password2'] !== "") {
                     $password1 = trim($_POST['password1']);
                     $password2 = trim($_POST['password2']);
                     if ($password1 !== "" && $password2 !== "" && $password1 === $password2) {
                         $hashed_password = crypt($password1, $password1);
-                        update_admin_account($admin_id, $new_admin_id, $hashed_password);
+                        update_admin_account($admin_id, $login_id, $hashed_password);
                     }
                 } else {
                     $admin = retrieve_admin_account($admin_id);
-                    update_admin_id($admin_id, $new_admin_id);
+                    update_admin_id($admin_id, $login_id);
                 }
                 update_profile($admin['profile_fk'], $display_name);
             }
         }
-        $redirect_address = '/admin-edit-admin-account?admin-id=' . $new_admin_id;
+        $redirect_address = '/admin-edit-admin-account?admin-id=' . $admin_id;
         header('Location: ' . $redirect_address);
     }
 }
@@ -630,7 +635,7 @@ class UserEditAPIHandler {
     function post() {
         if (isset($_POST['user-id']) && isset($_POST['display-name'])) {
             $user_id = trim($_POST['user-id']);
-            $display_name = trim($_POST['display-name']);
+            $display_name = htmlspecialchars(trim($_POST['display-name']));
             if ($user_id !== "" && $display_name !== "") {
                 if (isset($_POST['role'])) {
                     update_user($user_id, 1);
@@ -650,8 +655,8 @@ class QuestionEditAPIHandler {
     function post() {
         if (isset($_POST['question-id']) && isset($_POST['title']) && isset($_POST['content'])) {
             $question_id = trim($_POST['question-id']);
-            $title = trim($_POST['title']);
-            $content = trim($_POST['content']);
+            $title = htmlspecialchars(trim($_POST['title']));
+            $content = htmlspecialchars(trim($_POST['content']));
             if ($question_id !== "" && $title !== "") {
                 if (isset($_POST['visible'])) {
                     update_question($question_id, $title, $content, 1);
@@ -707,7 +712,7 @@ class AnswerEditAPIHandler {
     function post() {
         if (isset($_POST['answer-id']) && isset($_POST['content'])) {
             $answer_id = trim($_POST['answer-id']);
-            $content = trim($_POST['content']);
+            $content = htmlspecialchars(trim($_POST['content']));
             if ($answer_id !== "" && $content !== "") {
                 if (isset($_POST['visible'])) {
                     update_answer($answer_id, $content, 1);
@@ -762,7 +767,7 @@ class AnswerCommentDeletionAPIHandler {
 class TagCreationAPIHandler {
     function post() {
         if (isset($_POST['tag-name'])) {
-            $tag_name = trim($_POST['tag-name']);
+            $tag_name = htmlspecialchars(trim($_POST['tag-name']));
             if ($tag_name !== "") {
                 create_tag($tag_name);
             }
@@ -776,7 +781,7 @@ class TagEditAPIHandler {
     function post() {
         if (isset($_POST['tag-name']) && isset($_POST['tag-id'])) {
             $tag_id = trim($_POST['tag-id']);
-            $tag_name = trim($_POST['tag-name']);
+            $tag_name = htmlspecialchars(trim($_POST['tag-name']));
             if ($tag_name !== "") {
                 update_tag($tag_id, $tag_name);
             }
@@ -795,6 +800,19 @@ class TagDeletionAPIHandler {
         }
         $redirect_address = '/admin-view-tags';
         header('Location: ' . $redirect_address);
+    }
+}
+
+class TagSearchAPIHandler {
+    function get_xhr() {
+        $data = retrieve_tag_names_like_string($_GET["term"]);
+
+        $result = array();
+        for ($i = 0; $i < count($data); $i++) {
+            array_push($result, $data[$i][0]);
+        }
+
+        return_success_response($result);
     }
 }
 
@@ -902,6 +920,7 @@ $json_base_urls = array(
     "/tag-creation/" => "TagCreationAPIHandler",
     "/tag-edit/" => "TagEditAPIHandler",
     "/tag-deletion/" => "TagDeletionAPIHandler",
+    "/tag/search/" => "TagSearchAPIHandler",
 
     "/user-question-edit/" => "UserSaveQuestionChangesAPIHandler",
     "/user-question-delete/" => "UserDeleteQuestionAPIHandler",

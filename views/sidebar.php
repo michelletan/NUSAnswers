@@ -1,5 +1,5 @@
 <!-- Menu for mobile -->
-<nav id="mobile-menu" class="affix col-xs-5 col-sm-5 hidden-md hidden-lg hidden-xl">
+<nav id="mobile-menu" class="affix col-xs-5 col-sm-5 col-md-5 hidden-lg hidden-xl">
     <div class="container-fluid center-block">
         <div class="row">
             <div class="col-md-10 col-lg-10">
@@ -32,7 +32,7 @@
                     <div class="sidebar-title">Tags</div>
                     <div class="sidebar-body">
                         <?php
-                        $tags = retrieve_tag_names(SIDEBAR_TAG_NUMBER);
+                        $tags = retrieve_tag_names_with_limit(SIDEBAR_TAG_NUMBER);
                         foreach ($tags as $tag) { ?>
                             <a href="/tagged/<?php echo $tag["tag_name"]; ?>/">#<?php echo $tag["tag_name"]; ?></a>
                         <?php }?>
@@ -45,7 +45,7 @@
 <!-- Menu for desktop -->
 <div class="hidden-xs hidden-sm hidden-md col-lg-3 col-lg-3">
 </div>
-<div class="sidebar affix hidden-xs hidden-sm col-md-3 col-lg-3 col-xl-3">
+<div class="sidebar affix hidden-xs hidden-sm hidden-md col-lg-3 col-xl-3">
     <div class="row">
         <div class="col-md-2 col-lg-2">
         </div>
@@ -70,7 +70,7 @@
                 <div class="sidebar-title">Tags</div>
                 <div class="sidebar-body">
                     <?php
-                    $tags = retrieve_tag_names(SIDEBAR_TAG_NUMBER);
+                    $tags = retrieve_tag_names_with_limit(SIDEBAR_TAG_NUMBER);
                     foreach ($tags as $tag) { ?>
                         <a href="/tagged/<?php echo $tag["tag_name"]; ?>/">#<?php echo $tag["tag_name"]; ?></a>
                     <?php }?>

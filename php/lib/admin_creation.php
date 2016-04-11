@@ -1,12 +1,12 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
 
-function create_admin_account($admin_id_param, $hashed_password_param, $profile_fk_param) {
+function create_admin_account($login_id_param, $hashed_password_param, $profile_fk_param) {
     global $db;
-    $id = $db->escape_string($admin_id_param);
+    $id = $db->escape_string($login_id_param);
     $hashed_password = $db->escape_string($hashed_password_param);
     $profile_fk = $db->escape_string($profile_fk_param);
-    $query = "INSERT INTO admins VALUES('" . $id . "', '" . $hashed_password . "', " . $profile_fk . ");";
+    $query = "INSERT INTO admins (login_id, hashed_password, profile_fk) VALUES('" . $id . "', '" . $hashed_password . "', " . $profile_fk . ");";
     $db->query($query);
 }
 

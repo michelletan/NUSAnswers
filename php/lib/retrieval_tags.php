@@ -1,5 +1,22 @@
 <?php
-function retrieve_tag_names($limit_param) {
+function retrieve_tag_names_like_string($string_param) {
+    global $db;
+
+    $string = $db->escape_string($string_param);
+
+    $query = "SELECT tag_name FROM tags WHERE tag_name LIKE '%" . $string . "%'";
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all();
+        return $rows;
+    }
+}
+
+function retrieve_tag_names_with_limit($limit_param) {
     global $db;
 
     if (!is_int($limit_param)) {

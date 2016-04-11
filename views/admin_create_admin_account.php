@@ -3,9 +3,11 @@
     <?php include_once __DIR__ . '/admin_navbar.php'; ?>
     <div class="container-fluid">
         <div class="row">
-            <?php include_once __DIR__ . '/admin_sidebar.php'; ?>
-            <div class="main col-md-9 col-lg-10">
-                <div class="top-buffer-20px panel panel-default">
+            <div class="col-md-4 col-lg-3">
+                <?php include_once __DIR__ . '/admin_sidebar.php'; ?>
+            </div>
+            <div class="col-md-8 col-lg-9">
+                <div class="top-buffer-70px panel panel-default">
                     <ul class="list-group">
                         <li class="list-group-item">
                             <h4>Create Admin Account</h4>
@@ -15,8 +17,8 @@
                                 <div class="col-md-6">
                                     <form method="post" action="/api/admin-creation/">
                                         <div class="form-group">
-                                            <label for="admin-id">Admin ID</label>
-                                            <input required type="text" class="form-control" id="admin-id" placeholder="Admin ID" name="admin-id">
+                                            <label for="login-id">Login ID</label>
+                                            <input required type="text" class="form-control" id="login-id" placeholder="Login ID" name="login-id">
                                         </div>
                                         <div class="form-group">
                                             <label for="password1">Password</label>

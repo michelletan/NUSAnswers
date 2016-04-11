@@ -1,10 +1,10 @@
 <?php include_once __DIR__ . '/header.php'; ?>
 <body>
     <?php include_once __DIR__ . '/navbar.php'; ?>
-    <main id="panel">
     <div class="container-fluid center-block">
         <div class="row">
             <?php include_once __DIR__ . '/sidebar.php'; ?>
+            <main id="panel">
             <div class="main col-md-6 col-lg-6">
                 <h3 class="page-title"><?php if ($question) { echo $question["title"]; } else { echo "Default question title"; }?></h3>
                 <div id="<?php if ($question) { echo $question["question_id"]; } ?>" class="card">
@@ -83,9 +83,9 @@
                 <?php } else { ?>
                 <?php } ?>
             </div>
+            </main>
         </div>
     </div>
-    </main>
     <?php include_once __DIR__ . '/footer.php'; ?>
     <script src="/js/question.js"></script>
     <script src="/js/vote-ajax.js"></script>
