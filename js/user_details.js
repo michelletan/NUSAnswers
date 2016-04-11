@@ -54,6 +54,7 @@ $(document).ready(function() {
         method: "post",
         data: {comment_id: questionCommentID, comment_content: $("#comment-details").val()},
         success:function(data) {
+          console.log(data);
           window.location.reload();
         }
       });
@@ -124,11 +125,10 @@ function deleteAnswer(id) {
   });
 }
 
-/*
 function editAnswerComment(id, answerContent, commentContent) {
   $("#edit-modal").modal("show");
-  document.getElementById("answer-content").innerHTML = answerContent;
-  document.getElementById("comment-details").innerHTML = commentContent;
+  $("#answer-details").text(answerContent);
+  $("#comment-details").val(commentContent);
   answerCommentID = id;
 }
 
@@ -145,4 +145,3 @@ function deleteAnswerComment(id) {
     });
   });
 }
-*/

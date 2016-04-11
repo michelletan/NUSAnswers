@@ -300,11 +300,11 @@ class UserDashboardAnswersHandler {
     }
 }
 
-/*class UserDashboardAnswerCommentsHandler {
+class UserDashboardAnswerCommentsHandler {
     function get() {
         require VIEW_DIRECTORY . '/user_answer_comments_list.php';
     }
-}*/
+}
 
 class AdminDashboardHandler {
     function get() {
@@ -561,6 +561,26 @@ class UserDeleteAnswerAPIHandler {
         if(isset($_POST["answer_id"])) {
             $answer_id = htmlspecialchars($_POST["answer_id"]);
             $has_deleted = delete_answer($answer_id);
+        }
+    }
+}
+
+class UserSaveAnswerCommentChangesAPIHandler {
+    function post() {
+        if(isset($_POST["comment_id"]) &&  isset($_POST["comment_content"])) {
+            $comment_id = htmlspecialchars($_POST["comment_id"]);
+            $comment_details = htmlspecialchars($_POST["comment_content"]);
+            $has_saved = save_answer_comment_changes_by_user($comment_id, $comment_details);
+            echo $has_saved;
+        }
+    }
+}
+
+class UserDeleteAnswerCommentAPIHandler {
+    function post() {
+        if(isset($_POST["comment_id"])) {
+            $comment_id = htmlspecialchars($_POST["comment_id"]);
+            $has_deleted = delete_answer_comment($comment_id);
         }
     }
 }
@@ -934,7 +954,9 @@ $json_base_urls = array(
     "/user-question-comment-edit/" => "UserSaveQuestionCommentChangesAPIHandler",
     "/user-question-comment-delete/" => "UserDeleteQuestionCommentAPIHandler",
     "/user-answer-edit/" => "UserSaveAnswerChangesAPIHandler",
-    "/user-answer-delete/" => "UserDeleteAnswerAPIHandler"
+    "/user-answer-delete/" => "UserDeleteAnswerAPIHandler",
+    "/user-answer-comment-edit/" => "UserSaveAnswerCommentChangesAPIHandler",
+    "/user-answer-comment-delete/" => "UserDeleteAnswerCommentAPIHandler"
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);
