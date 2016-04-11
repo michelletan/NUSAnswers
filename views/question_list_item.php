@@ -29,6 +29,7 @@
                                 <?php
                                 $tags = $data["tags"];
                                 $tag_count = count($tags);
+                                if ($tag_count == 0) { echo "No tags yet"; }
                                 $count = 0;
                                 foreach ($tags as $tag) { ?>
                                     <a href="/tagged/<?php echo $tag["tag_name"]; ?>">#<?php echo $tag["tag_name"]; if ($count < $tag_count - 1) { echo ', '; } $count++;?></a>
