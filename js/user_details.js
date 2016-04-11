@@ -42,7 +42,6 @@ $(document).ready(function() {
         method: "post",
         data: {answer_id: answerID, answer_details: $("#answer-details").val()},
         success:function(data) {
-          console.log(data);
           window.location.reload();
         }
       });
@@ -54,7 +53,6 @@ $(document).ready(function() {
         method: "post",
         data: {comment_id: questionCommentID, comment_content: $("#comment-details").val()},
         success:function(data) {
-          console.log(data);
           window.location.reload();
         }
       });
@@ -129,7 +127,7 @@ function editAnswerComment(id, answerContent, commentContent) {
   $("#edit-modal").modal("show");
   $("#answer-details").text(answerContent);
   $("#comment-details").val(commentContent);
-  answerCommentID = id;
+  questionCommentID = id;
 }
 
 function deleteAnswerComment(id) {
