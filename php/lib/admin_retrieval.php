@@ -154,7 +154,6 @@ function retrieve_admin_account($id_param) {
     $return_array['admin_id'] = $row['admin_id'];
     $return_array['login_id'] = $row['login_id'];
     $return_array['hashed_password'] = $row['hashed_password'];
-    $return_array['role'] = $row['role'];
     $return_array['profile_fk'] = $row['profile_fk'];
   }
   else {
@@ -245,5 +244,42 @@ function retrieve_all_tags() {
     $return_array[] = $tag;
   }
   return $return_array;
+}
+
+function retrieve_table_num_rows($table_name_param) {
+  global $db;
+  $table_name = $db->escape_string($table_name_param);
+  $query = "SELECT COUNT(*) as quantity FROM " . $table_name . ";";
+  $result = $db->query($query);
+  if ($row = $result->fetch_assoc()) {
+    $num_rows = $row['quantity'];
+  } else {
+    $num_rows = 0;
+  }
+  return $num_rows;
+}
+
+function retrieve_answers_quantity() {
+  return retrieve_table_num_rows("answers");
+}
+
+function retrieve_questions_quantity() {
+  return retrieve_table_num_rows("questions");
+}
+
+function retrieve_users_quantity() {
+  return retrieve_table_num_rows("users");
+}
+
+function retrieve_upvotes_quantity() {
+  global $db;
+  $query = "SELECT COUNT(*) as quantity FROM votes WHERE vote_type = 1;";
+  $result = $db->query($query);
+  if ($row = $result->fetch_assoc()) {
+    $upvotes_quantity = $row['quantity'];
+  } else {
+    $upvotes_quantity = 0;
+  }
+  return $upvotes_quantity;
 }
 ?>

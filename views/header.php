@@ -15,6 +15,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/login_check.php';
 <link rel="stylesheet" type="text/css" href="/css/jquery-comments.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <link rel="stylesheet" type="text/css" href="/css/search.css">
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="/css/jquery.tagit.css">
 <!-- FAVICONS -->
 <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">

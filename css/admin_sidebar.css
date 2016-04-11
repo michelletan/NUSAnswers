@@ -1,0 +1,10 @@
+@media (max-width: 991px) {
+    #mobile-menu {
+        display: none;
+    }
+}
+
+#mobile-menu {
+    z-index: 100;
+    overflow-y: auto;
+}

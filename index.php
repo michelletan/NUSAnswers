@@ -308,6 +308,10 @@ class UserDashboardAnswersHandler {
 
 class AdminDashboardHandler {
     function get() {
+        $answers_quantity = retrieve_answers_quantity();
+        $questions_quantity = retrieve_questions_quantity();
+        $users_quantity = retrieve_users_quantity();
+        $upvotes_quantity = retrieve_upvotes_quantity();
         require VIEW_DIRECTORY . '/admin_dashboard.php';
     }
 }
@@ -808,6 +812,19 @@ class TagDeletionAPIHandler {
     }
 }
 
+class TagSearchAPIHandler {
+    function get_xhr() {
+        $data = retrieve_tag_names_like_string($_GET["term"]);
+
+        $result = array();
+        for ($i = 0; $i < count($data); $i++) {
+            array_push($result, $data[$i][0]);
+        }
+
+        return_success_response($result);
+    }
+}
+
 $html_urls = array(
     "/" => "PopularQuestionsHandler",
 
@@ -910,6 +927,7 @@ $json_base_urls = array(
     "/tag-creation/" => "TagCreationAPIHandler",
     "/tag-edit/" => "TagEditAPIHandler",
     "/tag-deletion/" => "TagDeletionAPIHandler",
+    "/tag/search/" => "TagSearchAPIHandler",
 
     "/user-question-edit/" => "UserSaveQuestionChangesAPIHandler",
     "/user-question-delete/" => "UserDeleteQuestionAPIHandler",

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     $('.post-foldout').hide();
 
     $('.btn-view-comments').click(function(e) {
@@ -64,6 +65,8 @@ function populateFoldout(foldout, data, postId, isQuestion) {
         enableUpvoting: false,
         enableDeleting: false,
         enableAttachments: false,
+        enableNavigation: false,
+        enableReplying: $("#is_logged_in").val(),
         profilePictureURL: '/img/profile02.png',
         fieldMappings: {
             id: 'comment_id',

@@ -13,5 +13,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/login_check.php';
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/metisMenu.min.css">
 <link rel="stylesheet" href="../css/admin.css">
+<link rel="stylesheet" href="../css/admin_sidebar.css">
 <link rel="stylesheet" href="../css/admin_table.css">
 </head>

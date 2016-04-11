@@ -17,6 +17,12 @@ textarea:focus, input:focus, .uneditable-input:focus {
     outline: 0 none !important;
 }
 
+.ui-widget-content:focus {
+    border-color: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
 /* Hide scrollbar */
 /*::-webkit-scrollbar {
     width: 0px;
@@ -326,6 +332,19 @@ button {
     margin-top: 70px;
 }
 
+
+.top-buffer-20px {
+    margin-top: 20px;
+}
+
+.top-buffer-40px {
+    margin-top: 40px;
+}
+
+.top-buffer-70px {
+    margin-top: 70px;
+}
+
 /* Resize reCaptcha */
 @media screen and (max-height: 575px){
 #rc-imageselect, .g-recaptcha {
@@ -374,8 +393,12 @@ body {
 
 /* end Slideout CSS */
 
-.top-buffer-20px {
-    margin-top: 20px;
+/* Tag-it CSS */
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    font-family: 'Open Sans', sans-serif !important;
+    background: none !important;
+    color: #337ab7 !important;
+    font-weight: normal !important;
 }
 
 /* Modal CSS */
