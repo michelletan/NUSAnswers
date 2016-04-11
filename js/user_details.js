@@ -42,6 +42,7 @@ $(document).ready(function() {
         method: "post",
         data: {answer_id: answerID, answer_details: $("#answer-details").val()},
         success:function(data) {
+          console.log(data);
           window.location.reload();
         }
       });
@@ -82,7 +83,7 @@ function deleteQuestion(id) {
 
 function editQuestionComment(id, questionTitle, commentContent) {
   $("#edit-modal").modal("show");
-  $("#question-title").val(questionTitle);
+  $("#question-title").text(questionTitle);
   $("#question-comment-details").val(commentContent);
   questionCommentID = id;
 }
@@ -101,11 +102,11 @@ function deleteQuestionComment(id) {
   });
 }
 
-/*
+
 function editAnswer(id, questionTitle, answerContent) {
   $("#edit-modal").modal("show");
-    document.getElementById("question-title").value = questionTitle;
-    document.getElementById("answer-details").innerHTML = answerContent;
+    $("#question-title").text(questionTitle);
+    $("#answer-details").val(answerContent);
     answerID = id;
 }
 
@@ -123,6 +124,7 @@ function deleteAnswer(id) {
   });
 }
 
+/*
 function editAnswerComment(id, answerContent, commentContent) {
   $("#edit-modal").modal("show");
   document.getElementById("answer-content").innerHTML = answerContent;

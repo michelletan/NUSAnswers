@@ -65,6 +65,8 @@ function populateFoldout(foldout, data, postId, isQuestion) {
         enableUpvoting: false,
         enableDeleting: false,
         enableAttachments: false,
+        enableNavigation: false,
+        enableReplying: $("#is_logged_in").val(),
         profilePictureURL: '/img/profile02.png',
         fieldMappings: {
             id: 'comment_id',
