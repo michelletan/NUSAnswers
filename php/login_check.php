@@ -74,4 +74,10 @@ function has_mod_rights() {
 function is_logged_in() {
 	return isset($_SESSION['profile']) && isset($_SESSION['display_name']) && isset($_SESSION['role']);
 }
+
+function logout_active_session() {
+	unset($_SESSION['profile']);
+	unset($_SESSION['display_name']);
+	unset($_SESSION['role']);
+}
 ?>

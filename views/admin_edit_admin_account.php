@@ -27,7 +27,7 @@ if (isset($_GET['admin-id'])) {
                             <li class="list-group-item">
                                 <h4>Edit Admin Account</h4>
                             </li>
-                            <li class="list-group-item summary-display">
+                            <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -48,7 +48,7 @@ if (isset($_GET['admin-id'])) {
                             <li class="list-group-item">
                                 <h4>Edit Admin Profile</h4>
                             </li>
-                            <li class="list-group-item summary-display">
+                            <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">

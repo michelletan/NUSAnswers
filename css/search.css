@@ -1,7 +1,7 @@
 .gsc-orderby-container,
 .gcsc-branding,
 .gsc-url-top  {
-    display: none;
+    display: none !important;
 }
 
 div.gs-snippet {

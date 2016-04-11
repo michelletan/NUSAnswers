@@ -23,7 +23,7 @@ if (isset($_GET['tag-id'])) {
                         <li class="list-group-item">
                             <h4>Edit Tag</h4>
                         </li>
-                        <li class="list-group-item summary-display">
+                        <li class="list-group-item">
                             <div class="row">
                                 <div class="col-md-6">
                                     <form method="post" action="/api/tag-edit/">

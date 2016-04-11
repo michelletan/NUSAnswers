@@ -8,6 +8,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_update.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_deletion.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/login_admin.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission_answers.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/json.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/vote.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/user_changes.php';
@@ -259,7 +260,7 @@ class UserProfileHandler {
 }
 
 class SearchHandler {
-    function get($id) {
+    function get() {
         require VIEW_DIRECTORY . '/search.php';
     }
 }
@@ -308,107 +309,192 @@ class UserDashboardAnswersHandler {
 
 class AdminDashboardHandler {
     function get() {
-        $answers_quantity = retrieve_answers_quantity();
-        $questions_quantity = retrieve_questions_quantity();
-        $users_quantity = retrieve_users_quantity();
-        $upvotes_quantity = retrieve_upvotes_quantity();
-        require VIEW_DIRECTORY . '/admin_dashboard.php';
+        if (is_logged_in() && has_admin_rights()) {
+            $answers_quantity = retrieve_answers_quantity();
+            $questions_quantity = retrieve_questions_quantity();
+            $users_quantity = retrieve_users_quantity();
+            $upvotes_quantity = retrieve_upvotes_quantity();
+            require VIEW_DIRECTORY . '/admin_dashboard.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminCreateAdminAccountHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_create_admin_account.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_create_admin_account.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewAdminAccountsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_admin_accounts.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_view_admin_accounts.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditAdminAccountsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_admin_account.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_edit_admin_account.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewUsersHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_users.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_view_users.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditUserHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_user.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_edit_user.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewQuestionsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_questions.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_view_questions.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditQuestionHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_question.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_edit_question.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewQuestionCommentsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_question_comments.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_view_question_comments.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditQuestionCommentHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_question_comment.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_edit_question_comment.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewAnswersHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_answers.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_view_answers.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditAnswerHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_answer.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_edit_answer.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewAnswerCommentsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_answer_comments.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_view_answer_comments.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditAnswerCommentHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_answer_comment.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_edit_answer_comment.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminCreateTagHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_create_tag.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_create_tag.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewTagsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_tags.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_view_tags.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditTagHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_tag.php';
+        if (is_logged_in() && has_admin_rights()) {
+            require VIEW_DIRECTORY . '/admin_edit_tag.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
@@ -432,44 +518,24 @@ class AdminLoginAPIHandler {
   }
 }
 
-class QuestionSubmitAPIHandler {
-    function post_xhr() {
-        $array_to_return = array();
-        if (isset($_POST['type'])) {
-            $type = $_POST['type'];
-            if ($type == "question") {
-                if (!isset($_POST['title'])) {
-                    $array_to_return['status'] = "error";
-                    $array_to_return['message'] = "Error: no title";
-                } else if (!isset($_POST['content'])) {
-                    $array_to_return['status'] = "error";
-                    $array_to_return['message'] = "Error: no content";
-                } else {
-                    $tags = [];
-                    if (isset($_POST['tags'])) {
-                        $tags = json_decode($_POST['tags']);
-                    }
+// Handlers for Logout API
 
-                    // check if person is logged in, and get the profile id here
-                    // left blank for now
-                    $profile = NULL;
-                    $id = submit_question($_POST['title'], $_POST['content'], $tags, $profile);
+class AdminLogoutAPIHandler {
+  function get() {
+    logout_active_session();
+    $redirect_address = "/admin/login";
+    header('Location: ' . $redirect_address);
+  }
+}
 
-                    if ($id) {
-                        $array_to_return['status'] = "success";
-                        $array_to_return['message'] = "Question submitted successfully";
-                        $array_to_return['question_id'] = $id;
-                    } else {
-                        $array_to_return['status'] = "error";
-                        $array_to_return['message'] = "Question submission not successful";
-                    }
-                }
-            }
-            $json_to_return = json_encode($array_to_return);
-            echo($json_to_return);
-            exit();
-        }
-    }
+// Handlers for submission API
+
+class AnswerSubmitFromQuestionAPIhandler {
+  function post() {
+    $redirect_address = "/question/" . $_POST['question-friendly-url'];
+    $query_result = submit_answer($_POST['question-id'], $_POST['answer-content'], 1);
+    header('Location: ' . $redirect_address);
+  }
 }
 
 class QuestionCommentAPIHandler {
@@ -851,6 +917,8 @@ class TagDeletionAPIHandler {
     }
 }
 
+// Admin API Handlers END
+
 class TagSearchAPIHandler {
     function get_xhr() {
         $data = retrieve_tag_names_like_string($_GET["term"]);
@@ -937,11 +1005,14 @@ $json_url_prefix = "/api";
 
 $json_base_urls = array(
     "/login/admin" => "AdminLoginAPIHandler",
+    "/logout/admin" => "AdminLogoutAPIHandler",
     "/question/comments/:number" => "QuestionCommentAPIHandler",
     "/answer/comments/:number" => "AnswerCommentAPIHandler",
 
     "/question/comments/post" => "QuestionCommentPostAPIHandler",
     "/answer/comments/post" => "AnswerCommentPostAPIHandler",
+
+    "/answer/submit/question" => "AnswerSubmitFromQuestionAPIhandler",
 
     "/upvote/" => "UpvoteAPIHandler",
     "/downvote/" => "DownvoteAPIHandler",
@@ -953,7 +1024,6 @@ $json_base_urls = array(
     "/user-deletion/" => "UserDeletionAPIHandler",
     "/user-edit/" => "UserEditAPIHandler",
 
-    "/question-submit" => "QuestionSubmitAPIHandler",
     "/question-edit/" => "QuestionEditAPIHandler",
     "/question-deletion/" => "QuestionDeletionAPIHandler",
     "/question-comment-edit/" => "QuestionCommentEditAPIHandler",

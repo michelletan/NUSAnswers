@@ -23,7 +23,7 @@ if (isset($_GET['comment-id'])) {
                         <li class="list-group-item">
                             <h4>Edit Answer Comment</h4>
                         </li>
-                        <li class="list-group-item summary-display">
+                        <li class="list-group-item">
                             <div class="row">
                                 <div class="col-md-6">
                                     <form method="post" action="/api/answer-comment-edit/">
