@@ -1,6 +1,7 @@
 var questionID = -1;
-var commentID = -1;
+var questionCommentID = -1;
 var answerID = -1;
+var answerCommentID = -1;
 $(document).ready(function() {
   $("#menu").metisMenu();
     $('.btn-filter').on('click', function () {
@@ -24,11 +25,33 @@ $(document).ready(function() {
       });
     });
 
-    $("#saveCommentChanges").on('click', function() {
+    $("#saveQuestionCommentChanges").on('click', function() {
       $.ajax({
         url: "http://localhost:8000/api/user-question-comment-edit/",  
         method: "post",
-        data: {comment_id: commentID, comment_content: document.getElementById("comment-details").innerHTML},
+        data: {comment_id: questionCommentID, comment_content: document.getElementById("question-comment-details").innerHTML},
+        success:function(data) {
+          window.location.reload();
+        }
+      });
+    });
+
+    $("#saveAnswerChanges").on('click', function() {
+      $.ajax({
+        url: "http://localhost:8000/api/user-answer-edit/",  
+        method: "post",
+        data: {answer_id: answerID, answer_details: document.getElementById("answer-details").innerHTML},
+        success:function(data) {
+          window.location.reload();
+        }
+      });
+    });
+
+    $("#saveAnswerCommentChanges").on('click', function() {
+      $.ajax({
+        url: "http://localhost:8000/api/user-answer-comment-edit/",  
+        method: "post",
+        data: {comment_id: questionCommentID, comment_content: document.getElementById("comment-details").innerHTML},
         success:function(data) {
           window.location.reload();
         }
@@ -57,16 +80,16 @@ function deleteQuestion(id) {
   });
 }
 
-function editComment(id, questionTitle, commentContent) {
+function editQuestionComment(id, questionTitle, commentContent) {
   $("#edit-modal").modal("show");
   document.getElementById("question-title").innerHTML = questionTitle;
-  document.getElementById("comment-details").innerHTML = commentContent;
-  commentID = id;
+  document.getElementById("question-comment-details").innerHTML = commentContent;
+  questionCommentID = id;
 }
 
-function deleteComment(id) {
+function deleteQuestionComment(id) {
   $("#delete-modal").modal("show");
-  $("#deleteComment").on('click', function() {
+  $("#deleteQuestionComment").on('click', function() {
     $.ajax({
       url: "http://localhost:8000/api/user-question-comment-delete/",
       method: "post",
@@ -77,3 +100,47 @@ function deleteComment(id) {
     });
   });
 }
+
+/*
+function editAnswer(id, questionTitle, answerContent) {
+  $("#edit-modal").modal("show");
+    document.getElementById("question-title").value = questionTitle;
+    document.getElementById("answer-details").innerHTML = answerContent;
+    answerID = id;
+}
+
+function deleteAnswer(id) {
+  $("#delete-modal").modal("show");
+  $("#deleteAnswer").on('click', function() {
+    $.ajax({
+      url: "http://localhost:8000/api/user-answer-delete/",
+      method: "post",
+      data: {answer_id: id},
+      success:function(data) {
+        window.location.reload();
+      }
+    });
+  });
+}
+
+function editAnswerComment(id, answerContent, commentContent) {
+  $("#edit-modal").modal("show");
+  document.getElementById("answer-content").innerHTML = answerContent;
+  document.getElementById("comment-details").innerHTML = commentContent;
+  answerCommentID = id;
+}
+
+function deleteAnswerComment(id) {
+  $("#delete-modal").modal("show");
+  $("#deleteAnswerComment").on('click', function() {
+    $.ajax({
+      url: "http://localhost:8000/api/user-answer-comment-delete/",
+      method: "post",
+      data: {comment_id: id},
+      success:function(data) {
+        window.location.reload();
+      }
+    });
+  });
+}
+*/
