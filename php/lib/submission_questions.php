@@ -1,24 +1,24 @@
 <?php
-function submit_question_anonymously($title_param, $content_param, $tags_param) {
-  global $db;
-  $title = $db->escape_string($title_param);
-  $content = $db->escape_string($content_param);
-  $friendly_url = get_seo_string($title);
-  $tags = array();
-  foreach ($tags_param as $value) {
-    $tags[] = $db->escape_string($value);
-  }
-  $query = "INSERT INTO questions (title, content, friendly_url) " .
-           "VALUES ('$title', '$content', '$friendly_url')";
+// function submit_question_anonymously($title_param, $content_param, $tags_param) {
+//   global $db;
+//   $title = $db->escape_string($title_param);
+//   $content = $db->escape_string($content_param);
+//   $friendly_url = get_seo_string($title);
+//   $tags = array();
+//   foreach ($tags_param as $value) {
+//     $tags[] = $db->escape_string($value);
+//   }
+//   $query = "INSERT INTO questions (title, content, friendly_url) " .
+//            "VALUES ('$title', '$content', '$friendly_url')";
 
-  $result = $db->query($query);
-  if ($result) {
-    $id = $db->insert_id;
-    submit_tags($tags, $id);
-    return $id;
-  }
-  return false;
-}
+//   $result = $db->query($query);
+//   if ($result) {
+//     $id = $db->insert_id;
+//     submit_tags($tags, $id);
+//     return $id;
+//   }
+//   return false;
+// }
 
 function submit_question($title_param, $content_param, $tags_param, $profile_id_param) {
   global $db;

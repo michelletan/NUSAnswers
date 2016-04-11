@@ -9,6 +9,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_deletion.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/login_admin.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission_answers.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/recaptcha-master/src/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/json.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/vote.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/user_changes.php';
@@ -533,8 +534,19 @@ class AdminLogoutAPIHandler {
 class AnswerSubmitFromQuestionAPIhandler {
   function post() {
     $redirect_address = "/question/" . $_POST['question-friendly-url'];
-    $query_result = submit_answer($_POST['question-id'], $_POST['answer-content'], 1);
+    $query_question_id = htmlspecialchars($_POST['question-id']);
+    $query_answer_contents = htmlspecialchars($_POST['answer-content']);
+    $query_result = submit_answer($query_question_id, $query_answer_contents, 1);
     header('Location: ' . $redirect_address);
+  }
+}
+
+class AnswerSubmitFromHomeAPIhandler {
+  function post() {
+    $query_question_id = htmlspecialchars($_POST['question_id']);
+    $query_answer_contents = htmlspecialchars($_POST['answer_content']);
+    $query_result = submit_answer($query_question_id, $query_answer_contents, 1);
+    echo $query_result ? 'true' : 'false';
   }
 }
 
@@ -600,6 +612,56 @@ class AnswerCommentPostAPIHandler {
             }
         } else {
             return_bad_request_error_response();
+        }
+    }
+}
+
+class QuestionSubmitAPIHandler {
+    function post_xhr() {
+        $array_to_return = array();
+        if (isset($_POST['type'])) {
+            $type = $_POST['type'];
+            if ($type == "question") {
+                if(!isset($_POST['response'])) {
+                    $array_to_return['status'] = "error";
+                    $array_to_return['message'] = "Error: recaptcha not selected";
+                } else if (empty($_POST['title']) || ctype_space($_POST['title'])) { // don't want unset or empty strings
+                    $array_to_return['status'] = "error";
+                    $array_to_return['message'] = "Error: no title";
+                } else if (emptyt($_POST['content']) || ctype_space($_POST['content'])) {
+                    $array_to_return['status'] = "error";
+                    $array_to_return['message'] = "Error: no content";
+                } else {
+                    $secret = '6LfDtxsTAAAAAKVKX9M3CnOE7RgKfhTuAWYrhe6U';
+                    $recaptcha = new \ReCaptcha\ReCaptcha($secret);
+                    $resp = $recaptcha->verify($_POST['response'], $_SERVER['REMOTE_ADDR']);
+
+                    if ($resp->isSuccess()) {
+                      $tags = [];
+                      if (isset($_POST['tags'])) {
+                        $tags = json_decode($_POST['tags']);
+                      }
+
+                      // check if person is logged in, and get the profile id here
+                      // left blank for now
+                      $profile = NULL;
+                      $id = submit_question($_POST['title'], $_POST['content'], $tags, $profile);
+                    } else {
+                      $id = false;
+                    }
+                    if ($id) {
+                        $array_to_return['status'] = "success";
+                        $array_to_return['message'] = "Question submitted successfully";
+                        $array_to_return['question_id'] = $id;
+                    } else {
+                        $array_to_return['status'] = "error";
+                        $array_to_return['message'] = "Question submission not successful";
+                    }
+                }
+            }
+            $json_to_return = json_encode($array_to_return);
+            echo($json_to_return);
+            exit();
         }
     }
 }
@@ -703,7 +765,7 @@ class UserDeleteAnswerCommentAPIHandler {
 // Handlers for Admin API
 
 class AdminCreationAPIHandler {
-    function post() {   
+    function post() {
         if (is_logged_in() && has_admin_rights()) {
             // Creates an admin profile and an admin account
             if (isset($_POST['login-id']) && isset($_POST['password1']) && isset($_POST['password2'])) {
@@ -837,7 +899,7 @@ class QuestionDeletionAPIHandler {
             }
             $redirect_address = '/admin-view-questions';
             header('Location: ' . $redirect_address);
-        }    
+        }
     }
 }
 
@@ -1076,6 +1138,7 @@ $json_base_urls = array(
     "/answer/comments/post" => "AnswerCommentPostAPIHandler",
 
     "/answer/submit/question" => "AnswerSubmitFromQuestionAPIhandler",
+    "/answer/submit/home" => "AnswerSubmitFromHomeAPIhandler",
 
     "/upvote/" => "UpvoteAPIHandler",
     "/downvote/" => "DownvoteAPIHandler",
@@ -1087,6 +1150,7 @@ $json_base_urls = array(
     "/user-deletion/" => "UserDeletionAPIHandler",
     "/user-edit/" => "UserEditAPIHandler",
 
+    "/question-submit/" => "QuestionSubmitAPIHandler",
     "/question-edit/" => "QuestionEditAPIHandler",
     "/question-deletion/" => "QuestionDeletionAPIHandler",
     "/question-comment-edit/" => "QuestionCommentEditAPIHandler",
