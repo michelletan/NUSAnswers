@@ -1,6 +1,10 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid center-block">
         <div class="row">
+            <input type="hidden" id="is-logged-in" value="<?php echo is_logged_in();?>" />
+            <input type="hidden" id="has-admin-rights" value="<?php echo has_admin_rights();?>" />
+            <input type="hidden" id="has_mod_rights" value="<?php echo has_mod_rights();?>" />
+            <input type="hidden" id="user-display-name" value="<?php echo get_active_display_name();?>" />
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header col-sm-12 col-sm-12 col-md-12 col-lg-2">
                 <div class="row">
