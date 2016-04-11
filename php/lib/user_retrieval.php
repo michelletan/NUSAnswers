@@ -104,4 +104,57 @@ function retrieve_comments_for_answer_by_user($name_param) {
         return $return_array;
     }
 }
+
+function retrieve_question_quantity_user($name_param) {
+    global $db;
+    $name = $db->escape_string($name_param);
+
+    $query = "SELECT COUNT(*) as quantity FROM questions WHERE profile_fk = 1";
+    $result = $db->query($query);
+    if ($row = $result->fetch_assoc()) {
+        $num_rows = $row['quantity'];
+    } else {
+        $num_rows = 0;
+    }
+    return $num_rows;
+}
+
+function retrieve_answer_quantity_user($name_param) {
+    global $db;
+    $name = $db->escape_string($name_param);
+
+    $query = "SELECT COUNT(*) as quantity FROM answers WHERE profile_fk = 1";
+    $result = $db->query($query);
+    if ($row = $result->fetch_assoc()) {
+        $num_rows = $row['quantity'];
+    } else {
+        $num_rows = 0;
+    }
+    return $num_rows;
+}
+
+function retrieve_comment_quantity_user($name_param) {
+    global $db;
+    $name = $db->escape_string($name_param);
+
+    $query = "SELECT COUNT(*) as quantityQues FROM question_comments WHERE profile_fk = 1";
+    $result = $db->query($query);
+
+    if ($row = $result->fetch_assoc()) {
+        $num_rows = $row['quantityQues'];
+    } else {
+        $num_rows = 0;
+    }
+
+    $query = "SELECT COUNT(*) as quantityAns FROM answer_comments WHERE profile_fk = 1";
+    $result = $db->query($query);
+
+    if ($row = $result->fetch_assoc()) {
+        $num_rows += $row['quantityAns'];
+    } else {
+        $num_rows += 0;
+    }    
+    
+    return $num_rows;
+}
 ?>

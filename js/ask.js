@@ -17,6 +17,7 @@ $(document).ready(function() {
          }
     });
 	$('.post-answer').hide();
+	$('.question-message').hide();
 	document.getElementById("btn-submit-question").disabled = true;
 });
 
@@ -27,6 +28,7 @@ function enableSubmit(){
 function postQuestion() {
 	var title = $('#question-title').val();
 	var content = $('#question-details').val();
+	var response = grecaptcha.getResponse();
   $.ajax({
 	    url: "/api/question-submit/",
 	    method: "POST",
@@ -34,7 +36,8 @@ function postQuestion() {
 	    data: {
 	      type: "question",
 	      title: title,
-	      content: content
+	      content: content,
+	      response: response
 	    },
 
 	    success: function(json) {
@@ -46,13 +49,13 @@ function postQuestion() {
 	      if(status=="success") {
 	      	var question_id = json['question_id'];
 	      	$('.post-answer').html(message + "<br>id#: " + question_id);
+      		$('.ask-form').hide();
+			$('.post-answer').show();
 	      }
 	      else {
-	      	$('.post-answer').html(message);
+	      	$('.question-message').html(message);
+			$('.question-message').show();
 	      }
 	    }
 	  });
-
-	$('.ask-form').hide();
-	$('.post-answer').show();
 }
