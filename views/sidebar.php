@@ -32,7 +32,7 @@
                     <div class="sidebar-title">Tags</div>
                     <div class="sidebar-body">
                         <?php
-                        $tags = retrieve_tag_names(SIDEBAR_TAG_NUMBER);
+                        $tags = retrieve_tag_names_with_limit(SIDEBAR_TAG_NUMBER);
                         foreach ($tags as $tag) { ?>
                             <a href="/tagged/<?php echo $tag["tag_name"]; ?>/">#<?php echo $tag["tag_name"]; ?></a>
                         <?php }?>
@@ -70,7 +70,7 @@
                 <div class="sidebar-title">Tags</div>
                 <div class="sidebar-body">
                     <?php
-                    $tags = retrieve_tag_names(SIDEBAR_TAG_NUMBER);
+                    $tags = retrieve_tag_names_with_limit(SIDEBAR_TAG_NUMBER);
                     foreach ($tags as $tag) { ?>
                         <a href="/tagged/<?php echo $tag["tag_name"]; ?>/">#<?php echo $tag["tag_name"]; ?></a>
                     <?php }?>
