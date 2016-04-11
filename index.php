@@ -889,16 +889,11 @@ $json_base_urls = array(
     "/tag-creation/" => "TagCreationAPIHandler",
     "/tag-edit/" => "TagEditAPIHandler",
     "/tag-deletion/" => "TagDeletionAPIHandler",
-<<<<<<< HEAD
+    
     "/user-question-edit/" => "UserSaveQuestionChangesAPIHandler",
     "/user-question-delete/" => "UserDeleteQuestionAPIHandler",
     "/user-question-comment-edit/" => "UserSaveQuestionCommentChangesAPIHandler",
     "/user-question-comment-delete/" => "UserDeleteQuestionCommentAPIHandler"
-=======
-
-    "/edit/" => "UserSaveChangesAPIHandler",
-    "/delete/" => "UserDeleteQuestionAPIHandler"
->>>>>>> e4bfe92d07aea9011caaeb61ed8edbced42844ab
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);
