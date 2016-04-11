@@ -3,7 +3,6 @@ $(document).ready(function() {
 
     $('.main').click(function(e) {
         if ($(e.target).hasClass("btn-view-comments")) {
-            console.log("yea");
             e.preventDefault();
 
             // Get its parent post
