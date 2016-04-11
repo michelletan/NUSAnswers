@@ -46,7 +46,7 @@ function retrieve_comments_for_question_by_user($name_param) {
     }
 }
 
-/*
+
 function retrieve_answers_by_user($name_param) {
     global $db;
     $name = $db->escape_string($name_param);
@@ -73,6 +73,7 @@ function retrieve_answers_by_user($name_param) {
     }
 }
 
+/*
 function retrieve_comments_for_answer_by_user($name_param) {
     global $db;
     $name = $db->escape_string($name_param);

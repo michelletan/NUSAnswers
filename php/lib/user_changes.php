@@ -26,4 +26,17 @@ function save_question_comment_changes_by_user($comment_id_param, $comment_detai
     	return 0;
     }
 }
+
+function save_answer_changes_by_user($answer_id_param, $answer_details) {
+    global $db;
+
+    $query = "UPDATE answers SET content = '" . $answer_details . "' WHERE answer_id = " . $answer_id_param;
+    $db->query($query);
+
+    if($db->affected_rows >= 0){ 
+        return 1;
+    } else {
+        return 0;
+    }
+}
 ?>
