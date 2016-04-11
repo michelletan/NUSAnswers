@@ -11,7 +11,7 @@ function retrieve_tag_names_like_string($string_param) {
     if ($result->num_rows == 0) {
         return array();
     } else {
-        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        $rows = $result->fetch_all();
         return $rows;
     }
 }

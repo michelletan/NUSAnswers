@@ -154,7 +154,6 @@ function retrieve_admin_account($id_param) {
     $return_array['admin_id'] = $row['admin_id'];
     $return_array['login_id'] = $row['login_id'];
     $return_array['hashed_password'] = $row['hashed_password'];
-    $return_array['role'] = $row['role'];
     $return_array['profile_fk'] = $row['profile_fk'];
   }
   else {

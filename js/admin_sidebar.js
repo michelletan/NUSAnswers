@@ -1,3 +1,5 @@
 $(document).ready(function() {
-    $("#menu").metisMenu();
+    $("#btn-toggle-menu").click(function() {
+        $("#mobile-menu").toggle();
+    });
 });
