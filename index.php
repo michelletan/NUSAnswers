@@ -566,8 +566,8 @@ class AnswerCommentAPIHandler {
 
 class QuestionCommentPostAPIHandler {
     function post() {
-        if (isset($_POST["question_id"]) && isset($_POST["content"])) {
-            $question_id = $_POST["question_id"];
+        if (isset($_POST["id"]) && isset($_POST["content"])) {
+            $question_id = $_POST["id"];
             $content = $_POST["content"];
             $parent = isset($_POST["parent"]) ? $_POST["parent"] : null;
 
@@ -586,8 +586,21 @@ class QuestionCommentPostAPIHandler {
 
 class AnswerCommentPostAPIHandler {
     function post() {
-        $success = submit_comment_for_answer();
-        echo $success;
+        if (isset($_POST["id"]) && isset($_POST["content"])) {
+            $answer_id = $_POST["id"];
+            $content = $_POST["content"];
+            $parent = isset($_POST["parent"]) ? $_POST["parent"] : null;
+
+            $comment = submit_comment_for_answer($answer_id, $content, $parent);
+
+            if (count($comment) > 0) {
+                return_success_response($comment[0]);
+            } else {
+                return_internal_server_error_response();
+            }
+        } else {
+            return_bad_request_error_response();
+        }
     }
 }
 
