@@ -165,13 +165,14 @@ function retrieve_admin_account($id_param) {
 
 function retrieve_all_user_records() {
   global $db;
-  $query = "SELECT user_id, profile_fk FROM users;";
+  $query = "SELECT user_id, login_id, profile_fk FROM users;";
   $users = $db->query($query);
   $return_array = array();
   while ($user = $users->fetch_assoc()) {
     $query = "SELECT display_name FROM profiles WHERE profile_id = " . $user['profile_fk'];
     $user_profiles = $db->query($query); 
     $user_record['user_id'] = $user['user_id'];
+    $user_record['login_id'] = $user['login_id'];
     if ($user_profile = $user_profiles->fetch_assoc()) {
       $user_record['display_name'] = $user_profile['display_name'];
     } else {
@@ -191,6 +192,7 @@ function retrieve_user($id_param) {
   if ($row = $result->fetch_assoc()) {
     $return_array['user_found'] = true;
     $return_array['user_id'] = $row['user_id'];
+    $return_array['login_id'] = $row['login_id'];
     $return_array['role'] = $row['role'];
     $return_array['profile_fk'] = $row['profile_fk'];
   }
