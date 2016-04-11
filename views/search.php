@@ -9,6 +9,7 @@
             <div class="main col-sm-9 col-md-6 col-lg-6">
                 <h3 class="page-title">Search Results</h3>
                 <img id="loading-gif" src="../img/balls.gif">
+                <gcse:searchresults-only></gcse:searchresults-only>
             </div>
         </div>
     </div>
