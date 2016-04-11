@@ -17,7 +17,7 @@ $(document).ready(function() {
          }
     });
 	$('.post-answer').hide();
-	// document.getElementById("btn-submit-question").disabled = true;
+	document.getElementById("btn-submit-question").disabled = true;
 });
 
 function enableSubmit(){
