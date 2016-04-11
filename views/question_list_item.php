@@ -81,12 +81,12 @@
                 </div>
             </div>
           <div class="answer-text-box col-sm-10 col-md-10 col-lg-10">
-            <textarea class="form-control" id="<?php echo $question['question-id'];?>-answer-text" placeholder="What's your answer?"></textarea>
+            <textarea class="form-control" id="<?php echo $question["question_id"]?>-answer-text" placeholder="What's your answer?"></textarea>
           </div>
       </div>
       <div class="row center-block text-right">
-          <input type="hidden" id="<?php echo $question['question-id'];?>-question-friendly-url" value="<?php echo $question['friendly_url'];?>">
-          <button type="submit" id="<?php echo $question['question-id'];?>-btn-submit-answer" class="btn btn-primary">Answer</button>
+          <input type="hidden" id="<?php echo $question["question_id"]?>-question-friendly-url" value="<?php echo $question['friendly_url'];?>">
+          <button type="submit" id="<?php echo $question["question_id"]?>-btn-submit-answer" class="btn btn-primary answer-button">Answer</button>
       </div>
         <?php }?>
     </div>

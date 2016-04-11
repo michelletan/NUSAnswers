@@ -15,6 +15,17 @@ $(document).ready(function() {
 
     });
 
+    $('body').on("click", ".answer-button", function (e) {
+      e.preventDefault();
+      // get first part of element id
+      var target = e.target.id;
+      var id = target.split("-")[0];
+      var questionUrl = $("#" + id + "-question-friendly-url").val();
+      var answerContent = $("#" + id + "-answer-text").val();
+      $("#" + target).prop('disabled', true);
+      handleAnswerSubmit(id, answerContent, questionUrl, target);
+    });
+
     // Initialise infinite scrolling
     $('.main').jscroll({
         debug: true,
@@ -103,6 +114,34 @@ function populateFoldout(foldout, data, postId) {
             return moment(time).fromNow();
         }
     });
+}
+
+function handleAnswerSubmit(id, content, questionUrl, target) {
+  console.log(id + " " + content);
+  $.ajax({
+    url: '/api/answer/submit/home',
+    method: 'POST',
+    data: {
+      question_id: id,
+      answer_content: content
+    },
+
+    success: function(data) {
+      if (data == "true") {
+        $("#" + target).prop('disabled', true);
+        $("#" + target).after("<br>Answer submitted successfully!<br>" +
+                              "<a href='/question/" + questionUrl + "' target='_blank'>Click here to view the question in a new tab</a>");
+
+      }
+      else {
+        $("#" + target).prop('disabled', false);
+      }
+    },
+
+    error: function() {
+      $("#" + target).prop('disabled', false);
+    }
+  });
 }
 
 

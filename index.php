@@ -445,6 +445,15 @@ class AnswerSubmitFromQuestionAPIhandler {
   }
 }
 
+class AnswerSubmitFromHomeAPIhandler {
+  function post() {
+    $query_question_id = htmlspecialchars($_POST['question_id']);
+    $query_answer_contents = htmlspecialchars($_POST['answer_content']);
+    $query_result = submit_answer($query_question_id, $query_answer_contents, 1);
+    echo $query_result ? 'true' : 'false';
+  }
+}
+
 class QuestionCommentAPIHandler {
     function get_xhr($id) {
         if ($id) {
@@ -917,6 +926,7 @@ $json_base_urls = array(
     "/answer/comments/post" => "AnswerCommentPostAPIHandler",
 
     "/answer/submit/question" => "AnswerSubmitFromQuestionAPIhandler",
+    "/answer/submit/home" => "AnswerSubmitFromHomeAPIhandler",
 
     "/upvote/" => "UpvoteAPIHandler",
     "/downvote/" => "DownvoteAPIHandler",
