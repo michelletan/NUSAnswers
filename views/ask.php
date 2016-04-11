@@ -12,7 +12,7 @@
                 <h3 class="page-title">Post Your Question</h3>
                 <div class="card">
                     <div class="post-content">
-                        <div class="ask-form form-horizontal" enctype="multipart/form-data"> 
+                        <div class="ask-form form-horizontal" enctype="multipart/form-data">
                           <div class="form-group">
                             <label for="question-title" class="col-sm-2 control-label">Title</label>
                             <div class="col-sm-10">
@@ -37,7 +37,7 @@
                                 <!-- <input type="file" accept="image/*" name="question-file" id="question-file">
                                 <p class="help-block">Only images with extension .jpg, .png and .gif are accepted. <br>
                                     Please keep your image size under 2MB.</p> -->
-                              <input type="filepicker-dragdrop" data-fp-button-class="btn btn-primary" data-fp-apikey="Ag47cAGj4Td2gqU2gOyrLz" data-fp-button-text="Choose image" data-fp-mimetype="image/*" data-fp-mimetypeonchange="alert(event.fpfile.url)">    
+                              <input type="filepicker-dragdrop" data-fp-button-class="btn btn-primary" data-fp-apikey="Ag47cAGj4Td2gqU2gOyrLz" data-fp-button-text="Choose image" data-fp-mimetype="image/*" data-fp-mimetypeonchange="alert(event.fpfile.url)">
                             </div>
                           </div>
                           <div class="form-group">
@@ -54,7 +54,7 @@
                             </div>
                           </div>
                         </div> <!-- originally end of form -->
-                        <div class="post-answer">          
+                        <div class="post-answer">
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,6 @@
     </div>
 
     <?php include_once __DIR__ . '/footer.php'; ?>
-    <script src="../js/ask.js"></script>
+    <script src="/js/ask.js"></script>
 </body>
 </html>
-
