@@ -19,7 +19,7 @@ include_once __DIR__ . '/admin_header.php'; ?>
                             <a href="" type="button" class="btn btn-info"><span class="glyphicon glyphicon-refresh"></span> Refresh</a>
                             <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-trash" onclick="submitAnswerCommentIdsForDeletion()"></span> Delete</button>
                         </li>
-                        <li class="list-group-item summary-display">
+                        <li class="list-group-item">
                             <table id="answer-comments-table" class="table table-filter">
                                 <form id="answer-comments-form" method="post" action="/api/answer-comment-deletion/">
                                     <thead>

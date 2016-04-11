@@ -25,7 +25,7 @@ include_once __DIR__ . '/admin_header.php';
                                 <button type="button" class="btn btn-default btn-filter" data-target="all">Clear Filter</button>
                             </div>
                         </li>
-                        <li class="list-group-item summary-display">
+                        <li class="list-group-item">
                             <table id="admin-accounts-table" class="table table-filter">
                                 <form id="admin-accounts-form" method="post" action="/api/admin-deletion/">
                                     <thead>
