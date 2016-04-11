@@ -14,7 +14,7 @@
                                 </div>
                                 <div class="col-xs-9 col-md-6 text-right">
                                     <div id="todays-stats-answers-quantity" class="todays-stats-quantity">
-                                        100
+                                        <?php echo $answers_quantity?>
                                     </div>
                                     <div class="todays-stats-metric">
                                         Answers given
@@ -31,7 +31,7 @@
                                 </div>                                
                                 <div class="col-xs-9 col-md-6 text-right">
                                     <div id="todays-stats-questions-quantity" class="todays-stats-quantity">
-                                        100
+                                        <?php echo $questions_quantity?>
                                     </div>
                                     <div class="todays-stats-metric">
                                         Questions asked
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="col-xs-9 col-md-6 text-right">
                                     <div id="todays-stats-users-quantity" class="todays-stats-quantity">
-                                        100
+                                        <?php echo $users_quantity?>
                                     </div>
                                     <div class="todays-stats-metric">
                                         New users
@@ -65,7 +65,7 @@
                                 </div>                                
                                 <div class="col-xs-9 col-md-6 text-right">
                                     <div id="todays-stats-upvotes-quantity" class="todays-stats-quantity">
-                                        100
+                                        <?php echo $upvotes_quantity?>
                                     </div>
                                     <div class="todays-stats-metric">
                                         Upvotes given
