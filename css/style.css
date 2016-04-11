@@ -326,6 +326,11 @@ button {
     margin-top: 70px;
 }
 
+
+.top-buffer-20px {
+    margin-top: 20px;
+}
+
 /* Resize reCaptcha */
 @media screen and (max-height: 575px){
 #rc-imageselect, .g-recaptcha {
@@ -373,10 +378,6 @@ body {
 }
 
 /* end Slideout CSS */
-
-.top-buffer-20px {
-    margin-top: 20px;
-}
 
 /* Modal CSS */
 /*#login-modal .modal-dialog {
