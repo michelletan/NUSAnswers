@@ -672,248 +672,280 @@ class UserDeleteAnswerAPIHandler {
 // Handlers for Admin API
 
 class AdminCreationAPIHandler {
-    function post() {
-        // Creates an admin profile and an admin account
-        if (isset($_POST['login-id']) && isset($_POST['password1']) && isset($_POST['password2'])) {
-            $login_id = htmlspecialchars(trim($_POST['login-id']));
-            $password1 = trim($_POST['password1']);
-            $password2 = trim($_POST['password2']);
-            if ($login_id !== "" && $password1 !== "" && $password2 !== "" && $password1 === $password2) {
-                $profile_fk = create_profile($login_id);
-                $hashed_password = crypt($password1, $password1);
-                create_admin_account($login_id, $hashed_password, $profile_fk);
+    function post() {   
+        if (is_logged_in() && has_admin_rights()) {
+            // Creates an admin profile and an admin account
+            if (isset($_POST['login-id']) && isset($_POST['password1']) && isset($_POST['password2'])) {
+                $login_id = htmlspecialchars(trim($_POST['login-id']));
+                $password1 = trim($_POST['password1']);
+                $password2 = trim($_POST['password2']);
+                if ($login_id !== "" && $password1 !== "" && $password2 !== "" && $password1 === $password2) {
+                    $profile_fk = create_profile($login_id);
+                    $hashed_password = crypt($password1, $password1);
+                    create_admin_account($login_id, $hashed_password, $profile_fk);
+                }
             }
+            $redirect_address = '/admin-create-admin-account';
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-create-admin-account';
-        header('Location: ' . $redirect_address);
     }
 }
 
 class AdminEditAPIHandler {
     function post() {
-        if (isset($_POST['admin-id']) && isset($_POST['login-id']) && isset($_POST['display-name'])) {
-            $admin_id = trim($_POST['admin-id']);
-            $login_id = htmlspecialchars(trim($_POST['login-id']));
-            $display_name = htmlspecialchars(trim($_POST['display-name']));
-            if ($login_id !== "" && $display_name !== "") {
-                if (isset($_POST['password1']) && isset($_POST['password2']) && $_POST['password1'] !== "" && $_POST['password2'] !== "") {
-                    $password1 = trim($_POST['password1']);
-                    $password2 = trim($_POST['password2']);
-                    if ($password1 !== "" && $password2 !== "" && $password1 === $password2) {
-                        $hashed_password = crypt($password1, $password1);
-                        update_admin_account($admin_id, $login_id, $hashed_password);
+        if (is_logged_in() && has_admin_rights()) {
+            if (isset($_POST['admin-id']) && isset($_POST['login-id']) && isset($_POST['display-name'])) {
+                $admin_id = trim($_POST['admin-id']);
+                $login_id = htmlspecialchars(trim($_POST['login-id']));
+                $display_name = htmlspecialchars(trim($_POST['display-name']));
+                if ($login_id !== "" && $display_name !== "") {
+                    if (isset($_POST['password1']) && isset($_POST['password2']) && $_POST['password1'] !== "" && $_POST['password2'] !== "") {
+                        $password1 = trim($_POST['password1']);
+                        $password2 = trim($_POST['password2']);
+                        if ($password1 !== "" && $password2 !== "" && $password1 === $password2) {
+                            $hashed_password = crypt($password1, $password1);
+                            update_admin_account($admin_id, $login_id, $hashed_password);
+                        }
+                    } else {
+                        $admin = retrieve_admin_account($admin_id);
+                        update_admin_id($admin_id, $login_id);
                     }
-                } else {
-                    $admin = retrieve_admin_account($admin_id);
-                    update_admin_id($admin_id, $login_id);
+                    update_profile($admin['profile_fk'], $display_name);
                 }
-                update_profile($admin['profile_fk'], $display_name);
             }
+            $redirect_address = '/admin-edit-admin-account?admin-id=' . $admin_id;
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-edit-admin-account?admin-id=' . $admin_id;
-        header('Location: ' . $redirect_address);
     }
 }
 
 class AdminDeletionAPIHandler {
     function post() {
+        if (is_logged_in() && has_admin_rights()) {
         // Cascades deletion to profile of admin
-        if (isset($_POST['admin-id'])) {
-            foreach ($_POST['admin-id'] as $admin_id) {
-                $admin_account = retrieve_admin_account($admin_id);
-                delete_profile($admin_account['profile_fk']);
-                delete_admin_account($admin_id);
+            if (isset($_POST['admin-id'])) {
+                foreach ($_POST['admin-id'] as $admin_id) {
+                    $admin_account = retrieve_admin_account($admin_id);
+                    delete_profile($admin_account['profile_fk']);
+                    delete_admin_account($admin_id);
+                }
             }
+            $redirect_address = '/admin-view-admin-accounts';
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-view-admin-accounts';
-        header('Location: ' . $redirect_address);
     }
 }
 
 class UserDeletionAPIHandler {
     function post() {
-        // Cascades deletion to profile of user
-        if (isset($_POST['user-id'])) {
-            foreach ($_POST['user-id'] as $user_id) {
-                $user = retrieve_user($user_id);
-                delete_profile($user['profile_fk']);
-                delete_user($user_id);
+        if (is_logged_in() && has_admin_rights()) {
+            // Cascades deletion to profile of user
+            if (isset($_POST['user-id'])) {
+                foreach ($_POST['user-id'] as $user_id) {
+                    $user = retrieve_user($user_id);
+                    delete_profile($user['profile_fk']);
+                    delete_user($user_id);
+                }
             }
+            $redirect_address = '/admin-view-users';
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-view-users';
-        header('Location: ' . $redirect_address);
     }
 }
 
 class UserEditAPIHandler {
     function post() {
-        if (isset($_POST['user-id']) && isset($_POST['display-name'])) {
-            $user_id = trim($_POST['user-id']);
-            $display_name = htmlspecialchars(trim($_POST['display-name']));
-            if ($user_id !== "" && $display_name !== "") {
-                if (isset($_POST['role'])) {
-                    update_user($user_id, 1);
-                } else {
-                    update_user($user_id, 0);
+        if (is_logged_in() && has_admin_rights()) {
+            if (isset($_POST['user-id']) && isset($_POST['display-name'])) {
+                $user_id = trim($_POST['user-id']);
+                $display_name = htmlspecialchars(trim($_POST['display-name']));
+                if ($user_id !== "" && $display_name !== "") {
+                    if (isset($_POST['role'])) {
+                        update_user($user_id, 1);
+                    } else {
+                        update_user($user_id, 0);
+                    }
+                    $user = retrieve_user($user_id);
+                    update_profile($user['profile_fk'], $display_name);
                 }
-                $user = retrieve_user($user_id);
-                update_profile($user['profile_fk'], $display_name);
             }
+            $redirect_address = '/admin-edit-user?user-id=' . $user_id;
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-edit-user?user-id=' . $user_id;
-        header('Location: ' . $redirect_address);
     }
 }
 
 class QuestionEditAPIHandler {
     function post() {
-        if (isset($_POST['question-id']) && isset($_POST['title']) && isset($_POST['content'])) {
-            $question_id = trim($_POST['question-id']);
-            $title = htmlspecialchars(trim($_POST['title']));
-            $content = htmlspecialchars(trim($_POST['content']));
-            if ($question_id !== "" && $title !== "") {
-                if (isset($_POST['visible'])) {
-                    update_question($question_id, $title, $content, 1);
-                } else {
-                    update_question($question_id, $title, $content, 0);
+        if (is_logged_in() && has_admin_rights()) {
+            if (isset($_POST['question-id']) && isset($_POST['title']) && isset($_POST['content'])) {
+                $question_id = trim($_POST['question-id']);
+                $title = htmlspecialchars(trim($_POST['title']));
+                $content = htmlspecialchars(trim($_POST['content']));
+                if ($question_id !== "" && $title !== "") {
+                    if (isset($_POST['visible'])) {
+                        update_question($question_id, $title, $content, 1);
+                    } else {
+                        update_question($question_id, $title, $content, 0);
+                    }
                 }
             }
+            $redirect_address = '/admin-edit-question?question-id=' . $question_id;
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-edit-question?question-id=' . $question_id;
-        header('Location: ' . $redirect_address);
     }
 }
 
 class QuestionDeletionAPIHandler {
     function post() {
-        if (isset($_POST['question-id'])) {
-            foreach ($_POST['question-id'] as $question_id) {
-                delete_question($question_id);
+        if (is_logged_in() && has_admin_rights()) {
+            if (isset($_POST['question-id'])) {
+                foreach ($_POST['question-id'] as $question_id) {
+                    delete_question($question_id);
+                }
             }
-        }
-        $redirect_address = '/admin-view-questions';
-        header('Location: ' . $redirect_address);
+            $redirect_address = '/admin-view-questions';
+            header('Location: ' . $redirect_address);
+        }    
     }
 }
 
 class QuestionCommentEditAPIHandler {
     function post() {
-        if (isset($_POST['comment-id']) && isset($_POST['content'])) {
-            $comment_id = trim($_POST['comment-id']);
-            $content = trim($_POST['content']);
-            if ($comment_id !== "" && $content !== "") {
-                update_question_comment($comment_id, $content);
+        if (is_logged_in() && has_admin_rights()) {
+            if (isset($_POST['comment-id']) && isset($_POST['content'])) {
+                $comment_id = trim($_POST['comment-id']);
+                $content = trim($_POST['content']);
+                if ($comment_id !== "" && $content !== "") {
+                    update_question_comment($comment_id, $content);
+                }
             }
+            $redirect_address = '/admin-edit-question-comment?comment-id=' . $comment_id;
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-edit-question-comment?comment-id=' . $comment_id;
-        header('Location: ' . $redirect_address);
     }
 }
 
 class QuestionCommentDeletionAPIHandler {
     function post() {
-        if (isset($_POST['question-comment-id'])) {
-            foreach ($_POST['question-comment-id'] as $question_comment_id) {
-                delete_question_comment($question_comment_id);
+        if (is_logged_in() && has_admin_rights()) {
+            if (isset($_POST['question-comment-id'])) {
+                foreach ($_POST['question-comment-id'] as $question_comment_id) {
+                    delete_question_comment($question_comment_id);
+                }
             }
+            $redirect_address = '/admin-view-question-comments';
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-view-question-comments';
-        header('Location: ' . $redirect_address);
     }
 }
 
 class AnswerEditAPIHandler {
     function post() {
-        if (isset($_POST['answer-id']) && isset($_POST['content'])) {
-            $answer_id = trim($_POST['answer-id']);
-            $content = htmlspecialchars(trim($_POST['content']));
-            if ($answer_id !== "" && $content !== "") {
-                if (isset($_POST['visible'])) {
-                    update_answer($answer_id, $content, 1);
-                } else {
-                    update_answer($answer_id, $content, 0);
+        if (is_logged_in() && has_admin_rights()) {
+            if (isset($_POST['answer-id']) && isset($_POST['content'])) {
+                $answer_id = trim($_POST['answer-id']);
+                $content = htmlspecialchars(trim($_POST['content']));
+                if ($answer_id !== "" && $content !== "") {
+                    if (isset($_POST['visible'])) {
+                        update_answer($answer_id, $content, 1);
+                    } else {
+                        update_answer($answer_id, $content, 0);
+                    }
                 }
             }
+            $redirect_address = '/admin-edit-answer?answer-id=' . $answer_id;
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-edit-answer?answer-id=' . $answer_id;
-        header('Location: ' . $redirect_address);
     }
 }
 
 class AnswerDeletionAPIHandler {
     function post() {
-        if (isset($_POST['answer-id'])) {
-            foreach ($_POST['answer-id'] as $answer_id) {
-                delete_answer($answer_id);
+        if (is_logged_in() && has_admin_rights()) {
+            if (isset($_POST['answer-id'])) {
+                foreach ($_POST['answer-id'] as $answer_id) {
+                    delete_answer($answer_id);
+                }
             }
+            $redirect_address = '/admin-view-answers';
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-view-answers';
-        header('Location: ' . $redirect_address);
     }
 }
 
 class AnswerCommentEditAPIHandler {
     function post() {
-        if (isset($_POST['comment-id']) && isset($_POST['content'])) {
-            $comment_id = trim($_POST['comment-id']);
-            $content = trim($_POST['content']);
-            if ($comment_id !== "" && $content !== "") {
-                update_answer_comment($comment_id, $content);
+        if (is_logged_in() && has_admin_rights()) {
+            if (isset($_POST['comment-id']) && isset($_POST['content'])) {
+                $comment_id = trim($_POST['comment-id']);
+                $content = trim($_POST['content']);
+                if ($comment_id !== "" && $content !== "") {
+                    update_answer_comment($comment_id, $content);
+                }
             }
+            $redirect_address = '/admin-edit-answer-comment?comment-id=' . $comment_id;
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-edit-answer-comment?comment-id=' . $comment_id;
-        header('Location: ' . $redirect_address);
     }
 }
 
 class AnswerCommentDeletionAPIHandler {
     function post() {
-        if (isset($_POST['answer-comment-id'])) {
-            foreach ($_POST['answer-comment-id'] as $answer_comment_id) {
-                delete_answer_comment($answer_comment_id);
+        if (is_logged_in() && has_admin_rights()) {
+            if (isset($_POST['answer-comment-id'])) {
+                foreach ($_POST['answer-comment-id'] as $answer_comment_id) {
+                    delete_answer_comment($answer_comment_id);
+                }
             }
+            $redirect_address = '/admin-view-answer-comments';
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-view-answer-comments';
-        header('Location: ' . $redirect_address);
     }
 }
 
 class TagCreationAPIHandler {
     function post() {
-        if (isset($_POST['tag-name'])) {
-            $tag_name = htmlspecialchars(trim($_POST['tag-name']));
-            if ($tag_name !== "") {
-                create_tag($tag_name);
+        if (is_logged_in() && has_admin_rights()) {
+            if (isset($_POST['tag-name'])) {
+                $tag_name = htmlspecialchars(trim($_POST['tag-name']));
+                if ($tag_name !== "") {
+                    create_tag($tag_name);
+                }
             }
+            $redirect_address = '/admin-create-tag';
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-create-tag';
-        header('Location: ' . $redirect_address);
     }
 }
 
 class TagEditAPIHandler {
     function post() {
-        if (isset($_POST['tag-name']) && isset($_POST['tag-id'])) {
-            $tag_id = trim($_POST['tag-id']);
-            $tag_name = htmlspecialchars(trim($_POST['tag-name']));
-            if ($tag_name !== "") {
-                update_tag($tag_id, $tag_name);
+        if (is_logged_in() && has_admin_rights()) {
+            if (isset($_POST['tag-name']) && isset($_POST['tag-id'])) {
+                $tag_id = trim($_POST['tag-id']);
+                $tag_name = htmlspecialchars(trim($_POST['tag-name']));
+                if ($tag_name !== "") {
+                    update_tag($tag_id, $tag_name);
+                }
             }
+            $redirect_address = '/admin-edit-tag?tag-id=' . $tag_id;
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-edit-tag?tag-id=' . $tag_id;
-        header('Location: ' . $redirect_address);
     }
 }
 
 class TagDeletionAPIHandler {
     function post() {
-        if (isset($_POST['tag-id'])) {
-            foreach ($_POST['tag-id'] as $tag_id) {
-                delete_tag($tag_id);
+        if (is_logged_in() && has_admin_rights()) {
+            if (isset($_POST['tag-id'])) {
+                foreach ($_POST['tag-id'] as $tag_id) {
+                    delete_tag($tag_id);
+                }
             }
+            $redirect_address = '/admin-view-tags';
+            header('Location: ' . $redirect_address);
         }
-        $redirect_address = '/admin-view-tags';
-        header('Location: ' . $redirect_address);
     }
 }
 
