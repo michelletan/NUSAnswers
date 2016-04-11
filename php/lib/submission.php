@@ -88,6 +88,7 @@ function submit_question($title_param, $content_param, $tags_param, $profile_id_
   return false;
 }
 
+/*
 function submit_answer($content_param, $profile_id_param, $question_id_param) {
   global $db;
   $content = $db->escape_string($content_param);
@@ -97,6 +98,7 @@ function submit_answer($content_param, $profile_id_param, $question_id_param) {
            "VALUES ('$content', '$profile_id', '$question_id')";
   $result = $db->query($query);
 }
+*/
 
 function submit_tags($tags, $question_id) {
   global $db;

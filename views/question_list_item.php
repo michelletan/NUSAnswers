@@ -85,6 +85,7 @@
           </div>
       </div>
       <div class="row center-block text-right">
+          <input type="hidden" id="question-id-value" value="<?php echo $question['question-id']; ?>">
           <button type="submit" id="btn-submit-answer" class="btn btn-primary">Answer</button>
       </div>
         <?php }?>

@@ -8,6 +8,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_update.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_deletion.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/login_admin.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission_answers.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/json.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/vote.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/user_changes.php';
@@ -428,6 +429,15 @@ class AdminLoginAPIHandler {
   }
 }
 
+// Handlers for submission API
+
+class AnswerSubmitFromQuestionAPIhandler {
+  function post() {
+    $redirect_address = "/question/" . $_POST['question-friendly-url'];
+    $query_result = submit_answer($_POST['question-id'], $_POST['answer-content'], 1);
+    header('Location: ' . $redirect_address);
+  }
+}
 
 class QuestionCommentAPIHandler {
     function get_xhr($id) {
@@ -866,6 +876,8 @@ $json_base_urls = array(
 
     "/question/comments/post" => "QuestionCommentPostAPIHandler",
     "/answer/comments/post" => "AnswerCommentPostAPIHandler",
+
+    "/answer/submit/question" => "AnswerSubmitFromQuestionAPIhandler",
 
     "/upvote/" => "UpvoteAPIHandler",
     "/downvote/" => "DownvoteAPIHandler",
