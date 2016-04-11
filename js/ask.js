@@ -17,7 +17,7 @@ $(document).ready(function() {
          }
     });
 	$('.post-answer').hide();
-	document.getElementById("btn-submit-question").disabled = true;
+	// document.getElementById("btn-submit-question").disabled = true;
 });
 
 function enableSubmit(){
@@ -28,9 +28,9 @@ function postQuestion() {
 	var title = $('#question-title').val();
 	var content = $('#question-details').val();
   $.ajax({
-	    url: "../php/lib/submission.php",
+	    url: "/api/question-submit",
 	    method: "POST",
-
+        type: "application/json",
 	    data: {
 	      type: "question",
 	      title: title,
@@ -49,7 +49,7 @@ function postQuestion() {
 	      }
 	      else {
 	      	$('.post-answer').html(message);
-	      }      
+	      }
 	    }
 	  });
 
