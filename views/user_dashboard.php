@@ -4,9 +4,10 @@
     <?php include_once __DIR__ . '/user_navbar.php'; ?>
     <div class="container-fluid center-block">
         <div class="row">
-            <?php include_once __DIR__ . '/user_sidebar.php'; ?>
-            <main id="panel">
-            <div class="main col-md-9 col-lg-10">
+            <div class="col-md-4 col-lg-3">
+                <?php include_once __DIR__ . '/user_sidebar.php'; ?>
+            </div>
+            <div class="col-md-8 col-lg-9">
                 <div class="row">
                     <div class="col-md-4 col-lg-4">
                         <div class="todays-stats todays-stats-questions">
@@ -16,7 +17,7 @@
                                 </div>
                                 <div class="col-xs-9 col-md-6 text-center">
                                     <div class="todays-stats-quantity">
-                                        100
+                                        <?php echo retrieve_question_quantity_user('Curien'); ?>
                                     </div>
                                     <div class="todays-stats-metric">
                                         Questions asked
@@ -33,7 +34,7 @@
                                 </div>
                                 <div class="col-xs-9 col-md-6 text-center">
                                     <div class="todays-stats-quantity">
-                                        100
+                                        <?php echo retrieve_answer_quantity_user('Curien'); ?>
                                     </div>
                                     <div class="todays-stats-metric">
                                         Answers given
@@ -50,7 +51,7 @@
                                 </div>
                                 <div class="col-xs-9 col-md-6 text-center">
                                     <div class="todays-stats-quantity">
-                                        100
+                                         <?php echo retrieve_comment_quantity_user('Curien'); ?>
                                     </div>
                                     <div class="todays-stats-metric">
                                         Comments given

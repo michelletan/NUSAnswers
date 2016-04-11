@@ -9,7 +9,7 @@ $(document).ready(function() {
 
 function drawSummaryChart(id) {
     var data = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: ["April", "May", "June", "July", "August", "September", "October"],
         datasets: [
             {
                 label: "Number of Questions Asked",
@@ -17,7 +17,7 @@ function drawSummaryChart(id) {
                 strokeColor: "rgba(238, 207, 32, 0.8)",
                 highlightFill: "rgba(238, 207, 32, 0.75)",
                 highlightStroke: "rgba(238, 207, 32, 1)",
-                data: [65, 59, 80, 81, 56, 55, 40]
+                data: [20, 0, 0, 0, 0, 0, 0]
             },
             {
                 label: "Number of Answers Given",
@@ -25,7 +25,7 @@ function drawSummaryChart(id) {
                 strokeColor: "rgba(224, 102, 102, 0.8)",
                 highlightFill: "rgba(224, 102, 102, 0.75)",
                 highlightStroke: "rgba(224, 102, 102, 1)",
-                data: [28, 48, 40, 19, 86, 27, 90]
+                data: [13, 0, 0, 0, 0, 0, 0]
             },
             {
                 label: "Number of Comments Given",
@@ -33,7 +33,7 @@ function drawSummaryChart(id) {
                 strokeColor: "rgba(204, 102, 255, 0.8)",
                 highlightFill: "rgba(204, 102, 255, 0.75)",
                 highlightStroke: "rgba(204, 102, 255, 1)",
-                data: [45, 24, 57, 35, 93, 51, 13]
+                data: [47, 0, 0, 0, 0, 0, 0]
             }
         ]
     };
@@ -78,7 +78,7 @@ function drawSummaryChart(id) {
 
 function drawQuestionsChart(id) {
     var data = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: ["April", "May", "June", "July", "August", "September", "October"],
         datasets: [
             {
                 label: "Number of Questions Asked",
@@ -86,7 +86,7 @@ function drawQuestionsChart(id) {
                 strokeColor: "rgba(238, 207, 32, 0.8)",
                 highlightFill: "rgba(238, 207, 32, 0.75)",
                 highlightStroke: "rgba(238, 207, 32, 1)",
-                data: [65, 59, 80, 81, 56, 55, 40]
+                data: [20, 0, 0, 0, 0, 0, 0]
             }
         ]
     };
@@ -131,7 +131,7 @@ function drawQuestionsChart(id) {
 
 function drawAnswersChart(id) {
     var data = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: ["April", "May", "June", "July", "August", "September", "October"],
         datasets: [
             {
                 label: "Number of Answers Given",
@@ -139,7 +139,7 @@ function drawAnswersChart(id) {
                 strokeColor: "rgba(224, 102, 102, 0.8)",
                 highlightFill: "rgba(224, 102, 102, 0.75)",
                 highlightStroke: "rgba(224, 102, 102, 1)",
-                data: [28, 48, 40, 19, 86, 27, 90]
+                data: [13, 0, 0, 0, 0, 0, 0]
             }
         ]
     };
@@ -184,7 +184,7 @@ function drawAnswersChart(id) {
 
 function drawCommentsChart(id) {
     var data = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: ["April", "May", "June", "July", "August", "September", "October"],
         datasets: [
             {
                 label: "Number of Comments Given",
@@ -192,7 +192,7 @@ function drawCommentsChart(id) {
                 strokeColor: "rgba(204, 102, 255, 0.8)",
                 highlightFill: "rgba(204, 102, 255, 0.75)",
                 highlightStroke: "rgba(204, 102, 255, 1)",
-                data: [45, 24, 57, 35, 93, 51, 13]
+                data: [47, 0, 0, 0, 0, 0, 0]
             }
         ]
     };
@@ -234,3 +234,15 @@ function drawCommentsChart(id) {
     var ctx = document.getElementById(id).getContext("2d");
     var myBarChart = new Chart(ctx).Bar(data, options);
 }
+
+$('.todays-stats-quantity').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+    }, {
+        duration: 1000,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    });
+});
