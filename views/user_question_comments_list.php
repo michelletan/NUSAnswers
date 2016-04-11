@@ -9,13 +9,6 @@
                 <div class="col-md-10 col-md-offset-2">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-danger btn-filter" data-target="all" selected>All Questions</button>
-                                    <button type="button" class="btn btn-success btn-filter" data-target="all-questions">Without Images</button>
-                                    <button type="button" class="btn btn-warning btn-filter" data-target="all-images">With Images</button>
-                                </div>
-                            </div>
                             <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -28,20 +21,20 @@
                                                 <div class="form-group">
                                                     <label for="question-title" class="col-sm-2 control-label">Title</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="question-title" value="[Title]">
+                                                        <p id="question-title">[Question Title]</p>
                                                     </div> 
                                                 </div> 
                                                 <div class="form-group"> 
-                                                    <label for="question-details" class="col-sm-2 control-label">Details</label> 
+                                                    <label for="question-comment-details" class="col-sm-2 control-label">Comment</label> 
                                                     <div class="col-sm-10"> 
-                                                        <textarea class="form-control" id="question-details">[Details]</textarea>
+                                                        <textarea class="form-control" id="question-comment-details">[Comment Details]</textarea>
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary" id="saveQuestionChanges">Save changes</button>
+                                            <button type="button" class="btn btn-primary" id="saveQuestionCommentChanges">Save changes</button>
                                         </div>
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
@@ -51,13 +44,13 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title" id="myModalLabel">Delete Question</h4>
+                                            <h4 class="modal-title" id="myModalLabel">Delete Comment</h4>
                                         </div>
                                         <div class="modal-body">
-                                            Do you want to delete this question?
+                                            Do you want to delete this comment?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" id="deleteQuestion">Yes</button>
+                                            <button type="button" class="btn btn-default" id="deleteQuestionComment">Yes</button>
                                             <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
                                         </div>
                                     </div><!-- /.modal-content -->
@@ -67,27 +60,28 @@
                                 <table class="table table-filter" id="questionsAndAnswers">
                                     <tbody>
                                         <?php 
-                                            $questions = retrieve_questions_by_user('Curien'); // to be replaced by display name
-                                            foreach($questions as $question) {
+                                            $comments = retrieve_comments_for_question_by_user('Curien'); // to be replaced by display name
+                                            foreach($comments as $item) {
+                                                $comment = $item[0];
+                                                $ques = $item[1];
                                         ?>
                                         <tr data-status="all-questions">
                                             <td>
                                                 <div class="media">
                                                     <div class="media-body">
-                                                        <span class="media-meta pull-right"><?php echo $question['created_timestamp']; ?></span>
+                                                        <span class="media-meta pull-right"><?php echo $comment['created_timestamp']; ?></span>
                                                         <h4 class="title">
-                                                            <a href="/question/<?php echo $question["friendly_url"]?>" id="title">
-                                                                <?php echo $question['title']; ?>
+                                                            <a href="/question/<?php echo $ques["friendly_url"]?>" id="title">
+                                                                <?php echo $ques["title"]; ?>
                                                             </a>
-                                                            <span class="pull-right questions">(Without Images)</span>
                                                         </h4>
                                                         <p class="summary" id="content">
                                                             <?php 
-                                                                echo $question['content'];
+                                                                echo $comment['content'];
                                                             ?>
                                                         </p>
-                                                        <span class="glyphicon glyphicon-trash pull-right" id="<?php echo $question['question_id']; ?>" onclick="deleteQuestion(this.id)"></span>
-                                                        <span class="glyphicon glyphicon-pencil pull-right" id="<?php echo $question['question_id']; ?>" onclick="editQuestion(this.id, '<?php echo $question['title']; ?>', '<?php echo $question['content']; ?>')"></span>
+                                                        <span class="glyphicon glyphicon-trash pull-right" id="<?php echo $comment['comment_id']; ?>" onclick="deleteQuestionComment(this.id)"></span>
+                                                        <span class="glyphicon glyphicon-pencil pull-right" id="<?php echo $comment['comment_id']; ?>" onclick="editQuestionComment(this.id, '<?php echo $ques["title"]; ?>', '<?php echo $comment['content']; ?>')"></span>
                                                     </div>
                                                 </div>
                                             </td>

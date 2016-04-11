@@ -6,6 +6,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval_tags.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval_profiles.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval_comments.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_retrieval.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/user_retrieval.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/time_helper.php';
 
 ?>

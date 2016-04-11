@@ -40,20 +40,6 @@ function retrieve_questions_by_latest($limit_param, $page_param) {
     return $result;
 }
 
-function retrieve_questions_by_user($name_param) {
-    global $db;
-    $name = $db->escape_string($name_param);
-
-    $query = "SELECT * FROM questions q ". "JOIN profiles p ON p.profile_id = q.profile_fk ". "WHERE profile_id = '1'"; //change: WHERE p.display_name = $name
-    $questions = $db->query($query);
-
-    while ($question = $questions->fetch_assoc()) {
-        $return_array[] = $question;
-    }
-
-    return $return_array;
-}
-
 function retrieve_questions_with_popular_answers($limit_param, $page_param) {
     global $db;
 
