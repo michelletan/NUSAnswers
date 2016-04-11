@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     $('.post-foldout').hide();
 
     $('.btn-view-comments').click(function(e) {

@@ -17,6 +17,12 @@ textarea:focus, input:focus, .uneditable-input:focus {
     outline: 0 none !important;
 }
 
+.ui-widget-content:focus {
+    border-color: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
 /* Hide scrollbar */
 /*::-webkit-scrollbar {
     width: 0px;
