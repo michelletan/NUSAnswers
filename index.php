@@ -259,7 +259,7 @@ class UserProfileHandler {
 }
 
 class SearchHandler {
-    function get($id) {
+    function get() {
         require VIEW_DIRECTORY . '/search.php';
     }
 }
