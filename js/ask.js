@@ -28,7 +28,7 @@ function postQuestion() {
 	var title = $('#question-title').val();
 	var content = $('#question-details').val();
   $.ajax({
-	    url: "/api/question-submit",
+	    url: "/api/question-submit/",
 	    method: "POST",
         type: "application/json",
 	    data: {
@@ -37,9 +37,9 @@ function postQuestion() {
 	      content: content
 	    },
 
-	    success: function(data) {
-	      var json = $.parseJSON(data);
-	      console.log(json);
+	    success: function(json) {
+	    //   var json = $.parseJSON(data);
+	    //   console.log(json);
 	      var status = json['status'];
 	      var message = json['message'];
 

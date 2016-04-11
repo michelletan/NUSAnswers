@@ -604,6 +604,46 @@ class AnswerCommentPostAPIHandler {
     }
 }
 
+class QuestionSubmitAPIHandler {
+    function post_xhr() {
+        $array_to_return = array();
+        if (isset($_POST['type'])) {
+            $type = $_POST['type'];
+            if ($type == "question") {
+                if (!isset($_POST['title'])) {
+                    $array_to_return['status'] = "error";
+                    $array_to_return['message'] = "Error: no title";
+                } else if (!isset($_POST['content'])) {
+                    $array_to_return['status'] = "error";
+                    $array_to_return['message'] = "Error: no content";
+                } else {
+                    $tags = [];
+                    if (isset($_POST['tags'])) {
+                        $tags = json_decode($_POST['tags']);
+                    }
+
+                    // check if person is logged in, and get the profile id here
+                    // left blank for now
+                    $profile = NULL;
+                    $id = submit_question($_POST['title'], $_POST['content'], $tags, $profile);
+
+                    if ($id) {
+                        $array_to_return['status'] = "success";
+                        $array_to_return['message'] = "Question submitted successfully";
+                        $array_to_return['question_id'] = $id;
+                    } else {
+                        $array_to_return['status'] = "error";
+                        $array_to_return['message'] = "Question submission not successful";
+                    }
+                }
+            }
+            $json_to_return = json_encode($array_to_return);
+            echo($json_to_return);
+            exit();
+        }
+    }
+}
+
 class UpvoteAPIHandler {
     function post() {
         if (isset($_POST["answer_id"])) {
@@ -685,7 +725,7 @@ class UserDeleteAnswerAPIHandler {
 // Handlers for Admin API
 
 class AdminCreationAPIHandler {
-    function post() {   
+    function post() {
         if (is_logged_in() && has_admin_rights()) {
             // Creates an admin profile and an admin account
             if (isset($_POST['login-id']) && isset($_POST['password1']) && isset($_POST['password2'])) {
@@ -819,7 +859,7 @@ class QuestionDeletionAPIHandler {
             }
             $redirect_address = '/admin-view-questions';
             header('Location: ' . $redirect_address);
-        }    
+        }
     }
 }
 
@@ -1069,6 +1109,7 @@ $json_base_urls = array(
     "/user-deletion/" => "UserDeletionAPIHandler",
     "/user-edit/" => "UserEditAPIHandler",
 
+    "/question-submit/" => "QuestionSubmitAPIHandler",
     "/question-edit/" => "QuestionEditAPIHandler",
     "/question-deletion/" => "QuestionDeletionAPIHandler",
     "/question-comment-edit/" => "QuestionCommentEditAPIHandler",
