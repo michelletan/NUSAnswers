@@ -680,7 +680,6 @@ class UserSaveAnswerChangesAPIHandler {
             $answer_id = htmlspecialchars($_POST["answer_id"]);
             $answer_details = htmlspecialchars($_POST["answer_details"]);
             $has_saved = save_answer_changes_by_user($answer_id, $answer_details);
-            echo $has_saved;
         }
     }
 }
@@ -700,7 +699,6 @@ class UserSaveAnswerCommentChangesAPIHandler {
             $comment_id = htmlspecialchars($_POST["comment_id"]);
             $comment_details = htmlspecialchars($_POST["comment_content"]);
             $has_saved = save_answer_comment_changes_by_user($comment_id, $comment_details);
-            echo $has_saved;
         }
     }
 }
