@@ -23,7 +23,7 @@ function create_profile_table () {
   global $db;
   $query = "CREATE TABLE profiles (" .
            "profile_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
-           "display_name VARCHAR(32) NOT NULL" .
+           "display_name VARCHAR(128) NOT NULL" .
            "image_url VARCHAR(255) NOT NULL DEFAULT '/img/profile02.png'" .
            ")";
   $db->query($query);
@@ -32,7 +32,8 @@ function create_profile_table () {
 function create_user_table () {
   global $db;
   $query = "CREATE TABLE users (" .
-           "user_id VARCHAR(128) PRIMARY KEY," .
+           "user_number INTEGER AUTO_INCREMENT PRIMARY KEY," .
+           "user_id VARCHAR(128) UNIQUE NOT NULL," .
            "role INTEGER NOT NULL," .
            "profile_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
@@ -43,7 +44,8 @@ function create_user_table () {
 function create_admin_table () {
   global $db;
   $query = "CREATE TABLE admins (" .
-           "admin_id VARCHAR(128) PRIMARY KEY," .
+           "admin_number INTEGER AUTO_INCREMENT PRIMARY KEY," .
+           "admin_id VARCHAR(128) UNIQUE NOT NULL," .
            "hashed_password VARCHAR(256) NOT NULL," .
            "profile_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
