@@ -309,11 +309,16 @@ class UserDashboardAnswersHandler {
 
 class AdminDashboardHandler {
     function get() {
-        $answers_quantity = retrieve_answers_quantity();
-        $questions_quantity = retrieve_questions_quantity();
-        $users_quantity = retrieve_users_quantity();
-        $upvotes_quantity = retrieve_upvotes_quantity();
-        require VIEW_DIRECTORY . '/admin_dashboard.php';
+        if (is_logged_in()) {
+            $answers_quantity = retrieve_answers_quantity();
+            $questions_quantity = retrieve_questions_quantity();
+            $users_quantity = retrieve_users_quantity();
+            $upvotes_quantity = retrieve_upvotes_quantity();
+            require VIEW_DIRECTORY . '/admin_dashboard.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
@@ -821,6 +826,8 @@ class TagDeletionAPIHandler {
         header('Location: ' . $redirect_address);
     }
 }
+
+// Admin API Handlers END
 
 class TagSearchAPIHandler {
     function get_xhr() {
