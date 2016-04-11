@@ -640,7 +640,7 @@ class QuestionEditAPIHandler {
     function post() {
         if (isset($_POST['question-id']) && isset($_POST['title']) && isset($_POST['content'])) {
             $question_id = trim($_POST['question-id']);
-            $title = trim($_POST['title']);
+            $title = htmlspecialchars(trim($_POST['title']));
             $content = htmlspecialchars(trim($_POST['content']));
             if ($question_id !== "" && $title !== "") {
                 if (isset($_POST['visible'])) {
