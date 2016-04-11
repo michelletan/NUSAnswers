@@ -324,97 +324,177 @@ class AdminDashboardHandler {
 
 class AdminCreateAdminAccountHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_create_admin_account.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_create_admin_account.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewAdminAccountsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_admin_accounts.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_view_admin_accounts.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditAdminAccountsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_admin_account.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_edit_admin_account.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewUsersHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_users.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_view_users.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditUserHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_user.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_edit_user.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewQuestionsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_questions.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_view_questions.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditQuestionHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_question.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_edit_question.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewQuestionCommentsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_question_comments.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_view_question_comments.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditQuestionCommentHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_question_comment.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_edit_question_comment.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewAnswersHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_answers.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_view_answers.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditAnswerHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_answer.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_edit_answer.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewAnswerCommentsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_answer_comments.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_view_answer_comments.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditAnswerCommentHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_answer_comment.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_edit_answer_comment.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminCreateTagHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_create_tag.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_create_tag.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminViewTagsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_view_tags.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_view_tags.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class AdminEditTagHandler {
     function get() {
-        require VIEW_DIRECTORY . '/admin_edit_tag.php';
+        if (is_logged_in()) {
+            require VIEW_DIRECTORY . '/admin_edit_tag.php';
+        } else {
+            $redirect_address = '/admin/login';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
@@ -434,6 +514,16 @@ class AdminLoginAPIHandler {
         $redirect_address = '/admin-dashboard';
       }
     }
+    header('Location: ' . $redirect_address);
+  }
+}
+
+// Handlers for Logout API
+
+class AdminLogoutAPIHandler {
+  function get() {
+    logout_active_session();
+    $redirect_address = "/admin/login";
     header('Location: ' . $redirect_address);
   }
 }
@@ -915,6 +1005,7 @@ $json_url_prefix = "/api";
 
 $json_base_urls = array(
     "/login/admin" => "AdminLoginAPIHandler",
+    "/logout/admin" => "AdminLogoutAPIHandler",
     "/question/comments/:number" => "QuestionCommentAPIHandler",
     "/answer/comments/:number" => "AnswerCommentAPIHandler",
 
