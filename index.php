@@ -671,7 +671,7 @@ class QuestionCommentEditAPIHandler {
     function post() {
         if (isset($_POST['comment-id']) && isset($_POST['content'])) {
             $comment_id = trim($_POST['comment-id']);
-            $content = htmlspecialchars(trim($_POST['content']));
+            $content = trim($_POST['content']);
             if ($comment_id !== "" && $content !== "") {
                 update_question_comment($comment_id, $content);
             }
@@ -727,7 +727,7 @@ class AnswerCommentEditAPIHandler {
     function post() {
         if (isset($_POST['comment-id']) && isset($_POST['content'])) {
             $comment_id = trim($_POST['comment-id']);
-            $content = htmlspecialchars(trim($_POST['content']));
+            $content = trim($_POST['content']);
             if ($comment_id !== "" && $content !== "") {
                 update_answer_comment($comment_id, $content);
             }
