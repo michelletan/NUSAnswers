@@ -32,8 +32,8 @@ function create_profile_table () {
 function create_user_table () {
   global $db;
   $query = "CREATE TABLE users (" .
-           "user_number INTEGER AUTO_INCREMENT PRIMARY KEY," .
-           "user_id VARCHAR(128) UNIQUE NOT NULL," .
+           "user_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
+           "login_id VARCHAR(128) UNIQUE NOT NULL," .
            "role INTEGER NOT NULL," .
            "profile_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
@@ -44,8 +44,8 @@ function create_user_table () {
 function create_admin_table () {
   global $db;
   $query = "CREATE TABLE admins (" .
-           "admin_number INTEGER AUTO_INCREMENT PRIMARY KEY," .
-           "admin_id VARCHAR(128) UNIQUE NOT NULL," .
+           "admin_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
+           "login_id VARCHAR(128) UNIQUE NOT NULL," .
            "hashed_password VARCHAR(256) NOT NULL," .
            "profile_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
@@ -280,7 +280,7 @@ function insert_admin() {
     $query = "INSERT INTO profiles (display_name) VALUES ('Admin');";
     $db->query($query);
 
-    $query = "INSERT INTO admins VALUES ('admin@example.com', 'papAq5PwY/QQM', 1);";
+    $query = "INSERT INTO admins (login_id, hashed_password, profile_fk) VALUES ('admin@example.com', 'papAq5PwY/QQM', 1);";
     $db->query($query);
 }
 
@@ -292,7 +292,7 @@ function insert_users() {
   "('Cat')" .
   ";";
   $db->query($query);
-  $query = "INSERT INTO users (user_id, role, profile_fk) VALUES " .
+  $query = "INSERT INTO users (login_id, role, profile_fk) VALUES " .
   " ('curien', 0, 2)," .
   " ('goldman', 1, 3)," .
   " ('catherine', 0, 4)" .
