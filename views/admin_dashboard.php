@@ -3,9 +3,12 @@
     <?php include_once __DIR__ . '/admin_navbar.php'; ?>
     <div class="container-fluid">
         <div class="row">
-            <?php include_once __DIR__ . '/admin_sidebar.php'; ?>
-            <div class="main col-md-9 col-lg-10">
+            <div class="col-md-4 col-lg-3">
+                <?php include_once __DIR__ . '/admin_sidebar.php'; ?>
+            </div>
+            <div class="col-md-8 col-lg-9">
                 <div class="row">
+                    <div class="top-buffer-40px">
                     <div class="col-md-6 col-lg-3">
                         <div class="todays-stats todays-stats-answers">
                             <div class="row">
@@ -73,6 +76,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
                 <div class="row">

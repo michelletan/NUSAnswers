@@ -16,9 +16,11 @@ if (isset($_GET['user-id'])) {
     <?php include_once __DIR__ . '/admin_navbar.php'; ?>
     <div class="container-fluid">
         <div class="row">
-            <?php include_once __DIR__ . '/admin_sidebar.php'; ?>
-            <div class="main col-md-9 col-lg-10">
-                <div class="top-buffer-20px panel panel-default">
+            <div class="col-md-4 col-lg-3">
+                <?php include_once __DIR__ . '/admin_sidebar.php'; ?>
+            </div>
+            <div class="col-md-8 col-lg-9">
+                <div class="top-buffer-70px panel panel-default">
                     <ul class="list-group">
                         <form method="post" action="/api/user-edit/">
                             <input hidden name="user-id" value="<?php echo $user['user_id']?>">

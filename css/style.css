@@ -331,6 +331,14 @@ button {
     margin-top: 20px;
 }
 
+.top-buffer-40px {
+    margin-top: 40px;
+}
+
+.top-buffer-70px {
+    margin-top: 70px;
+}
+
 /* Resize reCaptcha */
 @media screen and (max-height: 575px){
 #rc-imageselect, .g-recaptcha {
