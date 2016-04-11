@@ -13,6 +13,11 @@
                 <div class="card">
                     <div class="post-content">
                         <div class="ask-form form-horizontal" enctype="multipart/form-data">
+                           <div class="form-group">
+                            <div style="color: red;" class="question-message col-sm-10" >
+                                <!-- For posting success/failure -->
+                            </div>
+                           </div>
                           <div class="form-group">
                             <label for="question-title" class="col-sm-2 control-label">Title</label>
                             <div class="col-sm-10">
@@ -46,9 +51,6 @@
                             </div>
                           </div>
                           <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-8" >
-                                <!-- For posting success/failure -->
-                            </div>
                             <div class="text-right col-sm-offset-10 col-sm-2">
                               <button type="submit" id="btn-submit-question" onclick="postQuestion()" class="btn btn-primary">Post</button>
                             </div>
