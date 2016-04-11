@@ -2,13 +2,10 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission_comments.php';
 
-/*
+
 function json_submission_interface() {
   $array_to_return = array();
-  if (!isset($_POST['type'])) {
-    $array_to_return['status'] = "Error: type of submission not defined";
-  }
-  else {
+  if (isset($_POST['type'])) {
     $type = $_POST['type'];
     if ($type == "question") {
       if (!isset($_POST['title'])) {
@@ -25,12 +22,10 @@ function json_submission_interface() {
           $tags = json_decode($_POST['tags']);
         }
 
-        if (!isset($_POST['profile']) || $_POST['profile'] == "") {
-          $id = submit_question_anonymously($_POST['title'], $_POST['content'], $tags);
-        }
-        else {
-          $id = submit_question($_POST['title'], $_POST['content'], $tags, $_POST['profile']);
-        }
+        // check if person is logged in, and get the profile id here
+        // left blank for now
+        $profile = NULL;
+        $id = submit_question($_POST['title'], $_POST['content'], $tags, $profile);
 
         if ($id) {
           $array_to_return['status'] = "success";
@@ -43,11 +38,10 @@ function json_submission_interface() {
         }
       }
     }
-  }
   $json_to_return = json_encode($array_to_return);
   echo ($json_to_return);
+  }
 }
-*/
 
 function submit_question_anonymously($title_param, $content_param, $tags_param) {
   global $db;
@@ -72,13 +66,29 @@ function submit_question($title_param, $content_param, $tags_param, $profile_id_
   global $db;
   $title = $db->escape_string($title_param);
   $content = $db->escape_string($content_param);
-  $profile_id = $db->escape_string($profile_id_param);
+
+  // handle profile differently depending on whether user is logged in
+  if ($profile_id_param) {
+    $profile_id = $db->escape_string($profile_id_param);
+  }
+  else {
+    $profile_id = NULL;
+  }
   $tags = array();
   foreach ($tags_param as $value) {
     $tags[] = $db->escape_string($value);
   }
-  $query = "INSERT INTO questions (title, content, profile_fk) " .
+
+  // handle input differently depending on whether user is logged in
+  if ($profile_id) {
+    $query = "INSERT INTO questions (title, content, profile_fk) " .
            "VALUES ('$title', '$content', $profile_id)";
+  }
+  else {
+    $query = "INSERT INTO questions (title, content) " .
+           "VALUES ('$title', '$content')";
+  }
+
   $result = $db->query($query);
   if ($result) {
     $id = $db->insert_id;
@@ -86,16 +96,6 @@ function submit_question($title_param, $content_param, $tags_param, $profile_id_
     return $id;
   }
   return false;
-}
-
-function submit_answer($content_param, $profile_id_param, $question_id_param) {
-  global $db;
-  $content = $db->escape_string($content_param);
-  $profile_id = $db->escape_string($profile_id_param);
-  $question_id = $db->escape_string($question_id_param);
-  $query = "INSERT INTO answers (content, profile_fk, question_fk) " .
-           "VALUES ('$content', '$profile_id', '$question_id')";
-  $result = $db->query($query);
 }
 
 function submit_tags($tags, $question_id) {
@@ -180,5 +180,5 @@ function get_seo_string($vp_string){
     return $vp_string;
 }
 
-// json_submission_interface();
+json_submission_interface();
 ?>
