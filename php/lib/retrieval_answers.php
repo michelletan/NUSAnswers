@@ -32,9 +32,9 @@ function retrieve_answers_for_question_order_by_votes($question_id_param) {
 
     $query = "SELECT a.answer_id, a.content, a.created_timestamp, " .
              "a.profile_fk as answer_user_id, SUM(v.vote_type) as vote_count ".
-             "FROM answers a, votes v " .
+             "FROM answers a LEFT JOIN votes v " .
+             "ON a.answer_id = v.answer_fk " .
              "WHERE a.question_fk = " . $question_id . " " .
-             "AND a.answer_id = v.answer_fk " .
              "GROUP BY a.answer_id " .
              "ORDER BY vote_count DESC;";
 

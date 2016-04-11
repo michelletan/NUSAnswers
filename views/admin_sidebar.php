@@ -46,7 +46,7 @@
     </div>
 </div>
 <!-- Menu for desktop -->
-<div class="sidebar affix visible-md visible-lg col-md-4 col-lg-3">
+<div id="desktop-menu" class="sidebar affix visible-md visible-lg col-md-4 col-lg-3">
     <div class="row">        
         <div class="sidebar-inner col-lg-offset-2 col-lg-10">
             <div class="card">
