@@ -528,7 +528,6 @@ class UserSaveQuestionCommentChangesAPIHandler {
             $comment_id = htmlspecialchars($_POST["comment_id"]);
             $comment_details = htmlspecialchars($_POST["comment_content"]);
             $has_saved = save_question_comment_changes_by_user($comment_id, $comment_details);
-            echo $has_saved;
         }
     }
 }
@@ -537,7 +536,27 @@ class UserDeleteQuestionCommentAPIHandler {
     function post() {
         if(isset($_POST["comment_id"])) {
             $comment_id = htmlspecialchars($_POST["comment_id"]);
-            $has_deleted = delete_comment($comment_id);
+            $has_deleted = delete_question_comment($comment_id);
+        }
+    }
+}
+
+class UserSaveAnswerChangesAPIHandler {
+    function post() {
+        if(isset($_POST["answer_id"]) &&  isset($_POST["answer_details"])) {
+            $answer_id = htmlspecialchars($_POST["answer_id"]);
+            $answer_details = htmlspecialchars($_POST["answer_details"]);
+            $has_saved = save_answer_changes_by_user($answer_id, $answer_details);
+            echo $has_saved;
+        }
+    }
+}
+
+class UserDeleteAnswerAPIHandler {
+    function post() {
+        if(isset($_POST["answer_id"])) {
+            $answer_id = htmlspecialchars($_POST["answer_id"]);
+            $has_deleted = delete_answer($answer_id);
         }
     }
 }
@@ -895,7 +914,9 @@ $json_base_urls = array(
     "/user-question-edit/" => "UserSaveQuestionChangesAPIHandler",
     "/user-question-delete/" => "UserDeleteQuestionAPIHandler",
     "/user-question-comment-edit/" => "UserSaveQuestionCommentChangesAPIHandler",
-    "/user-question-comment-delete/" => "UserDeleteQuestionCommentAPIHandler"
+    "/user-question-comment-delete/" => "UserDeleteQuestionCommentAPIHandler",
+    "/user-answer-edit/" => "UserSaveAnswerChangesAPIHandler",
+    "/user-answer-delete/" => "UserDeleteAnswerAPIHandler"
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);
