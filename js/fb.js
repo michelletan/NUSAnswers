@@ -13,9 +13,7 @@ function login() {
 
 function logout() {
   FB.logout(function(response) {
-    window.location.reload();
-    $("#non-login-view").show();
-    $(".login-view").hide();
+    window.location = "/"
   }, {scope: 'email'});
 }
 
