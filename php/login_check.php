@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
 
 // require_once $_SERVER['DOCUMENT_ROOT'] . '/php/Facebook/src/Facebook/autoload.php';
 //
@@ -16,6 +17,10 @@ function set_active_profile($profile_id) {
 	$_SESSION['profile'] = $profile_id;
 }
 
+function set_active_display_name($display_name) {
+	$_SESSION['display_name'] = $display_name;
+}
+
 function set_active_role($role) {
 	$_SESSION['role'] = $role;
 }
@@ -23,6 +28,15 @@ function set_active_role($role) {
 function get_active_profile() {
 	if (isset($_SESSION['profile'])) {
 		return $_SESSION['profile'];
+	}
+	else {
+		return null;
+	}
+}
+
+function get_active_display_name() {
+	if (isset($_SESSION['display_name'])) {
+		return $_SESSION['display_name'];
 	}
 	else {
 		return null;
@@ -39,5 +53,25 @@ function get_active_role() {
 	}
 }
 
-$is_logged_in = false;
+function has_admin_rights() {
+	if (isset($_SESSION['role']) && $_SESSION['role'] >= USER_ROLE_ADMIN) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+function has_mod_rights() {
+	if (isset($_SESSION['role']) && $_SESSION['role'] >= USER_ROLE_MOD) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+function is_logged_in() {
+	return isset($_SESSION['profile']) && isset($_SESSION['display_name']) && isset($_SESSION['role']);
+}
 ?>

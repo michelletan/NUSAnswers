@@ -64,7 +64,7 @@ include_once __DIR__ . '/admin_header.php'; ?>
                                                         </a>
                                                         <div class="media-body">                                                        
                                                             <h4 class="title">
-                                                                <a href="/admin-edit-user?user-id=<?php echo $user_record['user_id']?>"><?php echo $user_record['user_id']?></a>
+                                                                <a href="/admin-edit-user?user-id=<?php echo $user_record['user_id']?>"><?php echo $user_record['login_id']?></a>
                                                             </h4>                                     
                                                             <p><?php echo $user_record['display_name']?></p>
                                                         </div>

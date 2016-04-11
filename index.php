@@ -419,6 +419,7 @@ class AdminLoginAPIHandler {
       $admin_info = admin_login($_POST['admin-id'], $_POST['password']);
       if ($admin_info) {
         set_active_profile($admin_info['profile-id']);
+        set_active_display_name($admin_info['display-name']);
         set_active_role(USER_ROLE_ADMIN);
         $redirect_address = '/admin-dashboard';
       }
@@ -545,14 +546,14 @@ class UserDeleteQuestionCommentAPIHandler {
 class AdminCreationAPIHandler {
     function post() {
         // Creates an admin profile and an admin account
-        if (isset($_POST['admin-id']) && isset($_POST['password1']) && isset($_POST['password2'])) {
-            $admin_id = trim($_POST['admin-id']);
+        if (isset($_POST['login-id']) && isset($_POST['password1']) && isset($_POST['password2'])) {
+            $login_id = htmlspecialchars(trim($_POST['login-id']));
             $password1 = trim($_POST['password1']);
             $password2 = trim($_POST['password2']);
-            if ($admin_id !== "" && $password1 !== "" && $password2 !== "" && $password1 === $password2) {
-                $profile_fk = create_profile($admin_id);
+            if ($login_id !== "" && $password1 !== "" && $password2 !== "" && $password1 === $password2) {
+                $profile_fk = create_profile($login_id);
                 $hashed_password = crypt($password1, $password1);
-                create_admin_account($admin_id, $hashed_password, $profile_fk);
+                create_admin_account($login_id, $hashed_password, $profile_fk);
             }
         }
         $redirect_address = '/admin-create-admin-account';
@@ -562,26 +563,26 @@ class AdminCreationAPIHandler {
 
 class AdminEditAPIHandler {
     function post() {
-        if (isset($_POST['admin-id']) && isset($_POST['new-admin-id']) && isset($_POST['display-name'])) {
+        if (isset($_POST['admin-id']) && isset($_POST['login-id']) && isset($_POST['display-name'])) {
             $admin_id = trim($_POST['admin-id']);
-            $new_admin_id = trim($_POST['new-admin-id']);
-            $display_name = trim($_POST['display-name']);
-            if ($new_admin_id !== "" && $display_name !== "") {
+            $login_id = htmlspecialchars(trim($_POST['login-id']));
+            $display_name = htmlspecialchars(trim($_POST['display-name']));
+            if ($login_id !== "" && $display_name !== "") {
                 if (isset($_POST['password1']) && isset($_POST['password2']) && $_POST['password1'] !== "" && $_POST['password2'] !== "") {
                     $password1 = trim($_POST['password1']);
                     $password2 = trim($_POST['password2']);
                     if ($password1 !== "" && $password2 !== "" && $password1 === $password2) {
                         $hashed_password = crypt($password1, $password1);
-                        update_admin_account($admin_id, $new_admin_id, $hashed_password);
+                        update_admin_account($admin_id, $login_id, $hashed_password);
                     }
                 } else {
                     $admin = retrieve_admin_account($admin_id);
-                    update_admin_id($admin_id, $new_admin_id);
+                    update_admin_id($admin_id, $login_id);
                 }
                 update_profile($admin['profile_fk'], $display_name);
             }
         }
-        $redirect_address = '/admin-edit-admin-account?admin-id=' . $new_admin_id;
+        $redirect_address = '/admin-edit-admin-account?admin-id=' . $admin_id;
         header('Location: ' . $redirect_address);
     }
 }
@@ -620,7 +621,7 @@ class UserEditAPIHandler {
     function post() {
         if (isset($_POST['user-id']) && isset($_POST['display-name'])) {
             $user_id = trim($_POST['user-id']);
-            $display_name = trim($_POST['display-name']);
+            $display_name = htmlspecialchars(trim($_POST['display-name']));
             if ($user_id !== "" && $display_name !== "") {
                 if (isset($_POST['role'])) {
                     update_user($user_id, 1);
@@ -640,8 +641,8 @@ class QuestionEditAPIHandler {
     function post() {
         if (isset($_POST['question-id']) && isset($_POST['title']) && isset($_POST['content'])) {
             $question_id = trim($_POST['question-id']);
-            $title = trim($_POST['title']);
-            $content = trim($_POST['content']);
+            $title = htmlspecialchars(trim($_POST['title']));
+            $content = htmlspecialchars(trim($_POST['content']));
             if ($question_id !== "" && $title !== "") {
                 if (isset($_POST['visible'])) {
                     update_question($question_id, $title, $content, 1);
@@ -697,7 +698,7 @@ class AnswerEditAPIHandler {
     function post() {
         if (isset($_POST['answer-id']) && isset($_POST['content'])) {
             $answer_id = trim($_POST['answer-id']);
-            $content = trim($_POST['content']);
+            $content = htmlspecialchars(trim($_POST['content']));
             if ($answer_id !== "" && $content !== "") {
                 if (isset($_POST['visible'])) {
                     update_answer($answer_id, $content, 1);
@@ -752,7 +753,7 @@ class AnswerCommentDeletionAPIHandler {
 class TagCreationAPIHandler {
     function post() {
         if (isset($_POST['tag-name'])) {
-            $tag_name = trim($_POST['tag-name']);
+            $tag_name = htmlspecialchars(trim($_POST['tag-name']));
             if ($tag_name !== "") {
                 create_tag($tag_name);
             }
@@ -766,7 +767,7 @@ class TagEditAPIHandler {
     function post() {
         if (isset($_POST['tag-name']) && isset($_POST['tag-id'])) {
             $tag_id = trim($_POST['tag-id']);
-            $tag_name = trim($_POST['tag-name']);
+            $tag_name = htmlspecialchars(trim($_POST['tag-name']));
             if ($tag_name !== "") {
                 update_tag($tag_id, $tag_name);
             }
@@ -823,7 +824,7 @@ $html_urls = array(
 
     "/user" => "HomeHandler",
     "/user/:number" => "UserProfileHandler",
-    
+
     "/search" => "SearchHandler",
 
     "/login" => "LoginHandler",
@@ -881,7 +882,7 @@ $json_base_urls = array(
     "/question-deletion/" => "QuestionDeletionAPIHandler",
     "/question-comment-edit/" => "QuestionCommentEditAPIHandler",
     "/question-comment-deletion/" => "QuestionCommentDeletionAPIHandler",
-    
+
     "/answer-edit/" => "AnswerEditAPIHandler",
     "/answer-deletion/" => "AnswerDeletionAPIHandler",
     "/answer-comment-edit/" => "AnswerCommentEditAPIHandler",

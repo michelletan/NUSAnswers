@@ -1,6 +1,8 @@
 function upvoteAnswer(answerId) {
+    var domain = window.location.host;
+    var url = "http://" + domain + "/api/upvote/";
     $.ajax({
-        url: "http://localhost:8000/api/upvote/",
+        url: url,
         method: "post",
         data: {answer_id: answerId},
         success: function(data) {
@@ -10,8 +12,10 @@ function upvoteAnswer(answerId) {
 }
 
 function downvoteAnswer(answerId) {
+    var domain = window.location.host;
+    var url = "http://" + domain + "/api/downvote/";
     $.ajax({
-        url: "http://localhost:8000/api/downvote/",  
+        url: url,  
         method: "post",
         data: {answer_id: answerId},
         success:function(data) {

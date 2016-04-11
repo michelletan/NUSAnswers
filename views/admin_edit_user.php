@@ -29,8 +29,8 @@ if (isset($_GET['user-id'])) {
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>User ID</label>
-                                            <input disabled type="text" class="form-control" id="username" placeholder="Username" name="username" value="<?php echo $user['user_id']?>">
+                                            <label>Login ID</label>
+                                            <input disabled type="text" class="form-control" id="login-id" placeholder="Login ID" name="login-id" value="<?php echo $user['login_id']?>">
                                         </div>
                                         <div class="checkbox">
                                             <label>

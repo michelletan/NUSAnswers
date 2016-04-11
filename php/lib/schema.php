@@ -23,7 +23,7 @@ function create_profile_table () {
   global $db;
   $query = "CREATE TABLE profiles (" .
            "profile_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
-           "display_name VARCHAR(32) NOT NULL" .
+           "display_name VARCHAR(128) NOT NULL," .
            "image_url VARCHAR(255) NOT NULL DEFAULT '/img/profile02.png'" .
            ")";
   $db->query($query);
@@ -32,7 +32,8 @@ function create_profile_table () {
 function create_user_table () {
   global $db;
   $query = "CREATE TABLE users (" .
-           "user_id VARCHAR(128) PRIMARY KEY," .
+           "user_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
+           "login_id VARCHAR(128) UNIQUE NOT NULL," .
            "role INTEGER NOT NULL," .
            "profile_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
@@ -43,7 +44,8 @@ function create_user_table () {
 function create_admin_table () {
   global $db;
   $query = "CREATE TABLE admins (" .
-           "admin_id VARCHAR(128) PRIMARY KEY," .
+           "admin_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
+           "login_id VARCHAR(128) UNIQUE NOT NULL," .
            "hashed_password VARCHAR(256) NOT NULL," .
            "profile_fk INTEGER NOT NULL," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
@@ -198,12 +200,18 @@ function drop_tables () {
 /************************* USER PROFILE TABLES *************************/
 function drop_all_user_tables () {
   drop_admin_table();
+  drop_moderator_table();
   drop_user_table();
   drop_profile_table();
 }
 
 function drop_profile_table () {
   drop_table_by_name("profiles");
+}
+
+// obsolete table
+function drop_moderator_table () {
+  drop_table_by_name("moderators");
 }
 
 function drop_user_table () {
@@ -272,7 +280,7 @@ function insert_admin() {
     $query = "INSERT INTO profiles (display_name) VALUES ('Admin');";
     $db->query($query);
 
-    $query = "INSERT INTO admins VALUES ('admin@example.com', 'papAq5PwY/QQM', 1);";
+    $query = "INSERT INTO admins (login_id, hashed_password, profile_fk) VALUES ('admin@example.com', 'papAq5PwY/QQM', 1);";
     $db->query($query);
 }
 
@@ -284,7 +292,7 @@ function insert_users() {
   "('Cat')" .
   ";";
   $db->query($query);
-  $query = "INSERT INTO users (user_id, role, profile_fk) VALUES " .
+  $query = "INSERT INTO users (login_id, role, profile_fk) VALUES " .
   " ('curien', 0, 2)," .
   " ('goldman', 1, 3)," .
   " ('catherine', 0, 4)" .

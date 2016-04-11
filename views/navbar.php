@@ -2,7 +2,6 @@
     <div class="container-fluid center-block">
         <div class="row">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="hidden-xs hidden-sm col-md-1 col-lg-1 col-xl-1"></div>
             <div class="navbar-header col-sm-12 col-sm-12 col-md-12 col-lg-2">
                 <div class="row">
                     <div class="col-xs-1 col-sm-1 hidden-md hidden-lg hidden-xl">
@@ -14,6 +13,7 @@
                     <a class="logo pull-right" href="<?php echo APP_HOME_URL; ?>"><img class="navbar-logo" src="/img/logo.png"/><span>NUS</span>Answers</a>
                 </div>
             </div>
+            <div class="hidden-xs hidden-sm col-md-1 col-lg-1 col-xl-1"></div>
             <!-- Shown in navbar on desktop -->
             <div class="hidden-xs hidden-sm hidden-md">
                 <form method="get" action="/search" class= "navbar-left col-md-4 col-lg-4 hidden-xs hidden-sm" role="search">
