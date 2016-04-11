@@ -49,7 +49,7 @@ function retrieve_tags_for_question($question_id_param) {
     }
 
     $query = "SELECT t.tag_id, t.tag_name FROM tags t ".
-             "LEFT JOIN (SELECT * FROM has_tags WHERE question_fk = " . $question_id . ") ht " .
+             "RIGHT JOIN (SELECT * FROM has_tags WHERE question_fk = " . $question_id . ") ht " .
              "ON t.tag_id = ht.tag_fk";
 
     $result = $db->query($query);
