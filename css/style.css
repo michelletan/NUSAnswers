@@ -150,10 +150,6 @@ img.navbar-logo {
     text-decoration: none;
 }
 
-.jscroll-outer {
-    margin-top: 70px;
-}
-
 .ask-form label {
     color: #F38630;
 }
@@ -326,7 +322,7 @@ button {
     margin-top: 8px;
 }
 
-#mobile-menu {
+#mobile-menu, .main {
     margin-top: 70px;
 }
 
