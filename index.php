@@ -790,10 +790,15 @@ class TagDeletionAPIHandler {
 }
 
 class TagSearchAPIHandler {
-    function get($string) {
-        $data = retrieve_tag_names_like_string($string);
+    function get_xhr() {
+        $data = retrieve_tag_names_like_string($_GET["term"]);
 
-        return $data;
+        $result = array();
+        for ($i = 0; $i < count($data); $i++) {
+            array_push($result, $data[$i][0]);
+        }
+
+        return_success_response($result);
     }
 }
 
@@ -899,7 +904,7 @@ $json_base_urls = array(
     "/tag-creation/" => "TagCreationAPIHandler",
     "/tag-edit/" => "TagEditAPIHandler",
     "/tag-deletion/" => "TagDeletionAPIHandler",
-    "/tag/search?term:alpha" => "TagSearchAPIHandler",
+    "/tag/search/" => "TagSearchAPIHandler",
 
     "/user-question-edit/" => "UserSaveQuestionChangesAPIHandler",
     "/user-question-delete/" => "UserDeleteQuestionAPIHandler",

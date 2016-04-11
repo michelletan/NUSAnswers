@@ -384,6 +384,14 @@ body {
     margin-top: 20px;
 }
 
+/* Tag-it CSS */
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    font-family: 'Open Sans', sans-serif !important;
+    background: none !important;
+    color: #337ab7 !important;
+    font-weight: normal !important;
+}
+
 /* Modal CSS */
 /*#login-modal .modal-dialog {
     width: 350px;
