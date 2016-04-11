@@ -1,3 +1,4 @@
+<!-- Menu for mobile -->
 <nav id="mobile-menu" class="affix col-xs-5 col-sm-5 hidden-md hidden-lg hidden-xl">
     <div class="container-fluid center-block">
         <div class="row">
@@ -33,7 +34,7 @@
         </div>
     </div>
 </nav>
-
+<!-- Menu for desktop -->
 <div class="sidebar col-md-3 col-lg-2">
     <div class="affix hidden-xs hidden-sm col-md-3 col-lg-2">
         <ul class="metismenu nav" id="menu">
