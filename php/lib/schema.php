@@ -23,7 +23,7 @@ function create_profile_table () {
   global $db;
   $query = "CREATE TABLE profiles (" .
            "profile_id INTEGER AUTO_INCREMENT PRIMARY KEY," .
-           "display_name VARCHAR(128) NOT NULL" .
+           "display_name VARCHAR(128) NOT NULL," .
            "image_url VARCHAR(255) NOT NULL DEFAULT '/img/profile02.png'" .
            ")";
   $db->query($query);
@@ -200,12 +200,18 @@ function drop_tables () {
 /************************* USER PROFILE TABLES *************************/
 function drop_all_user_tables () {
   drop_admin_table();
+  drop_moderator_table();
   drop_user_table();
   drop_profile_table();
 }
 
 function drop_profile_table () {
   drop_table_by_name("profiles");
+}
+
+// obsolete table
+function drop_moderator_table () {
+  drop_table_by_name("moderators");
 }
 
 function drop_user_table () {
