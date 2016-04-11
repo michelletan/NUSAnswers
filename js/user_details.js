@@ -18,7 +18,7 @@ $(document).ready(function() {
       $.ajax({
         url: "http://localhost:8000/api/user-question-edit/",  
         method: "post",
-        data: {question_id: questionID, question_title: document.getElementById("question-title").value, question_details: document.getElementById("question-details").innerHTML},
+        data: {question_id: questionID, question_title: $("#question-title").val(), question_details: $("#question-details").val()},
         success:function(data) {
           window.location.reload();
         }
@@ -29,7 +29,7 @@ $(document).ready(function() {
       $.ajax({
         url: "http://localhost:8000/api/user-question-comment-edit/",  
         method: "post",
-        data: {comment_id: questionCommentID, comment_content: document.getElementById("question-comment-details").innerHTML},
+        data: {comment_id: questionCommentID, comment_content: $("#question-comment-details").val()},
         success:function(data) {
           window.location.reload();
         }
@@ -40,7 +40,7 @@ $(document).ready(function() {
       $.ajax({
         url: "http://localhost:8000/api/user-answer-edit/",  
         method: "post",
-        data: {answer_id: answerID, answer_details: document.getElementById("answer-details").innerHTML},
+        data: {answer_id: answerID, answer_details: $("#answer-details").val()},
         success:function(data) {
           window.location.reload();
         }
@@ -51,7 +51,7 @@ $(document).ready(function() {
       $.ajax({
         url: "http://localhost:8000/api/user-answer-comment-edit/",  
         method: "post",
-        data: {comment_id: questionCommentID, comment_content: document.getElementById("comment-details").innerHTML},
+        data: {comment_id: questionCommentID, comment_content: $("#comment-details").val()},
         success:function(data) {
           window.location.reload();
         }
@@ -61,8 +61,8 @@ $(document).ready(function() {
 
 function editQuestion(id, questionTitle, questionContent) {
   $("#edit-modal").modal("show");
-    document.getElementById("question-title").value = questionTitle;
-    document.getElementById("question-details").innerHTML = questionContent;
+    $("#question-title").val(questionTitle);
+    $("#question-details").val(questionContent);
     questionID = id;
 }
 
@@ -82,8 +82,8 @@ function deleteQuestion(id) {
 
 function editQuestionComment(id, questionTitle, commentContent) {
   $("#edit-modal").modal("show");
-  document.getElementById("question-title").innerHTML = questionTitle;
-  document.getElementById("question-comment-details").innerHTML = commentContent;
+  $("#question-title").val(questionTitle);
+  $("#question-comment-details").val(commentContent);
   questionCommentID = id;
 }
 
