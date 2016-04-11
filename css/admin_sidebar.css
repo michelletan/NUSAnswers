@@ -4,7 +4,9 @@
     }
 }
 
-#mobile-menu {
+#mobile-menu,
+#desktop-menu {
     z-index: 100;
+    height: 100%;
     overflow-y: auto;
 }

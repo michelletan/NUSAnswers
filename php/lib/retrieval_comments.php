@@ -1,5 +1,5 @@
 <?php
-function retrieve_comment_with_id($id_param) {
+function retrieve_question_comment_with_id($id_param) {
     global $db;
 
     if (!is_int($id_param)) {
@@ -12,6 +12,30 @@ function retrieve_comment_with_id($id_param) {
     $query = "SELECT * FROM question_comments qc ".
             "JOIN profiles p ON p.profile_id = qc.profile_fk ".
             "WHERE qc.comment_id = ". $id;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        return $rows;
+    }
+}
+
+function retrieve_answer_comment_with_id($id_param) {
+    global $db;
+
+    if (!is_int($id_param)) {
+        // ERROR
+        $id = $db->escape_string($id_param);
+    } else {
+        $id = $id_param;
+    }
+
+    $query = "SELECT * FROM answer_comments ac ".
+            "JOIN profiles p ON p.profile_id = ac.profile_fk ".
+            "WHERE ac.comment_id = ". $id;
 
     $result = $db->query($query);
 

@@ -18,7 +18,7 @@ include_once __DIR__ . '/admin_header.php'; ?>
                             <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
                             <button type="button" class="btn btn-info" onclick="submitTagIdsForDeletion()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
                         </li>
-                        <li class="list-group-item summary-display">
+                        <li class="list-group-item">
                             <table id="tags-table" class="table table-filter">
                                 <form id="tags-form" method="post" action="/api/tag-deletion/">
                                     <thead>
