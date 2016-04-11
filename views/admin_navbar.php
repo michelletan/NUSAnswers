@@ -17,14 +17,14 @@
             <div class="hidden-xs hidden-sm hidden-md">
                 <div class= "navbar-left hidden-xs hidden-sm hidden-md col-lg-8 col-xl-8"></div>
                 <ul class="nav navbar-nav col-md-2 col-lg-2">
-                    <?php if (true) {?>
+                    <?php if (!is_logged_in()) {?>
                     <li><a href="#">Login</a></li>
                     <?php } ?>
-                    <?php if (true) {?>
+                    <?php if (is_logged_in()) {?>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo get_active_display_name() ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <?php if ($is_admin) {?>
+                            <?php if (has_admin_rights()) {?>
                             <li><a href="#">Admin Dashboard</a></li>
                             <?php } ?>
                             <li><a href="#">User Dashboard</a></li>

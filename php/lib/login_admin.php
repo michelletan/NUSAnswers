@@ -14,6 +14,10 @@ function admin_login($admin_id_param, $password_param) {
       $array_to_return = array();
       $array_to_return['admin-id'] = $row['admin_id'];
       $array_to_return['profile-id'] = $row['profile_fk'];
+      $subquery = "SELECT display_name FROM profiles WHERE profile_id=" . $row['profile_fk'];
+      $subresult = $db->query($subquery);
+      $subrow = $subresult->fetch_assoc();
+      $array_to_return['display-name'] = $subrow['display_name'];
       return $array_to_return;
     }
   }
