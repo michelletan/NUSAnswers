@@ -509,9 +509,9 @@ class DownvoteAPIHandler {
 class UserSaveQuestionChangesAPIHandler {
     function post() {
         if((isset($_POST["question_id"]) && isset($_POST["question_title"])) && isset($_POST["question_details"])) {
-            $question_id = $_POST["question_id"];
-            $question_title = $_POST["question_title"];
-            $question_details = $_POST["question_details"];
+            $question_id = htmlspecialchars($_POST["question_id"]);
+            $question_title = htmlspecialchars($_POST["question_title"]);
+            $question_details = htmlspecialchars($_POST["question_details"]);
             $has_saved = save_question_changes_by_user($question_id, $question_title, $question_details);
         }
     }
@@ -520,7 +520,7 @@ class UserSaveQuestionChangesAPIHandler {
 class UserDeleteQuestionAPIHandler {
     function post() {
         if(isset($_POST["question_id"])) {
-            $question_id = $_POST["question_id"];
+            $question_id = htmlspecialchars($_POST["question_id"]);
             $has_deleted = delete_question($question_id);
         }
     }
@@ -528,10 +528,11 @@ class UserDeleteQuestionAPIHandler {
 
 class UserSaveQuestionCommentChangesAPIHandler {
     function post() {
-        if(isset($_POST["comment_id"]) &&  isset($_POST["comment_details"])) {
-            $comment_id = $_POST["comment_id"];
-            $comment_details = $_POST["comment_details"];
-            $has_saved = save_comment_changes_by_user($comment_id, $comment_details);
+        if(isset($_POST["comment_id"]) &&  isset($_POST["comment_content"])) {
+            $comment_id = htmlspecialchars($_POST["comment_id"]);
+            $comment_details = htmlspecialchars($_POST["comment_content"]);
+            $has_saved = save_question_comment_changes_by_user($comment_id, $comment_details);
+            echo $has_saved;
         }
     }
 }
@@ -539,7 +540,7 @@ class UserSaveQuestionCommentChangesAPIHandler {
 class UserDeleteQuestionCommentAPIHandler {
     function post() {
         if(isset($_POST["comment_id"])) {
-            $comment_id = $_POST["comment_id"];
+            $comment_id = htmlspecialchars($_POST["comment_id"]);
             $has_deleted = delete_comment($comment_id);
         }
     }
