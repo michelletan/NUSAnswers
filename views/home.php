@@ -7,7 +7,7 @@
         <div class="row row-offcanvas row-offcanvas-left">
             <?php include_once __DIR__ . '/sidebar.php'; ?>
             <main id="panel">
-            <div class="main col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <div class="main jscroll-outer col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                 <?php
                 foreach ($questions as $data) {
                     $question = $data["question"];

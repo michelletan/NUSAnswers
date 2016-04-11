@@ -5,4 +5,4 @@
 <script type="text/javascript" src="/js/jquery-comments.js"></script>
 <script type="text/javascript" src="/js/moment.js"></script>
 <script type="text/javascript" src="/js/navbar.js"></script>
-<?php //qinclude_once("analyticstracking.php") ?>
+<?php include_once $_SERVER['DOCUMENT_ROOT']. '/php/analyticstracking.php'; ?>

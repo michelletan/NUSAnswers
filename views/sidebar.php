@@ -1,5 +1,5 @@
 <!-- Menu for mobile -->
-<nav id="mobile-menu" class="affix col-xs-4 col-sm-4 hidden-md hidden-lg hidden-xl">
+<nav id="mobile-menu" class="affix col-xs-5 col-sm-5 hidden-md hidden-lg hidden-xl">
     <div class="container-fluid center-block">
         <div class="row">
             <div class="col-md-10 col-lg-10">

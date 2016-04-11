@@ -22,7 +22,7 @@ function logout() {
 function share(url) {
   FB.ui({
     method: 'share',
-    href: 'http://localhost:8000' + url
+    href: 'http://www.nusanswers.me' + url
   }, function(response) {
     document.getElementById("share").innerHTML = "Shared!";
   });
@@ -31,7 +31,7 @@ function share(url) {
 window.fbAsyncInit = function() {
 	FB.init({
 	appId      : '581406865343052', // CREATE AND INSERT OWN APP ID TO TEST!
-	cookie     : true,  // enable cookies to allow the server to access 
+	cookie     : true,  // enable cookies to allow the server to access
 	                    // the session
   status     : true,
 	xfbml      : true,  // parse social plugins on this page

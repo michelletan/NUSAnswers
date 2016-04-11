@@ -2,9 +2,10 @@
 <body>
     <script src="../js/fb.js"></script>
     <?php include_once __DIR__ . '/user_navbar.php'; ?>
-    <div class="container-fluid">
+    <div class="container-fluid center-block">
         <div class="row">
             <?php include_once __DIR__ . '/user_sidebar.php'; ?>
+            <main id="panel">
             <div class="main col-md-9 col-lg-10">
                 <div class="row">
                     <div class="col-md-4 col-lg-4">
@@ -29,7 +30,7 @@
                             <div class="row">
                                 <div class="col-xs-3 col-md-6 text-center">
                                     <span class="glyphicon glyphicon-comment"></span>
-                                </div>                                
+                                </div>
                                 <div class="col-xs-9 col-md-6 text-center">
                                     <div class="todays-stats-quantity">
                                         100
@@ -39,7 +40,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>    
+                        </div>
                     </div>
                     <div class="col-md-4 col-lg-4">
                         <div class="todays-stats todays-stats-comments">
@@ -112,11 +113,12 @@
                     </div>
                 </div>
             </div>
+            </main>
         </div>
     </div>
 </body>
 <?php include_once __DIR__ . '/footer.php'; ?>
-<script src="../js/metisMenu.min.js"></script>
-<script src="../js/Chart.min.js"></script>
-<script src="../js/user_dashboard.js"></script>
+<script src="/js/metisMenu.min.js"></script>
+<script src="/js/Chart.min.js"></script>
+<script src="/js/user_dashboard.js"></script>
 </html>

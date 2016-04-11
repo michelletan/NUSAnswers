@@ -419,6 +419,7 @@ class AdminLoginAPIHandler {
       $admin_info = admin_login($_POST['admin-id'], $_POST['password']);
       if ($admin_info) {
         set_active_profile($admin_info['profile-id']);
+        set_active_display_name($admin_info['display-name']);
         set_active_role(USER_ROLE_ADMIN);
         $redirect_address = '/admin-dashboard';
       }
@@ -822,7 +823,7 @@ $html_urls = array(
 
     "/user" => "HomeHandler",
     "/user/:number" => "UserProfileHandler",
-    
+
     "/search" => "SearchHandler",
 
     "/login" => "LoginHandler",
@@ -880,7 +881,7 @@ $json_base_urls = array(
     "/question-deletion/" => "QuestionDeletionAPIHandler",
     "/question-comment-edit/" => "QuestionCommentEditAPIHandler",
     "/question-comment-deletion/" => "QuestionCommentDeletionAPIHandler",
-    
+
     "/answer-edit/" => "AnswerEditAPIHandler",
     "/answer-deletion/" => "AnswerDeletionAPIHandler",
     "/answer-comment-edit/" => "AnswerCommentEditAPIHandler",
