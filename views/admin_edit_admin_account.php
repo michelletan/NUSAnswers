@@ -4,7 +4,7 @@ include_once __DIR__ . '/admin_header.php';
 
 if (isset($_GET['admin-id'])) {
     $admin_id = $_GET['admin-id'];
-    $admin_account = retrieve_admin_account($admin_id);
+    $admin_account = retrieve_admin_account(htmlspecialchars($admin_id));
     $admin_profile = retrieve_profile($admin_account['profile_fk']);
 } else {
     $redirect_address = '/admin_view_admin_accounts';

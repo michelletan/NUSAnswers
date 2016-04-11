@@ -545,7 +545,7 @@ class AdminCreationAPIHandler {
     function post() {
         // Creates an admin profile and an admin account
         if (isset($_POST['admin-id']) && isset($_POST['password1']) && isset($_POST['password2'])) {
-            $admin_id = trim($_POST['admin-id']);
+            $admin_id = htmlspecialchars(trim($_POST['admin-id']));
             $password1 = trim($_POST['password1']);
             $password2 = trim($_POST['password2']);
             if ($admin_id !== "" && $password1 !== "" && $password2 !== "" && $password1 === $password2) {
@@ -563,8 +563,8 @@ class AdminEditAPIHandler {
     function post() {
         if (isset($_POST['admin-id']) && isset($_POST['new-admin-id']) && isset($_POST['display-name'])) {
             $admin_id = trim($_POST['admin-id']);
-            $new_admin_id = trim($_POST['new-admin-id']);
-            $display_name = trim($_POST['display-name']);
+            $new_admin_id = htmlspecialchars(trim($_POST['new-admin-id']));
+            $display_name = htmlspecialchars(trim($_POST['display-name']));
             if ($new_admin_id !== "" && $display_name !== "") {
                 if (isset($_POST['password1']) && isset($_POST['password2']) && $_POST['password1'] !== "" && $_POST['password2'] !== "") {
                     $password1 = trim($_POST['password1']);
@@ -619,7 +619,7 @@ class UserEditAPIHandler {
     function post() {
         if (isset($_POST['user-id']) && isset($_POST['display-name'])) {
             $user_id = trim($_POST['user-id']);
-            $display_name = trim($_POST['display-name']);
+            $display_name = htmlspecialchars(trim($_POST['display-name']));
             if ($user_id !== "" && $display_name !== "") {
                 if (isset($_POST['role'])) {
                     update_user($user_id, 1);
@@ -640,7 +640,7 @@ class QuestionEditAPIHandler {
         if (isset($_POST['question-id']) && isset($_POST['title']) && isset($_POST['content'])) {
             $question_id = trim($_POST['question-id']);
             $title = trim($_POST['title']);
-            $content = trim($_POST['content']);
+            $content = htmlspecialchars(trim($_POST['content']));
             if ($question_id !== "" && $title !== "") {
                 if (isset($_POST['visible'])) {
                     update_question($question_id, $title, $content, 1);
@@ -670,7 +670,7 @@ class QuestionCommentEditAPIHandler {
     function post() {
         if (isset($_POST['comment-id']) && isset($_POST['content'])) {
             $comment_id = trim($_POST['comment-id']);
-            $content = trim($_POST['content']);
+            $content = htmlspecialchars(trim($_POST['content']));
             if ($comment_id !== "" && $content !== "") {
                 update_question_comment($comment_id, $content);
             }
@@ -696,7 +696,7 @@ class AnswerEditAPIHandler {
     function post() {
         if (isset($_POST['answer-id']) && isset($_POST['content'])) {
             $answer_id = trim($_POST['answer-id']);
-            $content = trim($_POST['content']);
+            $content = htmlspecialchars(trim($_POST['content']));
             if ($answer_id !== "" && $content !== "") {
                 if (isset($_POST['visible'])) {
                     update_answer($answer_id, $content, 1);
@@ -726,7 +726,7 @@ class AnswerCommentEditAPIHandler {
     function post() {
         if (isset($_POST['comment-id']) && isset($_POST['content'])) {
             $comment_id = trim($_POST['comment-id']);
-            $content = trim($_POST['content']);
+            $content = htmlspecialchars(trim($_POST['content']));
             if ($comment_id !== "" && $content !== "") {
                 update_answer_comment($comment_id, $content);
             }
@@ -751,7 +751,7 @@ class AnswerCommentDeletionAPIHandler {
 class TagCreationAPIHandler {
     function post() {
         if (isset($_POST['tag-name'])) {
-            $tag_name = trim($_POST['tag-name']);
+            $tag_name = htmlspecialchars(trim($_POST['tag-name']));
             if ($tag_name !== "") {
                 create_tag($tag_name);
             }
@@ -765,7 +765,7 @@ class TagEditAPIHandler {
     function post() {
         if (isset($_POST['tag-name']) && isset($_POST['tag-id'])) {
             $tag_id = trim($_POST['tag-id']);
-            $tag_name = trim($_POST['tag-name']);
+            $tag_name = htmlspecialchars(trim($_POST['tag-name']));
             if ($tag_name !== "") {
                 update_tag($tag_id, $tag_name);
             }
