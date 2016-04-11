@@ -4,17 +4,19 @@
         <?php include_once __DIR__ . '/user_navbar.php'; ?>
         <div class="container-fluid">
             <div class="row">
-                <?php include_once __DIR__ . '/user_sidebar.php'; ?>
+                <div class="col-md-4 col-lg-3">
+                    <?php include_once __DIR__ . '/user_sidebar.php'; ?>
+                </div>
                 <section class="content">
-                <div class="col-md-10 col-md-offset-2">
-                    <div class="panel panel-default">
+                <div class="col-md-8 col-lg-9">
+                    <div class="top-buffer-70px panel panel-default">
                         <div class="panel-body">
                             <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title" id="myModalLabel">Question</h4>
+                                            <h4 class="modal-title" id="myModalLabel">Edit Answer Comment</h4>
                                         </div>
                                         <div class="modal-body">
                                             <form class="ask-form form-horizontal">

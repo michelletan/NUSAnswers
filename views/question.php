@@ -1,5 +1,6 @@
 <?php include_once __DIR__ . '/header.php'; ?>
 <body>
+    <script src="../js/fb.js"></script>
     <?php include_once __DIR__ . '/navbar.php'; ?>
     <div class="container-fluid center-block">
         <div class="row">

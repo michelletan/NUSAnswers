@@ -2,6 +2,7 @@
 <script type="text/javascript" src="//api.filestackapi.com/filestack.js"></script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <body>
+    <script src="../js/fb.js"></script>
     <?php include_once __DIR__ . '/navbar.php'; ?>
 
     <div class="container-fluid center-block">
