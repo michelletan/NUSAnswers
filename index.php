@@ -438,7 +438,9 @@ class AdminLoginAPIHandler {
 class AnswerSubmitFromQuestionAPIhandler {
   function post() {
     $redirect_address = "/question/" . $_POST['question-friendly-url'];
-    $query_result = submit_answer($_POST['question-id'], $_POST['answer-content'], 1);
+    $query_question_id = htmlspecialchars($_POST['question-id']);
+    $query_answer_contents = htmlspecialchars($_POST['answer-content']);
+    $query_result = submit_answer($query_question_id, $query_answer_contents, 1);
     header('Location: ' . $redirect_address);
   }
 }
