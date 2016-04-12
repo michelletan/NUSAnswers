@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    createLinksForUrlsInText();
+
     $('.post-foldout').hide();
 
     $('.main').click(function(e) {
@@ -34,9 +36,15 @@ $(document).ready(function() {
         padding: 20,
         nextSelector: 'a.jscroll-next',
         contentSelector: '.question-list-item',
-        pagingSelector: '.pager'
+        pagingSelector: '.pager',
+        callback: createLinksForUrlsInText
     });
 });
+
+function createLinksForUrlsInText() {
+    $(".post-details").linkify();
+    $(".post-answer").linkify();
+}
 
 function isFoldoutShown(parent) {
     return parent.hasClass('foldout-shown');

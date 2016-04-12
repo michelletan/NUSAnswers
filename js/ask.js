@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     $("#question-tags").tagit({
          showAutocompleteOnFocus: true,
          tagSource: function(search, showChoices) {

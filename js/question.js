@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    $(".post-details").linkify();
+    $(".post-answer").linkify();
 
     $('.post-foldout').hide();
 
