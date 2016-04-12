@@ -50,7 +50,7 @@ function submit_question($title_param, $content_param, $tags_param, $profile_id_
   $result = $db->query($query);
   if ($result) {
     $id = $db->insert_id;
-    // submit_tags($tags, $id);
+    submit_tags($tags, $id);
     return $id;
   }
   return false;
