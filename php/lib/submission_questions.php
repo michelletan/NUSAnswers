@@ -135,6 +135,8 @@ function get_seo_string($vp_string){
 
     $vp_string = preg_replace('~-+~', '-', $vp_string);
 
+    $vp_string = str_replace(array('.', ','), '' , $vp_string);
+
     return $vp_string;
 }
 
