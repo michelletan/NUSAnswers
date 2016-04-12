@@ -12,12 +12,13 @@ function retrieve_highest_voted_answer_for_question($question_id_param) {
     $result = retrieve_answers_for_question_order_by_votes($question_id);
 
     if (count($result) == 0) {
-        return array();
+        $data = array();
+        $data["answer_count"] = 0;
     } else {
         $data = $result[0];
         $data["answer_count"] = count($result);
-        return $data;
     }
+    return $data;
 }
 
 function retrieve_answers_for_question_order_by_votes($question_id_param) {
