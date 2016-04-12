@@ -48,7 +48,7 @@
                 <div class="col-md-2 col-lg-2">
                     <div class="post-user row center-block text-center">
                             <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
-                            <a href="/user/<?php echo $answer["user"]["profile_id"]?>"><?php echo $data["user"]["display_name"]?></a>
+                            <a href="/user/<?php echo $answer["user"]["profile_id"]?>"><?php echo $answer["user"]["display_name"]?></a>
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-9">

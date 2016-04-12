@@ -47,6 +47,7 @@ function enableSubmit(){
 function postQuestion() {
 	var title = $('#question-title').val();
 	var content = $('#question-details').val();
+    var tags = $('#question-tags').val();
 	var response = grecaptcha.getResponse();
 	var file = $("#file").val();
   $.ajax({
@@ -58,7 +59,8 @@ function postQuestion() {
 	      title: title,
 	      content: content,
 	      response: response,
-	      file: file
+	      file: file,
+          tags: tags
 	    },
 
 	    success: function(json) {

@@ -353,6 +353,7 @@ button {
     transform-origin:0 0;
     -webkit-transform-origin:0 0;
 }
+}
 
 /* Slideout CSS */
 body {
@@ -394,7 +395,7 @@ body {
 /* end Slideout CSS */
 
 /* Tag-it CSS */
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+.tagit-choice, .tagit-choice-editable, .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
     font-family: 'Open Sans', sans-serif !important;
     background: none !important;
     color: #337ab7 !important;

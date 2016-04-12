@@ -156,6 +156,26 @@ function retrieve_question_with_answers($url_param) {
     }
 }
 
+function retrieve_questions_by_profile($id_param) {
+    global $db;
+
+    if (!is_int($id_param)) {
+        // ERROR
+        $id = $db->escape_string($id_param);
+    } else {
+        $id = $id_param;
+    }
+
+    $query = "SELECT * FROM questions " .
+             "WHERE profile_fk = $id ".
+             "ORDER BY question_id DESC ".
+             "LIMIT " . PROFILE_MAX_QUESTIONS_SHOWN;
+
+    $result = retrieve_questions_with_query($query, $limit);
+
+    return $result;
+}
+
 function retrieve_questions_with_query($query, $limit) {
     global $db;
 

@@ -2,6 +2,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission_comments.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission_questions.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission_tags.php';
 
 // function json_submission_interface() {
 //   $array_to_return = array();

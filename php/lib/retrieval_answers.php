@@ -49,4 +49,31 @@ function retrieve_answers_for_question_order_by_votes($question_id_param) {
     }
 }
 
+function retrieve_answers_by_profile($id_param) {
+    global $db;
+
+    if (!is_int($question_id_param)) {
+        // ERROR
+        $id = $db->escape_string($id_param);
+    } else {
+        $id = $id_param;
+    }
+
+    $query = "SELECT q.*, a.answer_id FROM answers a " .
+             "RIGHT JOIN questions q " .
+             "ON a.question_fk = q.question_id " .
+             "WHERE a.profile_fk = " . $id . " " .
+             "ORDER BY a.answer_id DESC " .
+             "LIMIT " . PROFILE_MAX_ANSWERS_SHOWN;
+
+    $result = $db->query($query);
+
+    if ($result->num_rows == 0) {
+        return array();
+    } else {
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        return $rows;
+    }
+}
+
 ?>
