@@ -280,7 +280,7 @@ function insert_admin() {
     $query = "INSERT INTO profiles (display_name) VALUES ('Admin');";
     $db->query($query);
 
-    $query = "INSERT INTO admins (login_id, hashed_password, profile_fk) VALUES ('admin@example.com', 'papAq5PwY/QQM', 1);";
+    $query = "INSERT INTO admins (login_id, hashed_password, profile_fk) VALUES ('admin', 'papAq5PwY/QQM', 1);";
     $db->query($query);
 }
 
