@@ -19,7 +19,7 @@ $(document).ready(function() {
     });
 	$('.post-answer').hide();
 	$('.question-message').hide();
-	document.getElementById("btn-submit-question").disabled = true;
+	// document.getElementById("btn-submit-question").disabled = true;
 });
 
 function enableSubmit(){
@@ -29,6 +29,7 @@ function enableSubmit(){
 function postQuestion() {
 	var title = $('#question-title').val();
 	var content = $('#question-details').val();
+    var tags = $('#question-tags').val();
 	var response = grecaptcha.getResponse();
   $.ajax({
 	    url: "/api/question-submit/",
@@ -38,6 +39,7 @@ function postQuestion() {
 	      type: "question",
 	      title: title,
 	      content: content,
+          tags: tags,
 	      response: response
 	    },
 

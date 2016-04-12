@@ -622,7 +622,7 @@ class QuestionSubmitAPIHandler {
         if (isset($_POST['type'])) {
             $type = $_POST['type'];
             if ($type == "question") {
-                if(!isset($_POST['response'])) {
+                if (!isset($_POST['response'])) {
                     $array_to_return['status'] = "error";
                     $array_to_return['message'] = "Error: recaptcha not selected";
                 } else if (empty($_POST['title']) || ctype_space($_POST['title'])) { // don't want unset or empty strings
@@ -633,21 +633,22 @@ class QuestionSubmitAPIHandler {
                     $array_to_return['message'] = "Error: no content";
                 } else {
                     $secret = '6LfDtxsTAAAAAKVKX9M3CnOE7RgKfhTuAWYrhe6U';
-                    $recaptcha = new \ReCaptcha\ReCaptcha($secret);
-                    $resp = $recaptcha->verify($_POST['response'], $_SERVER['REMOTE_ADDR']);
+                    $recaptcha = new\ ReCaptcha\ ReCaptcha($secret);
+                    $resp = $recaptcha -> verify($_POST['response'], $_SERVER['REMOTE_ADDR']);
 
-                    if ($resp->isSuccess()) {
-                      $tags = [];
-                      if (isset($_POST['tags'])) {
-                        $tags = json_decode($_POST['tags']);
-                      }
+                    if ($resp -> isSuccess()) {
+                        $tags = [];
+                        if (isset($_POST['tags'])) {
+                            $tags_string = $_POST['tags'];
+                            $tags = explode(',', $tags_string);
+                        }
 
-                      // check if person is logged in, and get the profile id here
-                      // left blank for now
-                      $profile = NULL;
-                      $id = submit_question($_POST['title'], $_POST['content'], $tags, $profile);
+                        // check if person is logged in, and get the profile id here
+                        // left blank for now
+                        $profile = NULL;
+                        $id = submit_question($_POST['title'], $_POST['content'], $tags, $profile);
                     } else {
-                      $id = false;
+                        $id = false;
                     }
                     if ($id) {
                         $array_to_return['status'] = "success";
