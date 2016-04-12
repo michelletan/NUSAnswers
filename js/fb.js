@@ -18,9 +18,10 @@ function logout() {
 }
 
 function share(url) {
+  var shareLink = 'http://www.nusanswers.me' + url;
   FB.ui({
     method: 'share',
-    href: 'http://www.nusanswers.me' + url
+    href: shareLink
   }, function(response) {
     document.getElementById("share").innerHTML = "Shared!";
   });
