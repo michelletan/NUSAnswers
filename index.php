@@ -628,7 +628,7 @@ class QuestionSubmitAPIHandler {
                 } else if (empty($_POST['title']) || ctype_space($_POST['title'])) { // don't want unset or empty strings
                     $array_to_return['status'] = "error";
                     $array_to_return['message'] = "Error: no title";
-                } else if (emptyt($_POST['content']) || ctype_space($_POST['content'])) {
+                } else if (empty($_POST['content']) || ctype_space($_POST['content'])) {
                     $array_to_return['status'] = "error";
                     $array_to_return['message'] = "Error: no content";
                 } else {

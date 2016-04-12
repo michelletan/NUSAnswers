@@ -204,14 +204,14 @@ function retrieve_best_answer_tags_users_for_question($question_row) {
 
     if (count($answer) > 0) {
         $answer_user = retrieve_profile_by_id($answer["answer_user_id"]);
+
+        if (count($answer_user) > 0) {
+            $answer["user"] = $answer_user[0];
+        }
     }
 
     if (count($question_user) > 0) {
         $question["user"] = $question_user[0];
-    }
-
-    if (count($answer_user) > 0) {
-        $answer["user"] = $answer_user[0];
     }
 
     // Add answer count to question
