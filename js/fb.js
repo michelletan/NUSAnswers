@@ -6,6 +6,10 @@ function login() {
       FB.api('/me', function(response) {
       //  console.log('Successful login for: ' + response.name);
         document.getElementById('username').innerHTML = response.name + "<span class=\"caret\"></span>";
+        $.ajax({
+          url: '/api/login/facebook',
+          method: 'POST'
+        });
       });
     }
   }, {scope: 'email'});
@@ -13,6 +17,10 @@ function login() {
 
 function logout() {
   FB.logout(function(response) {
+    $.ajax({
+      url: '/api/logout/facebook',
+      method: 'POST'
+    });
     window.location = "/"
   }, {scope: 'email'});
 }
@@ -30,6 +38,7 @@ function share(url) {
 window.fbAsyncInit = function() {
 	FB.init({
 	appId      : '581406865343052', // CREATE AND INSERT OWN APP ID TO TEST!
+  //appId      : '1742198345993041',
 	cookie     : true,  // enable cookies to allow the server to access
 	                    // the session
   status     : true,
@@ -45,6 +54,10 @@ window.fbAsyncInit = function() {
       FB.api('/me', function(response) {
       //  console.log('Successful login for: ' + response.name);
         document.getElementById('username').innerHTML = response.name + "<span class=\"caret\"></span>";
+        $.ajax({
+          url: '/api/login/facebook',
+          method: 'POST'
+        });
       });
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
