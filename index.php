@@ -256,6 +256,20 @@ class QuestionHandler {
 
 class UserProfileHandler {
     function get($id) {
+        global $user;
+        $user = retrieve_profile_by_id($id)[0];
+
+        global $questions;
+        $questions = retrieve_questions_by_profile($id);
+        $questions = $questions["questions"];
+
+        // echo var_dump($questions);
+
+        global $answers;
+        $answers = retrieve_answers_by_profile($id);
+
+        // echo var_dump($answers);
+
         require VIEW_DIRECTORY . '/profile.php';
     }
 }
