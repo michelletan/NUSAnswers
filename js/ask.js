@@ -48,9 +48,10 @@ function postQuestion() {
 
 	      if(status=="success") {
 	      	var question_id = json['question_id'];
-	      	$('.post-answer').html(message + "<br>id#: " + question_id);
-      		$('.ask-form').hide();
-			$('.post-answer').show();
+            // post-answer').html(message + "<br>id#: " + question_id);
+      // 		$('.ask-form').hide();
+			// $('.post-answer').show();
+            window.location.replace("/new-questions/");
 	      }
 	      else {
 	      	$('.question-message').html(message);
