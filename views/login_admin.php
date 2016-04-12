@@ -11,9 +11,9 @@
                     <div class="post-content">
                         <form class="form-horizontal" action="/api/login/admin" method="POST">
                           <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                            <label for="inputLoginID3" class="col-sm-2 control-label">Login ID</label>
                             <div class="col-sm-10">
-                              <input type="email" class="form-control" id="inputEmail3" name="admin-id" placeholder="Email">
+                              <input type="text" class="form-control" id="inputLoginID3" name="admin-id" placeholder="Login ID">
                             </div>
                           </div>
                           <div class="form-group">
