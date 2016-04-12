@@ -202,7 +202,7 @@ function retrieve_best_answer_tags_users_for_question($question_row) {
     $comment_count = retrieve_comment_count_for_question($question_id);
     $question_user = retrieve_profile_by_id($question["profile_fk"]);
 
-    if (count($answer) > 0) {
+    if ($answer["answer_count"] > 0) {
         $answer_user = retrieve_profile_by_id($answer["answer_user_id"]);
 
         if (count($answer_user) > 0) {
