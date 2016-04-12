@@ -645,7 +645,9 @@ class QuestionSubmitAPIHandler {
                       // check if person is logged in, and get the profile id here
                       // left blank for now
                       $profile = NULL;
-                      $id = submit_question($_POST['title'], $_POST['content'], $tags, $profile);
+
+                      $file = isset($_POST['file']) ? $_POST['file'] : NULL;
+                      $id = submit_question($_POST['title'], $_POST['content'], $tags, $profile, $file);
                     } else {
                       $id = false;
                     }

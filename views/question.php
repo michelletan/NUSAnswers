@@ -12,7 +12,7 @@
                     <div class="post-content card-line">
                         <div class="post-details row center-block">
                             <div class="col-md-10 col-lg-10">
-                                <?php if ($question) { echo $question["content"]; } else { echo "Default question details"; }?>
+                                <?php if ($question) { echo $question["content"]; if($question["image_url"] != NULL) {echo '<br><img class="col-md-11 col-lg-11" src="'. $question["image_url"] . '"alt="question-img">';}} else { echo "Default question details"; }?>
                             </div>
                             <div class="col-md-2 col-lg-2">
                                 <div class="post-user row center-block text-center">

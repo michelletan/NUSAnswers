@@ -21,6 +21,7 @@ function getQuestion(id) {
         var answer_count = json['answer_count'];
         var comment_count = json['comment_count'];
         var profile_id = json['profile_id'];
+        var image_url = json['image_url'];
       }
     }
   });
@@ -46,6 +47,7 @@ function getQuestionWithAnswer(id) {
         var answer_count = json['answer_count'];
         var comment_count = json['comment_count'];
         var profile_id = json['profile_id'];
+        var image_url = json['image_url'];
         for (var i = 0; i < json['answers'].length; i++) {
           console.log(json['answers'][i]);
           var answer_id = json['answers'][i]['answer_id'];

@@ -1,5 +1,8 @@
 <?php include_once __DIR__ . '/header.php'; ?>
-<script type="text/javascript" src="//api.filestackapi.com/filestack.js"></script>
+<!-- <script type="text/javascript" src="//api.filestackapi.com/filestack.js"></script> -->
+<script type="text/javascript">
+(function(a){if(window.filepicker){return}var b=a.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===a.location.protocol?"https:":"http:")+"//api.filepicker.io/v2/filepicker.js";var c=a.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);var d={};d._queue=[];var e="pick,pickMultiple,pickAndStore,read,write,writeUrl,export,convert,store,storeUrl,remove,stat,setKey,constructWidget,makeDropPane".split(",");var f=function(a,b){return function(){b.push([a,arguments])}};for(var g=0;g<e.length;g++){d[e[g]]=f(e[g],d._queue)}window.filepicker=d})(document);
+</script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <body>
     <script src="../js/fb.js"></script>
@@ -39,12 +42,16 @@
                           </div>
                           <div class="form-group">
                             <label for="question-file" class="col-sm-2 control-label">Image</label>
-                            <div class="col-sm-10">
-                                <!-- <input type="file" accept="image/*" name="question-file" id="question-file">
-                                <p class="help-block">Only images with extension .jpg, .png and .gif are accepted. <br>
-                                    Please keep your image size under 2MB.</p> -->
+                            <div class="col-sm-10 col-md-3">
+                              <input type="button" id="filepicker" value="Choose Image" class="btn btn-primary">
+                              <input type="hidden" id="file" name="file" value="">
+                              <!--
                               <input type="filepicker-dragdrop" data-fp-button-class="btn btn-primary" data-fp-apikey="Ag47cAGj4Td2gqU2gOyrLz" data-fp-button-text="Choose image" data-fp-mimetype="image/*" data-fp-mimetypeonchange="alert(event.fpfile.url)">
+                            -->
                             </div>
+                             <div class="col-sm-10 col-md-6">
+                                <p style="display: none" id="file-url"></p>
+                             </div>
                           </div>
                           <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
