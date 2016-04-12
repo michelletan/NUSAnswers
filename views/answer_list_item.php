@@ -13,7 +13,7 @@
                             <a onclick="upvoteAnswer(<?php echo $answer['answer_id']?>)"><span class="glyphicon glyphicon-chevron-up"></span><a>
                         </div>
                         <div id="answer-<?php echo $answer['answer_id']?>-vote-count" class="post-vote-count text-center">
-                            <?php echo $answer["vote_count"]; ?>
+                            <?php if ($answer["vote_count"]) { echo $answer["vote_count"]; } else { echo 0; }?>
                         </div>
                         <div class="post-vote-down center-block text-center">
                             <a onclick="downvoteAnswer(<?php echo $answer['answer_id']?>)"><span class="glyphicon glyphicon-chevron-down"></span></a>
