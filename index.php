@@ -451,6 +451,28 @@ class UserEditAnswerHandler {
     }
 }
 
+class UserViewAnswerCommentsHandler {
+    function get() {
+        if(is_logged_in()) {
+            require VIEW_DIRECTORY . '/user_view_answer_comments.php';
+        } else {
+            $redirect_address = "/";
+            header('Location: ' . $redirect_address);
+        }
+    }
+}
+
+class UserEditAnswerCommentHandler {
+    function get() {
+        if(is_logged_in()) {
+            require VIEW_DIRECTORY . '/user_edit_answer_comment.php';
+        } else {
+            $redirect_address = "/";
+            header('Location: ' . $redirect_address);
+        }
+    }
+}
+
 class AdminDashboardHandler {
     function get() {
         if (is_logged_in() && has_admin_rights()) {
@@ -950,6 +972,37 @@ class UserAnswerDeletionAPIHandler {
     }
 }
 
+class UserAnswerCommentEditAPIHandler {
+    function post() {
+        if (is_logged_in()) {
+            if (isset($_POST['comment-id']) && isset($_POST['content'])) {
+                $comment_id = trim($_POST['comment-id']);
+                $content = trim($_POST['content']);
+                if ($comment_id !== "" && $content !== "") {
+                    update_user_answer_comment($comment_id, $content);
+                }
+            }
+            $redirect_address = '/user-edit-answer-comment?comment-id=' . $comment_id;
+            header('Location: ' . $redirect_address);
+        }
+    }
+}
+
+class UserAnswerCommentDeletionAPIHandler {
+    function post() {
+        if (is_logged_in()) {
+            if (isset($_POST['answer-comment-id'])) {
+                foreach ($_POST['answer-comment-id'] as $answer_comment_id) {
+                    delete_user_answer_comment($answer_comment_id);
+                }
+            }
+            $redirect_address = '/user-view-answer-comments';
+            header('Location: ' . $redirect_address);
+        }
+    }
+}
+
+
 // Handlers for Admin API
 
 class AdminCreationAPIHandler {
@@ -1303,9 +1356,8 @@ $html_urls = array(
 
    "/user-view-answers" => "UserViewAnswersHandler",
    "/user-edit-answer" => "UserEditAnswerHandler",
-//   "/user-view-answer-comments" => "UserViewAnswerCommentsHandler", 
-//   "/user-edit-answer-comments" => "UserEditAnswerCommentHandler",
-
+   "/user-view-answer-comments" => "UserViewAnswerCommentsHandler", 
+   "/user-edit-answer-comment" => "UserEditAnswerCommentHandler",
 
     "/admin-dashboard" => "AdminDashboardHandler",
     "/admin-create-admin-account" => "AdminCreateAdminAccountHandler",
@@ -1357,8 +1409,8 @@ $json_base_urls = array(
 
     "/user-answer-deletion/" => "UserAnswerDeletionAPIHandler",
     "/user-answer-edit/" => "UserAnswerEditAPIHandler",
-//  "/user-answer-comment-deletion/" => "UserAnswerCommentDeletionAPIHandler",
-//  "/user-answer-comment-edit/" => "UserAnswerCommentEditAPIHandler",    
+    "/user-answer-comment-deletion/" => "UserAnswerCommentDeletionAPIHandler",
+    "/user-answer-comment-edit/" => "UserAnswerCommentEditAPIHandler",    
 
     "/admin-creation/" => "AdminCreationAPIHandler",
     "/admin-edit/" => "AdminEditAPIHandler",

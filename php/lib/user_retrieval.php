@@ -111,11 +111,11 @@ function retrieve_answer_for_user($id_param) {
     return $return_array;
 }
 
-function retrieve_comments_for_answer_by_user($id_param) {
+function retrieve_answer_comments_by_user($id_param) {
     global $db;
     $profile_id = $db->escape_string($id_param);
-
-    $query = "SELECT * FROM answer_comments WHERE profile_fk = '" . $profile_id . "'"; 
+    
+    $query = "SELECT * FROM answer_comments WHERE profile_fk = '" . $profile_id . "'"; //change: WHERE p.display_name = $name
 
     $result = $db->query($query);
 
@@ -123,21 +123,32 @@ function retrieve_comments_for_answer_by_user($id_param) {
         return array();
     } else {
         while ($row = $result->fetch_assoc()) {
-            $query = "SELECT * FROM answers WHERE answer_id = '" . $row["answer_fk"] . "'";
-            $res = $db->query($query);
+        //    $query = "SELECT * FROM questions WHERE question_id = '" . $row["question_fk"] . "'";
+        //    $res = $db->query($query);
 
-            while($ans = $res->fetch_assoc()) {
-                $query = "SELECT * FROM questions WHERE question_id = '" . $ans["question_fk"] . "'";
-                $res = $db->query($query);
-
-                while($ques = $res->fetch_assoc()) {
-                    $return_array[] = array($row, $ans, $ques);
-                }
-            }
+        //    while($ques = $res->fetch_assoc()) {
+            $return_array[] = $row;
+        //    }
         }
 
         return $return_array;
     }
+}
+
+function retrieve_answer_comment_for_user($id_param) {
+    global $db;
+    $answer_comment_id = $db->escape_string($id_param);
+
+    $query = "SELECT * FROM answer_comments WHERE comment_id = '" . $answer_comment_id . "'";
+
+    $result = $db->query($query);
+
+    $return_array = array();
+    if($row = $result->fetch_assoc()) {
+        $return_array = $row;
+    }
+
+    return $return_array;
 }
 
 function retrieve_question_quantity_user($id_param) {

@@ -15,10 +15,18 @@ function delete_user_question_comment($question_comment_id_param) {
     $db->query($query); 
 }
 
-function delete_user_answer($question_id_param) {
+function delete_user_answer($answer_id_param) {
     global $db;
-    $id = $db->escape_string($question_id_param);
+    $id = $db->escape_string($answer_id_param);
     $query = "DELETE FROM answers WHERE answer_id = " . $id . ";";
     $db->query($query); 
 }
+
+function delete_user_answer_comment($answer_comment_id_param) {
+    global $db;
+    $id = $db->escape_string($answer_comment_id_param);
+    $query = "DELETE FROM answer_comments WHERE comment_id = " . $id . ";";
+    $db->query($query); 
+}
+
 ?>
