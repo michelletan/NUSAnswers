@@ -32,10 +32,11 @@ function vote_answer($answer_id, $type) {
     }
     $db->query($query);
     
-    $query = "SELECT SUM(*) as num_votes FROM votes WHERE answer_fk = " . $answer_id;
+    $query = "SELECT SUM(vote_type) as num_votes FROM votes WHERE answer_fk = " . $answer_id;
+    $result = $db->query($query);
     if ($row = $result->fetch_assoc()) {
         $num_votes = $row['num_votes'];
-        $query = "UPDATE answers SET votes = " . $num_votes . " WHERE answer_fk = " . $answer_id;
+        $query = "UPDATE answers SET votes = " . $num_votes . " WHERE answer_id = " . $answer_id;
         $db->query($query);
     }
     return $change_type;
