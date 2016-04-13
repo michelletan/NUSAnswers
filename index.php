@@ -3,7 +3,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/Toro.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/login_check.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/fb-login.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_creation.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_update.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_deletion.php';
@@ -261,20 +260,6 @@ class QuestionHandler {
 
 class UserProfileHandler {
     function get($id) {
-        global $user;
-        $user = retrieve_profile_by_id($id)[0];
-
-        global $questions;
-        $questions = retrieve_questions_by_profile($id);
-        $questions = $questions["questions"];
-
-        // echo var_dump($questions);
-
-        global $answers;
-        $answers = retrieve_answers_by_profile($id);
-
-        // echo var_dump($answers);
-
         require VIEW_DIRECTORY . '/profile.php';
     }
 }
@@ -569,18 +554,6 @@ class AnswerSubmitFromHomeAPIhandler {
   }
 }
 
-class FacebookLoginAPIHandler {
-  function post() {
-    facebook_login_php();
-  }
-}
-
-class FacebookLogoutAPIHandler {
-  function post() {
-    logout_active_session();
-  }
-}
-
 class QuestionCommentAPIHandler {
     function get_xhr($id) {
         if ($id) {
@@ -653,7 +626,7 @@ class QuestionSubmitAPIHandler {
         if (isset($_POST['type'])) {
             $type = $_POST['type'];
             if ($type == "question") {
-                if (!isset($_POST['response'])) {
+                if(!isset($_POST['response'])) {
                     $array_to_return['status'] = "error";
                     $array_to_return['message'] = "Error: recaptcha not selected";
                 } else if (empty($_POST['title']) || ctype_space($_POST['title'])) { // don't want unset or empty strings
@@ -664,22 +637,23 @@ class QuestionSubmitAPIHandler {
                     $array_to_return['message'] = "Error: no content";
                 } else {
                     $secret = '6LfDtxsTAAAAAKVKX9M3CnOE7RgKfhTuAWYrhe6U';
-                    $recaptcha = new\ ReCaptcha\ ReCaptcha($secret);
-                    $resp = $recaptcha -> verify($_POST['response'], $_SERVER['REMOTE_ADDR']);
+                    $recaptcha = new \ReCaptcha\ReCaptcha($secret);
+                    $resp = $recaptcha->verify($_POST['response'], $_SERVER['REMOTE_ADDR']);
 
-                    if ($resp -> isSuccess()) {
-                        $tags = [];
-                        if (isset($_POST['tags'])) {
-                            $tags_string = $_POST['tags'];
-                            $tags = explode(',', $tags_string);
-                        }
+                    if ($resp->isSuccess()) {
+                      $tags = [];
+                      if (isset($_POST['tags'])) {
+                        $tags = json_decode($_POST['tags']);
+                      }
 
-                        // check if person is logged in, and get the profile id here
-                        // left blank for now
-                        $profile = NULL;
-                        $id = submit_question($_POST['title'], $_POST['content'], $tags, $profile);
+                      // check if person is logged in, and get the profile id here
+                      // left blank for now
+                      $profile = NULL;
+
+                      $file = isset($_POST['file']) ? $_POST['file'] : NULL;
+                      $id = submit_question($_POST['title'], $_POST['content'], $tags, $profile, $file);
                     } else {
-                        $id = false;
+                      $id = false;
                     }
                     if ($id) {
                         $array_to_return['status'] = "success";
@@ -1165,9 +1139,6 @@ $json_base_urls = array(
     "/logout/admin" => "AdminLogoutAPIHandler",
     "/question/comments/:number" => "QuestionCommentAPIHandler",
     "/answer/comments/:number" => "AnswerCommentAPIHandler",
-
-    "/login/facebook" => "FacebookLoginAPIHandler",
-    "/logout/facebook" => "FacebookLogoutAPIHandler",
 
     "/question/comments/post" => "QuestionCommentPostAPIHandler",
     "/answer/comments/post" => "AnswerCommentPostAPIHandler",

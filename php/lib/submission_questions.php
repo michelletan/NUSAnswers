@@ -20,10 +20,11 @@
 //   return false;
 // }
 
-function submit_question($title_param, $content_param, $tags_param, $profile_id_param) {
+function submit_question($title_param, $content_param, $tags_param, $profile_id_param, $image_param) {
   global $db;
   $title = $db->escape_string($title_param);
   $content = $db->escape_string($content_param);
+  $image_url = $db->escape_string($image_param);
   $friendly_url = get_seo_string($title);
 
   // handle profile differently depending on whether user is logged in
@@ -39,12 +40,12 @@ function submit_question($title_param, $content_param, $tags_param, $profile_id_
 
   // handle input differently depending on whether user is logged in
   if ($profile_id) {
-    $query = "INSERT INTO questions (title, content, profile_fk, friendly_url) " .
-           "VALUES ('$title', '$content', $profile_id, '$friendly_url')";
+    $query = "INSERT INTO questions (title, content, profile_fk, friendly_url, image_url) " .
+           "VALUES ('$title', '$content', $profile_id, '$friendly_url', '$image_url')";
   }
   else {
-    $query = "INSERT INTO questions (title, content, friendly_url) " .
-           "VALUES ('$title', '$content', '$friendly_url')";
+    $query = "INSERT INTO questions (title, content, friendly_url, image_url) " .
+           "VALUES ('$title', '$content', '$friendly_url', '$image_url')";
   }
 
   $result = $db->query($query);

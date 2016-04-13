@@ -19,7 +19,25 @@ $(document).ready(function() {
     });
 	$('.post-answer').hide();
 	$('.question-message').hide();
-	// document.getElementById("btn-submit-question").disabled = true;
+	document.getElementById("btn-submit-question").disabled = true;
+
+	$("#filepicker").click(function() {
+		filepicker.setKey("Ag47cAGj4Td2gqU2gOyrLz");
+		filepicker.pick(
+		 {
+		    mimetype: 'image/*',
+		    container: 'window',
+		    services: ['COMPUTER', 'FACEBOOK', 'CLOUDAPP']
+		  },
+		  function(Blob){
+		  	$("#file").val(Blob.url);
+		  	$("#file-url").text(Blob.filename).css("display", "block");
+		  },
+		  function(FPError){
+		//  console.log(FPError.toString()); - print errors to console
+		  }
+		);
+	});
 });
 
 function enableSubmit(){
@@ -31,6 +49,7 @@ function postQuestion() {
 	var content = $('#question-details').val();
     var tags = $('#question-tags').val();
 	var response = grecaptcha.getResponse();
+	var file = $("#file").val();
   $.ajax({
 	    url: "/api/question-submit/",
 	    method: "POST",
@@ -39,8 +58,9 @@ function postQuestion() {
 	      type: "question",
 	      title: title,
 	      content: content,
-          tags: tags,
-	      response: response
+	      response: response,
+	      file: file,
+          tags: tags
 	    },
 
 	    success: function(json) {
