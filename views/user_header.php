@@ -11,6 +11,5 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/login_check.php';
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
 <link href="../css/bootstrap.css" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/metisMenu.min.css">
 <link rel="stylesheet" href="../css/user.css">
 </head>

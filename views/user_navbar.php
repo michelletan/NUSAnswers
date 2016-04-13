@@ -25,8 +25,8 @@
                 </ul>
                 <ul class="nav navbar-nav col-md-2 col-lg-2">
                     <?php if(is_logged_in()) { ?>
-                    <li class="dropdown login-view" style="display:none">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="username">Username <span class="caret"></span></a>
+                    <li class="dropdown login-view">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="username"><?php echo get_active_display_name(); ?><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/user-dashboard">User Dashboard</a></li>
                             <li role="separator" class="divider"></li>
