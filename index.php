@@ -14,7 +14,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/recaptcha-master/src/autoload
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/json.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/vote.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/user_deletion.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/user_changes.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/user_update.php';
 
 // Reference & examples: https://github.com/anandkunal/ToroPHP
 // More examples: http://www.sitepoint.com/apify-legacy-app-toro/
@@ -324,6 +324,50 @@ class UserEditQuestionHandler {
     function get() {
         if(is_logged_in()) {
             require VIEW_DIRECTORY . '/user_edit_question.php';
+        } else {
+            $redirect_address = "/";
+            header('Location: ' . $redirect_address);
+        }
+    }
+}
+
+class UserViewQuestionCommentsHandler {
+    function get() {
+        if(is_logged_in()) {
+            require VIEW_DIRECTORY . '/user_view_question_comments.php';
+        } else {
+            $redirect_address = "/";
+            header('Location: ' . $redirect_address);
+        }
+    }
+}
+
+class UserEditQuestionCommentHandler {
+    function get() {
+        if(is_logged_in()) {
+            require VIEW_DIRECTORY . '/user_edit_question_comment.php';
+        } else {
+            $redirect_address = "/";
+            header('Location: ' . $redirect_address);
+        }
+    }
+}
+
+class UserViewAnswersHandler {
+    function get() {
+        if(is_logged_in()) {
+            require VIEW_DIRECTORY . '/user_view_answers.php';
+        } else {
+            $redirect_address = "/";
+            header('Location: ' . $redirect_address);
+        }
+    }
+}
+
+class UserEditAnswerHandler {
+    function get() {
+        if(is_logged_in()) {
+            require VIEW_DIRECTORY . '/user_edit_answer.php';
         } else {
             $redirect_address = "/";
             header('Location: ' . $redirect_address);
@@ -737,84 +781,6 @@ class DownvoteAPIHandler {
     }
 }
 
-/*
-class UserSaveQuestionChangesAPIHandler {
-    function post() {
-        if((isset($_POST["question_id"]) && isset($_POST["question_title"])) && isset($_POST["question_details"])) {
-            $question_id = htmlspecialchars($_POST["question_id"]);
-            $question_title = htmlspecialchars($_POST["question_title"]);
-            $question_details = htmlspecialchars($_POST["question_details"]);
-            $has_saved = save_question_changes_by_user($question_id, $question_title, $question_details);
-        }
-    }
-}
-
-class UserDeleteQuestionAPIHandler {
-    function post() {
-        if(isset($_POST["question_id"])) {
-            $question_id = htmlspecialchars($_POST["question_id"]);
-            $has_deleted = delete_question($question_id);
-        }
-    }
-}
-
-class UserSaveQuestionCommentChangesAPIHandler {
-    function post() {
-        if(isset($_POST["comment_id"]) &&  isset($_POST["comment_content"])) {
-            $comment_id = htmlspecialchars($_POST["comment_id"]);
-            $comment_details = htmlspecialchars($_POST["comment_content"]);
-            $has_saved = save_question_comment_changes_by_user($comment_id, $comment_details);
-        }
-    }
-}
-
-class UserDeleteQuestionCommentAPIHandler {
-    function post() {
-        if(isset($_POST["comment_id"])) {
-            $comment_id = htmlspecialchars($_POST["comment_id"]);
-            $has_deleted = delete_question_comment($comment_id);
-        }
-    }
-}
-
-class UserSaveAnswerChangesAPIHandler {
-    function post() {
-        if(isset($_POST["answer_id"]) &&  isset($_POST["answer_details"])) {
-            $answer_id = htmlspecialchars($_POST["answer_id"]);
-            $answer_details = htmlspecialchars($_POST["answer_details"]);
-            $has_saved = save_answer_changes_by_user($answer_id, $answer_details);
-        }
-    }
-}
-
-class UserDeleteAnswerAPIHandler {
-    function post() {
-        if(isset($_POST["answer_id"])) {
-            $answer_id = htmlspecialchars($_POST["answer_id"]);
-            $has_deleted = delete_answer($answer_id);
-        }
-    }
-}
-
-class UserSaveAnswerCommentChangesAPIHandler {
-    function post() {
-        if(isset($_POST["comment_id"]) &&  isset($_POST["comment_content"])) {
-            $comment_id = htmlspecialchars($_POST["comment_id"]);
-            $comment_details = htmlspecialchars($_POST["comment_content"]);
-            $has_saved = save_answer_comment_changes_by_user($comment_id, $comment_details);
-        }
-    }
-}
-
-class UserDeleteAnswerCommentAPIHandler {
-    function post() {
-        if(isset($_POST["comment_id"])) {
-            $comment_id = htmlspecialchars($_POST["comment_id"]);
-            $has_deleted = delete_answer_comment($comment_id);
-        }
-    }
-}*/
-
 class UserQuestionEditAPIHandler {
     function post() {
         if (is_logged_in()) {
@@ -845,6 +811,67 @@ class UserQuestionDeletionAPIHandler {
         }
     }
 }
+
+class UserQuestionCommentEditAPIHandler {
+    function post() {
+        if (is_logged_in()) {
+            if (isset($_POST['comment-id']) && isset($_POST['content'])) {
+                $comment_id = trim($_POST['comment-id']);
+                $content = trim($_POST['content']);
+                if ($comment_id !== "" && $content !== "") {
+                    update_user_question_comment($comment_id, $content);
+                }
+            }
+            $redirect_address = '/user-edit-question-comment?comment-id=' . $comment_id;
+            header('Location: ' . $redirect_address);
+        }
+    }
+}
+
+class UserQuestionCommentDeletionAPIHandler {
+    function post() {
+        if (is_logged_in()) {
+            if (isset($_POST['question-comment-id'])) {
+                foreach ($_POST['question-comment-id'] as $question_comment_id) {
+                    delete_question_comment($question_comment_id);
+                }
+            }
+            $redirect_address = '/user-view-question-comments';
+            header('Location: ' . $redirect_address);
+        }
+    }
+}
+
+class UserAnswerEditAPIHandler {
+    function post() {
+        if (is_logged_in()) {
+            if (isset($_POST['answer-id']) && isset($_POST['content'])) {
+                $answer_id = trim($_POST['answer-id']);
+                $content = htmlspecialchars(trim($_POST['content']));
+                if ($answer_id !== "" && $content !== "") {
+                    update_user_answer($answer_id, $content, 1);
+                }
+            }
+            $redirect_address = '/user-edit-answer?answer-id=' . $answer_id;
+            header('Location: ' . $redirect_address);
+        }
+    }
+}
+
+class UserAnswerDeletionAPIHandler {
+    function post() {
+        if (is_logged_in()) {
+            if (isset($_POST['answer-id'])) {
+                foreach ($_POST['answer-id'] as $answer_id) {
+                    delete_user_answer($answer_id);
+                }
+            }
+            $redirect_address = '/user-view-answers';
+            header('Location: ' . $redirect_address);
+        }
+    }
+}
+
 // Handlers for Admin API
 
 class AdminCreationAPIHandler {
@@ -1185,11 +1212,13 @@ $html_urls = array(
     "/user-view-questions" => "UserViewQuestionsHandler",
     "/user-edit-question" => "UserEditQuestionHandler",
 
-//    "/user-question-comments" => "UserDashboardQuestionCommentsHandler",
+    "/user-view-question-comments" => "UserViewQuestionCommentsHandler",
+    "/user-edit-question-comment" => "UserEditQuestionCommentHandler",
 
-//   "/user-answers" => "UserDashboardAnswersHandler",
-
-//    "/user-answer-comments" => "UserDashboardAnswerCommentsHandler",
+   "/user-view-answers" => "UserViewAnswersHandler",
+   "/user-edit-answers" => "UserEditAnswerHandler",
+//   "/user-view-answer-comments" => "UserViewAnswerCommentsHandler", 
+//   "/user-edit-answer-comments" => "UserEditAnswerCommentHandler",
 
 
     "/admin-dashboard" => "AdminDashboardHandler",
@@ -1237,6 +1266,13 @@ $json_base_urls = array(
 
     "/user-question-deletion/" => "UserQuestionDeletionAPIHandler",
     "/user-question-edit/" => "UserQuestionEditAPIHandler",
+    "/user-question-comment-deletion" => "UserQuestionCommentDeletionAPIHandler",
+    "/user-question-comment-edit/" => "UserQuestionCommentEditAPIHandler",
+
+//  "/user-answer-deletion/" => "UserAnswerDeletionAPIHandler",
+//  "/user-answer-edit/" => "UserAnswerEditAPIHandler",
+//  "/user-answer-comment-deletion/" => "UserAnswerCommentDeletionAPIHandler",
+//  "/user-answer-comment-edit/" => "UserAnswerCommentEditAPIHandler",    
 
     "/admin-creation/" => "AdminCreationAPIHandler",
     "/admin-edit/" => "AdminEditAPIHandler",

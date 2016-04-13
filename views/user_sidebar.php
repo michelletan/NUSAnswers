@@ -12,14 +12,14 @@
                 <div class="sidebar-title">Questions</div>
                 <div class="sidebar-body">
                     <a href="/user-view-questions">View Questions</a>
-                    <a href="/user-question-comments">View Question Comments</a>
+                    <a href="/user-view-question-comments">View Question Comments</a>
                 </div>
             </div>
             <div class="card">
                 <div class="sidebar-title">Answers</div>
                 <div class="sidebar-body">
-                    <a href="/user-answers">View Answers</a>
-                    <a href="/user-answer-comments">View Answer Comments</a>
+                    <a href="/user-view-answers">View Answers</a>
+                    <a href="/user-view-answer-comments">View Answer Comments</a>
                 </div>
             </div>
         </div>
@@ -39,14 +39,14 @@
                 <div class="sidebar-title">Questions</div>
                 <div class="sidebar-body">
                     <a href="/user-view-questions">View Questions</a>
-                    <a href="/user-question-comments">View Question Comments</a>
+                    <a href="/user-view-question-comments">View Question Comments</a>
                 </div>
             </div>
             <div class="card">
                 <div class="sidebar-title">Answers</div>
                 <div class="sidebar-body">
-                    <a href="/user-answers">View Answers</a>
-                    <a href="/user-answer-comments">View Answer Comments</a>
+                    <a href="/user-view-answers">View Answers</a>
+                    <a href="/user-view-answer-comments">View Answer Comments</a>
                 </div>
             </div>
         </div>
