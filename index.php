@@ -658,7 +658,9 @@ class FacebookLoginAPIHandler {
 
 class FacebookLogoutAPIHandler {
   function post() {
-    logout_active_session();
+    if (get_active_role() != USER_ROLE_ADMIN) {
+      logout_active_session();
+    }
   }
 }
 
