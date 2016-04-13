@@ -3,6 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/Toro.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/login_check.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/fb-login.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_creation.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_update.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_deletion.php';
@@ -555,6 +556,7 @@ class AdminLoginAPIHandler {
         set_active_profile($admin_info['profile-id']);
         set_active_display_name($admin_info['display-name']);
         set_active_role(USER_ROLE_ADMIN);
+        set_active_profile_picture($admin_info['image-url']);
         $redirect_address = '/admin-dashboard';
       }
     }
@@ -579,7 +581,7 @@ class AnswerSubmitFromQuestionAPIhandler {
     $redirect_address = "/question/" . $_POST['question-friendly-url'];
     $query_question_id = htmlspecialchars($_POST['question-id']);
     $query_answer_contents = htmlspecialchars($_POST['answer-content']);
-    $query_result = submit_answer($query_question_id, $query_answer_contents, 1);
+    $query_result = submit_answer($query_question_id, $query_answer_contents, get_active_profile());
     header('Location: ' . $redirect_address);
   }
 }
@@ -588,8 +590,20 @@ class AnswerSubmitFromHomeAPIhandler {
   function post() {
     $query_question_id = htmlspecialchars($_POST['question_id']);
     $query_answer_contents = htmlspecialchars($_POST['answer_content']);
-    $query_result = submit_answer($query_question_id, $query_answer_contents, 1);
+    $query_result = submit_answer($query_question_id, $query_answer_contents, get_active_profile());
     echo $query_result ? 'true' : 'false';
+  }
+}
+
+class FacebookLoginAPIHandler {
+  function post() {
+    facebook_login_php();
+  }
+}
+
+class FacebookLogoutAPIHandler {
+  function post() {
+    logout_active_session();
   }
 }
 
@@ -1191,6 +1205,9 @@ $json_base_urls = array(
     "/logout/admin" => "AdminLogoutAPIHandler",
     "/question/comments/:number" => "QuestionCommentAPIHandler",
     "/answer/comments/:number" => "AnswerCommentAPIHandler",
+
+    "/login/facebook" => "FacebookLoginAPIHandler",
+    "/logout/facebook" => "FacebookLogoutAPIHandler",
 
     "/question/comments/post" => "QuestionCommentPostAPIHandler",
     "/answer/comments/post" => "AnswerCommentPostAPIHandler",
