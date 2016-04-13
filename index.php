@@ -927,7 +927,7 @@ class UserAnswerEditAPIHandler {
                 $answer_id = trim($_POST['answer-id']);
                 $content = htmlspecialchars(trim($_POST['content']));
                 if ($answer_id !== "" && $content !== "") {
-                    update_user_answer($answer_id, $content, 1);
+                    update_user_answer($answer_id, $content);
                 }
             }
             $redirect_address = '/user-edit-answer?answer-id=' . $answer_id;
@@ -1302,7 +1302,7 @@ $html_urls = array(
     "/user-edit-question-comment" => "UserEditQuestionCommentHandler",
 
    "/user-view-answers" => "UserViewAnswersHandler",
-   "/user-edit-answers" => "UserEditAnswerHandler",
+   "/user-edit-answer" => "UserEditAnswerHandler",
 //   "/user-view-answer-comments" => "UserViewAnswerCommentsHandler", 
 //   "/user-edit-answer-comments" => "UserEditAnswerCommentHandler",
 
@@ -1355,8 +1355,8 @@ $json_base_urls = array(
     "/user-question-comment-deletion" => "UserQuestionCommentDeletionAPIHandler",
     "/user-question-comment-edit/" => "UserQuestionCommentEditAPIHandler",
 
-//  "/user-answer-deletion/" => "UserAnswerDeletionAPIHandler",
-//  "/user-answer-edit/" => "UserAnswerEditAPIHandler",
+    "/user-answer-deletion/" => "UserAnswerDeletionAPIHandler",
+    "/user-answer-edit/" => "UserAnswerEditAPIHandler",
 //  "/user-answer-comment-deletion/" => "UserAnswerCommentDeletionAPIHandler",
 //  "/user-answer-comment-edit/" => "UserAnswerCommentEditAPIHandler",    
 

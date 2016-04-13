@@ -83,18 +83,33 @@ function retrieve_answers_by_user($id_param) {
         return array();
     } else {
         while ($row = $result->fetch_assoc()) {
-            $query = "SELECT * FROM questions WHERE question_id = '" . $row["question_fk"] . "'";
-            $res = $db->query($query);
+        //    $query = "SELECT * FROM questions WHERE question_id = '" . $row["question_fk"] . "'";
+        //    $res = $db->query($query);
 
-            while($ques = $res->fetch_assoc()) {
-                $return_array[] = array($row, $ques);
-            }
+        //    while($ques = $res->fetch_assoc()) {
+            $return_array[] = $row;
+        //    }
         }
 
         return $return_array;
     }
 }
 
+function retrieve_answer_for_user($id_param) {
+    global $db;
+    $answer_id = $db->escape_string($id_param);
+
+    $query = "SELECT * FROM answers WHERE answer_id = '" . $answer_id . "'";
+
+    $result = $db->query($query);
+
+    $return_array = array();
+    if($row = $result->fetch_assoc()) {
+        $return_array = $row;
+    } 
+
+    return $return_array;
+}
 
 function retrieve_comments_for_answer_by_user($id_param) {
     global $db;
