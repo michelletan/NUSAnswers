@@ -97,18 +97,15 @@
         </div>
         <div class="post-footer">
             <div class="row center-block">
-                <div class="timestamp col-md-4 col-lg-4">Posted: <?php echo $question["created_date"]; ?></div>
+                <div class="timestamp col-xs-6 col-sm-6 col-md-4 col-lg-4">Posted: <?php echo $question["created_date"]; ?></div>
+                <a class="col-xs-6 col-sm-6 hidden-md hidden-lg hidden-xl text-center" onclick="share('/question/<?php echo $question["friendly_url"]?>')" id="share"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
                 <?php if ($question["answer_count"] > 0) { ?>
-                    <a href="/question/<?php echo $question["friendly_url"]?>" class="btn-view-answers col-md-3 col-lg-3 text-center">View Answers (<?php echo $question["answer_count"]; ?>)</a>
+                    <a href="/question/<?php echo $question["friendly_url"]?>" class="btn-view-answers col-xs-6 col-sm-6 col-md-3 col-lg-3 text-center">Answers (<?php echo $question["answer_count"]; ?>)</a>
                 <?php } else { ?>
-                    <div class="col-md-3 col-lg-3"></div>
+                    <div class="hidden-xs hidden-sm col-md-3 col-lg-3"></div>
                 <?php } ?>
-                <?php if ($question["comment_count"] > 0) { ?>
-                    <a class="btn-view-comments col-md-3 col-lg-3 text-center">View Comments (<?php echo $question["comment_count"]; ?>)</a>
-                <?php } else { ?>
-                    <a class="btn-view-comments col-md-3 col-lg-3 text-center">Comment</a>
-                <?php } ?>
-                <a class="col-md-2 col-lg-2 text-center" onclick="share('/question/<?php echo $question["friendly_url"]?>')" id="share"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
+                <a class="btn-view-comments col-xs-6 col-sm-6 col-md-3 col-lg-3 text-center"><?php echo "Comments (" . $question["comment_count"] . ")";?></a>
+                <a class="hidden-xs hidden-sm col-md-2 col-lg-2 text-center" onclick="share('/question/<?php echo $question["friendly_url"]?>')" id="share"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
             </div>
         </div>
     </div>
