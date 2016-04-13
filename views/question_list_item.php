@@ -98,7 +98,7 @@
         <div class="post-footer">
             <div class="row center-block">
                 <div class="timestamp col-xs-6 col-sm-6 col-md-4 col-lg-4">Posted: <?php echo $question["created_date"]; ?></div>
-                <a class="col-xs-6 col-sm-6 col-md-2 col-lg-2 text-center" onclick="share('/question/<?php echo $question["friendly_url"]?>')" id="share"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
+                <a class="col-xs-6 col-sm-6 hidden-md hidden-lg hidden-xl text-center" onclick="share('/question/<?php echo $question["friendly_url"]?>')" id="share"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
                 <?php if ($question["answer_count"] > 0) { ?>
                     <a href="/question/<?php echo $question["friendly_url"]?>" class="btn-view-answers col-xs-6 col-sm-6 col-md-3 col-lg-3 text-center">Answers (<?php echo $question["answer_count"]; ?>)</a>
                 <?php } else { ?>
