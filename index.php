@@ -714,20 +714,32 @@ class QuestionSubmitAPIHandler {
 
 class UpvoteAPIHandler {
     function post() {
-        if (isset($_POST["answer_id"])) {
-            $answer_id = $_POST["answer_id"];
-            $new_num_votes = upvote_answer($answer_id);
-            echo $new_num_votes;
+        if (is_logged_in()) {
+            if (isset($_POST["answer_id"])) {
+                $answer_id = $_POST["answer_id"];
+                echo upvote_answer($answer_id);
+                http_response_code(200);
+            } else {
+                http_response_code(400);
+            }
+        } else {
+            http_response_code(403);
         }
     }
 }
 
 class DownvoteAPIHandler {
     function post() {
-        if (isset($_POST["answer_id"])) {
-            $answer_id = $_POST["answer_id"];
-            $new_num_votes = downvote_answer($answer_id);
-            echo $new_num_votes;
+        if (is_logged_in()) {
+            if (isset($_POST["answer_id"])) {
+                $answer_id = $_POST["answer_id"];
+                echo downvote_answer($answer_id);
+                http_response_code(200);
+            } else {
+                http_response_code(400);
+            }
+        } else {
+            http_response_code(403);
         }
     }
 }

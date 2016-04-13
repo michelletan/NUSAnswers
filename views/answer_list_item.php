@@ -10,7 +10,7 @@
                 <div class="row center-block">
                     <div class="post-vote center-block">
                         <div class="post-vote-up center-block text-center">
-                            <a onclick="upvoteAnswer(<?php echo $answer['answer_id']?>)"><span class="glyphicon glyphicon-chevron-up"></span><a>
+                            <a onclick="upvoteAnswer(<?php echo $answer['answer_id']?>)"><span class="glyphicon glyphicon-chevron-up"></span></a>
                         </div>
                         <div id="answer-<?php echo $answer['answer_id']?>-vote-count" class="post-vote-count text-center">
                             <?php if ($answer["vote_count"]) { echo $answer["vote_count"]; } else { echo 0; }?>
