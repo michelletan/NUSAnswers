@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    $("#menu").metisMenu();
    Chart.defaults.global.responsive = true;
     drawSummaryChart("summary-canvas");
     drawQuestionsChart("questions-canvas");

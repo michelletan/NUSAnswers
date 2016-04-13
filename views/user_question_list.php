@@ -69,7 +69,7 @@
                                 <table class="table table-filter" id="questionsAndAnswers">
                                     <tbody>
                                         <?php 
-                                            $questions = retrieve_questions_by_user('Curien'); // to be replaced by display name
+                                            $questions = retrieve_questions_by_user(get_active_profile()); // to be replaced by display name
                                             foreach($questions as $question) {
                                         ?>
                                         <tr data-status="all-questions">

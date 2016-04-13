@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="sidebar-title">Questions</div>
                 <div class="sidebar-body">
-                    <a href="/user-questions">View Questions</a>
+                    <a href="/user-view-questions">View Questions</a>
                     <a href="/user-question-comments">View Question Comments</a>
                 </div>
             </div>
@@ -38,7 +38,7 @@
             <div class="card">
                 <div class="sidebar-title">Questions</div>
                 <div class="sidebar-body">
-                    <a href="/user-questions">View Questions</a>
+                    <a href="/user-view-questions">View Questions</a>
                     <a href="/user-question-comments">View Question Comments</a>
                 </div>
             </div>
