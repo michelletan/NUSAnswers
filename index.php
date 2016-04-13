@@ -284,13 +284,23 @@ class AdminLoginHandler {
 
 class UserDashboardHandler {
     function get() {
-        require VIEW_DIRECTORY . '/user_dashboard.php';
+        if(is_logged_in()) {
+            require VIEW_DIRECTORY . '/user_dashboard.php';
+        } else {
+            $redirect_address = '/';
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
 class UserDashboardQuestionsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/user_question_list.php';
+        if(is_logged_in()) {
+            require VIEW_DIRECTORY . '/user_question_list.php';
+        } else {
+            $redirect_address = "/";
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
