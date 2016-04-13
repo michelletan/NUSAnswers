@@ -52,6 +52,7 @@
                 <div class="post-foldout">
 
                 </div>
+                <?php if (is_logged_in()) { ?>
                 <h4 class="heading">Your Answer</h4>
                 <div class="card">
                     <div class="post-content">
@@ -59,8 +60,8 @@
                             <div class="row">
                                 <div class="answer-user col-sm-2 col-md-2 col-lg-2">
                                     <div class="post-user row center-block text-center">
-                                        <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
-                                        <a href="/user/<?php echo $question["user"]["user_id"]; ?>"><?php echo "YOU"; ?></a>
+                                        <img class="img-user img-circle" src="<?php echo get_active_profile_picture() ?>" alt="user-profile-pic" class="img-thumbnail"><br>
+                                        <a href="/user/<?php echo get_active_profile() ?>"><?php echo get_active_display_name(); ?></a>
                                     </div>
                                 </div>
                               <div class="answer-text-box col-sm-10 col-md-10 col-lg-10">
@@ -75,6 +76,8 @@
                         </form>
                     </div>
                 </div>
+                <?php } else { ?>
+                <?php } ?>
                 <?php if ($answers) { ?>
                     <h4 class="heading">Answers (<?php echo count($answers); ?>)</h4>
                     <?php

@@ -215,6 +215,10 @@ img.navbar-logo {
     font-size: 24px;
 }
 
+.post-vote-count {
+    color: #00A8C6;
+}
+
 .post-footer {
     padding: 0px;
 }

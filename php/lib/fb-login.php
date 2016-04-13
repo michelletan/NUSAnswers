@@ -60,7 +60,7 @@ function facebook_login_php() {
   $fbid = $user['id'];
   $email = $user['email'];
 
-  $query = "SELECT p.display_name AS display_name, p.profile_id AS profile_id, u.role AS role " .
+  $query = "SELECT p.display_name AS display_name, p.profile_id AS profile_id, p.image_url AS image_url, u.role AS role " .
            "FROM profiles p, users u WHERE u.login_id='$email' AND p.profile_id=u.profile_fk";
   $result = $db->query($query);
   echo($query);
@@ -70,12 +70,14 @@ function facebook_login_php() {
     set_active_profile($row['profile_id']);
     set_active_display_name($row['display_name']);
     set_active_role($row['role']);
+    set_active_profile_picture($row['image_url']);
   }
   // add new user if not present
   else {
     $email_array = explode("@", $email);
     $auto_display_name = $email_array[0];
-    $insert_profile_query = "INSERT INTO profiles (display_name, image_url) VALUES ('$auto_display_name', '//graph.facebook.com/$fbid/picture')";
+    $image = "//graph.facebook.com/$fbid/picture";
+    $insert_profile_query = "INSERT INTO profiles (display_name, image_url) VALUES ('$auto_display_name', '$image')";
     $db->query($insert_profile_query);
     $id = $db->insert_id;
     $insert_user_query = "INSERT INTO users (login_id, profile_fk) VALUES ('$email', $id)";
@@ -84,6 +86,7 @@ function facebook_login_php() {
       set_active_profile($id);
       set_active_display_name($auto_display_name);
       set_active_role(0);
+      set_active_profile_picture($image);
     }
   }
 }
