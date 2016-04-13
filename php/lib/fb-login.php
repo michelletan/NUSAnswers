@@ -5,9 +5,18 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
 
 function facebook_login_php() {
   global $db;
+
+  if($_SERVER['HTTP_HOST'] === "nusanswers.me") {
+    $appid = '581406865343052';
+    $appsecret = '894be6b1bb847d273b6080aea4c8b815';
+  } else {
+    $appid = '1581294052181728';
+    $appsecret = '7fb25be97985a0d52e78374d7d42d366';
+  }
+
   $fb = new Facebook\Facebook([
-    'app_id' => '581406865343052',
-    'app_secret' => '894be6b1bb847d273b6080aea4c8b815',
+    'app_id' => $appid,
+    'app_secret' => $appsecret,
     //'app_id' => '1742198345993041',
     //'app_secret' => '09cc05b64e7dbb8cc394cc2f178bb4e9',
     'default_graph_version' => 'v2.5',

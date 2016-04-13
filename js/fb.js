@@ -36,8 +36,14 @@ function share(url) {
 }
 
 window.fbAsyncInit = function() {
+  var applicationId = "";
+  if(window.location.host == "nusanswers.me") {
+    applicationId = '581406865343052';
+  } else {
+    applicationId = '1581294052181728';
+  }
 	FB.init({
-	appId      : '581406865343052', // CREATE AND INSERT OWN APP ID TO TEST!
+	appId      : applicationId, // CREATE AND INSERT OWN APP ID TO TEST!
   //appId      : '1742198345993041',
 	cookie     : true,  // enable cookies to allow the server to access
 	                    // the session
