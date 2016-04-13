@@ -101,6 +101,44 @@ class NewQuestionsPageHandler {
     }
 }
 
+class MyQuestionsHandler {
+    function get() {
+        $current_user_id = get_active_profile();
+
+        $data = retrieve_questions_by_profile($current_user_id, INITIAL_NUM_QUESTIONS, 1);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = 1;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class MyQuestionsPageHandler {
+    function get($page_no) {
+        $current_user_id = 1;//get_active_profile();
+
+        $data = retrieve_questions_by_profile($current_user_id, INITIAL_NUM_QUESTIONS, $page_no);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = $page_no;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
 class PopularAnswersHandler {
     function get() {
         $data = retrieve_questions_with_popular_answers(INITIAL_NUM_QUESTIONS, 1);
@@ -155,6 +193,44 @@ class NewAnswersHandler {
 class NewAnswersPageHandler {
     function get($page_no) {
         $data = retrieve_questions_with_recent_answers(INITIAL_NUM_QUESTIONS, $page_no);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = $page_no;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class MyAnswersHandler {
+    function get() {
+        $current_user_id = 1;//get_active_profile();
+
+        $data = retrieve_questions_by_answers_by_profile($current_user_id, INITIAL_NUM_QUESTIONS, 1);
+
+        global $questions;
+        $questions = $data["questions"];
+
+        global $has_next_page;
+        $has_next_page = $data["has_next_page"];
+
+        global $page;
+        $page = 1;
+
+        require VIEW_DIRECTORY . '/home.php';
+    }
+}
+
+class MyAnswersPageHandler {
+    function get($page_no) {
+        $current_user_id = 1;//get_active_profile();
+
+        $data = retrieve_questions_by_answers_by_profile($current_user_id, INITIAL_NUM_QUESTIONS, $page_no);
 
         global $questions;
         $questions = $data["questions"];
@@ -266,7 +342,7 @@ class UserProfileHandler {
         $user = retrieve_profile_by_id($id)[0];
 
         global $questions;
-        $questions = retrieve_questions_by_profile($id);
+        $questions = retrieve_questions_by_profile_for_profile($id);
         $questions = $questions["questions"];
 
         // echo var_dump($questions);
@@ -1151,6 +1227,10 @@ $html_urls = array(
     "/new-questions/" => "NewQuestionsHandler",
     "/new-questions/:number" => "NewQuestionsPageHandler",
 
+    "/my-questions" => "MyQuestionsHandler",
+    "/my-questions/" => "MyQuestionsHandler",
+    "/my-questions/:number" => "MyQuestionsPageHandler",
+
     "/popular-answers" => "PopularAnswersHandler",
     "/popular-answers/" => "PopularAnswersHandler",
     "/popular-answers/:number" => "PopularAnswersPageHandler",
@@ -1158,6 +1238,10 @@ $html_urls = array(
     "/new-answers" => "NewAnswersHandler",
     "/new-answers/" => "NewAnswersHandler",
     "/new-answers/:number" => "NewAnswersPageHandler",
+
+    "/my-answers" => "MyAnswersHandler",
+    "/my-answers/" => "MyAnswersHandler",
+    "/my-answers/:number" => "MyAnswersPageHandler",
 
     "/ask" => "AskHandler",
     "/ask/" => "AskHandler",
