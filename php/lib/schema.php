@@ -73,6 +73,7 @@ function create_question_table () {
            "answers INTEGER NOT NULL DEFAULT 0," .
            "comments INTEGER NOT NULL DEFAULT 0," .
            "friendly_url VARCHAR(255) NOT NULL," .
+           "image_url VARCHAR(255) NULL," .
            "profile_fk INTEGER," .
            "FOREIGN KEY(profile_fk) REFERENCES profiles(profile_id)" .
            ")";
