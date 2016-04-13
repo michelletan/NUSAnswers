@@ -9,25 +9,27 @@
             <?php if ($question["content"]) { ?>
                 <div class="post-content-block card-line">
                     <div class="row">
-                        <div class="col-md-10 col-lg-10">
+                        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
                               <div class="post-answer">
                                   <?php echo $question["content"];
                                   if($question["image_url"] != NULL) {echo '<br><img class="col-md-11 col-lg-11" src="'. $question["image_url"] . '"alt="question-img">';}
                                   ?>
                               </div>
                         </div>
-                        <div class="col-md-2 col-lg-2">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                             <div class="post-user row center-block text-center">
+                                <div class="col-xs-3">
                                     <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
-                                    <a href="/user/<?php echo $question["user"]["profile_id"]?>"><?php echo $question["user"]["display_name"]?></a>
+                                </div>
+                                <a class="col-xs-3" href="/user/<?php echo $question["user"]["profile_id"]?>"><?php echo $question["user"]["display_name"]?></a>
                             </div>
                         </div>
                     </div>
                     <div class="post-tags row text-left">
-                            <div class="col-md-1 col-lg-1 text-center">
+                            <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 text-center">
                                 Tags:
                             </div>
-                            <div class="col-md-11 col-lg-11">
+                            <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11">
                                 <?php
                                 $tags = $data["tags"];
                                 $tag_count = count($tags);
@@ -45,18 +47,26 @@
                 <h5>Best Answer</h5>
             </div>
             <div class="row">
-                <div class="col-md-2 col-lg-2">
+                <div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
                     <div class="post-user row center-block text-center">
-                            <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
-                            <a href="/user/<?php echo $answer["user"]["profile_id"]?>"><?php echo $answer["user"]["display_name"]?></a>
+                    <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
+                        <a href="/user/<?php echo $answer["user"]["profile_id"]?>"><?php echo $answer["user"]["display_name"]?></a>
                     </div>
                 </div>
-                <div class="col-md-9 col-lg-9">
+                <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
                       <div class="post-answer">
                           <?php echo $answer["content"]; ?>
                       </div>
                 </div>
-                <div class="col-md-1 col-lg-1">
+                <div class="col-xs-8 hidden-sm hidden-md hidden-lg">
+                    <div class="post-user row center-block text-center">
+                        <div class="col-xs-5">
+                            <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
+                        </div>
+                        <a class="col-xs-3" href="/user/<?php echo $answer["user"]["profile_id"]?>"><?php echo $answer["user"]["display_name"]?></a>
+                    </div>
+                </div>
+                <div class="col-xs-2 col-sm-4 col-md-1 col-lg-1">
                     <div class="row center-block">
                         <div class="post-vote center-block">
                             <div class="center-block text-center">
@@ -100,15 +110,14 @@
         </div>
         <div class="post-footer">
             <div class="row center-block">
-                <div class="timestamp col-xs-6 col-sm-3 col-md-4 col-lg-4">Posted: <?php echo $question["created_date"]; ?></div>
-                <a class="col-xs-6 hidden-sm hidden-md hidden-lg hidden-xl text-center" onclick="share('/question/<?php echo $question["friendly_url"]?>')" id="share"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
+                <div class="timestamp col-xs-12 col-sm-3 col-md-4 col-lg-4">Posted: <?php echo $question["created_date"]; ?></div>
                 <?php if ($question["answer_count"] > 0) { ?>
-                    <a href="/question/<?php echo $question["friendly_url"]?>" class="btn-view-answers col-xs-6 col-sm-3 col-md-3 col-lg-3 text-center">Answers (<?php echo $question["answer_count"]; ?>)</a>
+                    <a href="/question/<?php echo $question["friendly_url"]?>" class="btn-view-answers col-xs-4 col-sm-3 col-md-3 col-lg-3 text-center">Answers (<?php echo $question["answer_count"]; ?>)</a>
                 <?php } else { ?>
                     <div class="hidden-xs hidden-sm col-md-3 col-lg-3"></div>
                 <?php } ?>
-                <a class="btn-view-comments col-xs-6 col-sm-3 col-md-3 col-lg-3 text-center"><?php echo "Comments (" . $question["comment_count"] . ")";?></a>
-                <a class="hidden-xs col-sm-3 col-md-2 col-lg-2 text-center" onclick="share('/question/<?php echo $question["friendly_url"]?>')" id="share"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
+                <a class="btn-view-comments col-xs-4 col-sm-3 col-md-3 col-lg-3 text-center"><?php echo "Comments (" . $question["comment_count"] . ")";?></a>
+                <a class="col-xs-4 col-sm-3 col-md-2 col-lg-2 text-center" onclick="share('/question/<?php echo $question["friendly_url"]?>')" id="share"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
             </div>
         </div>
     </div>

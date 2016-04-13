@@ -5,9 +5,7 @@ function voteAnswer(answerId, type) {
     } else if (type == -1) {
         action = "downvote/";
     }
-    
-    var domain = window.location.host;
-    var url = "http://" + domain + "/api/" + action;
+    var url = "/api/" + action;
     $.ajax({
         url: url,
         method: "post",
