@@ -260,6 +260,20 @@ class QuestionHandler {
 
 class UserProfileHandler {
     function get($id) {
+        global $user;
+        $user = retrieve_profile_by_id($id)[0];
+
+        global $questions;
+        $questions = retrieve_questions_by_profile($id);
+        $questions = $questions["questions"];
+
+        // echo var_dump($questions);
+
+        global $answers;
+        $answers = retrieve_answers_by_profile($id);
+
+        // echo var_dump($answers);
+
         require VIEW_DIRECTORY . '/profile.php';
     }
 }
@@ -653,7 +667,8 @@ class QuestionSubmitAPIHandler {
                     if ($resp->isSuccess()) {
                       $tags = [];
                       if (isset($_POST['tags'])) {
-                        $tags = json_decode($_POST['tags']);
+                          $tags_string = $_POST['tags'];
+                          $tags = explode(',', $tags_string);
                       }
 
                       // check if person is logged in, and get the profile id here
