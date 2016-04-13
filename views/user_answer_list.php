@@ -69,12 +69,16 @@
                                 <table class="table table-filter" id="questionsAndAnswers">
                                     <tbody>
                                         <?php 
-                                            $answers = retrieve_answers_by_user('Curien'); // to be replaced by display name
+                                            $answers = retrieve_answers_by_user(get_active_profile()); // to be replaced by display name
                                             foreach($answers as $answer) {
                                                 $ans = $answer[0];
                                                 $ques = $answer[1];
                                         ?>
+                                        <?php if($ans["image_url"] == null) { ?>
                                         <tr data-status="all-answers">
+                                        <?php } else {?>
+                                        <tr data-status="all-images">
+                                        <?php } ?>
                                             <td>
                                                 <div class="media">
                                                     <div class="media-body">
@@ -83,7 +87,11 @@
                                                             <a href="/question/<?php echo $ques["friendly_url"]?>" id="title">
                                                                 <?php echo $ques['title']; ?>
                                                             </a>
+                                                            <?php if($ans["image_url"] == null) ?>
                                                             <span class="pull-right questions">(Without Images)</span>
+                                                            <?php } else { ?>
+                                                            <span class="pull-right questions">(With Images)</span>
+                                                            <?php } ?>
                                                         </h4>
                                                         <p class="summary" id="content">
                                                             <?php 

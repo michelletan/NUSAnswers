@@ -3,6 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/Toro.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/login_check.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/fb-login.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_creation.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_update.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/admin_deletion.php';
@@ -12,6 +13,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/submission_answers.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/recaptcha-master/src/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/json.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/vote.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/user_deletion.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/user_changes.php';
 
 // Reference & examples: https://github.com/anandkunal/ToroPHP
@@ -298,31 +300,34 @@ class AdminLoginHandler {
 
 class UserDashboardHandler {
     function get() {
-        require VIEW_DIRECTORY . '/user_dashboard.php';
+        if(is_logged_in()) {
+            require VIEW_DIRECTORY . '/user_dashboard.php';
+        } else {
+            $redirect_address = "/";
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
-class UserDashboardQuestionsHandler {
+class UserViewQuestionsHandler {
     function get() {
-        require VIEW_DIRECTORY . '/user_question_list.php';
+        if(is_logged_in()) {
+            require VIEW_DIRECTORY . '/user_view_questions.php';
+        } else {
+            $redirect_address = "/";
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
-class UserDashboardQuestionCommentsHandler {
+class UserEditQuestionHandler {
     function get() {
-        require VIEW_DIRECTORY . '/user_question_comments_list.php';
-    }
-}
-
-class UserDashboardAnswersHandler {
-    function get() {
-        require VIEW_DIRECTORY . '/user_answer_list.php';
-    }
-}
-
-class UserDashboardAnswerCommentsHandler {
-    function get() {
-        require VIEW_DIRECTORY . '/user_answer_comments_list.php';
+        if(is_logged_in()) {
+            require VIEW_DIRECTORY . '/user_edit_question.php';
+        } else {
+            $redirect_address = "/";
+            header('Location: ' . $redirect_address);
+        }
     }
 }
 
@@ -530,6 +535,7 @@ class AdminLoginAPIHandler {
         set_active_profile($admin_info['profile-id']);
         set_active_display_name($admin_info['display-name']);
         set_active_role(USER_ROLE_ADMIN);
+        set_active_profile_picture($admin_info['image-url']);
         $redirect_address = '/admin-dashboard';
       }
     }
@@ -554,7 +560,7 @@ class AnswerSubmitFromQuestionAPIhandler {
     $redirect_address = "/question/" . $_POST['question-friendly-url'];
     $query_question_id = htmlspecialchars($_POST['question-id']);
     $query_answer_contents = htmlspecialchars($_POST['answer-content']);
-    $query_result = submit_answer($query_question_id, $query_answer_contents, 1);
+    $query_result = submit_answer($query_question_id, $query_answer_contents, get_active_profile());
     header('Location: ' . $redirect_address);
   }
 }
@@ -563,8 +569,20 @@ class AnswerSubmitFromHomeAPIhandler {
   function post() {
     $query_question_id = htmlspecialchars($_POST['question_id']);
     $query_answer_contents = htmlspecialchars($_POST['answer_content']);
-    $query_result = submit_answer($query_question_id, $query_answer_contents, 1);
+    $query_result = submit_answer($query_question_id, $query_answer_contents, get_active_profile());
     echo $query_result ? 'true' : 'false';
+  }
+}
+
+class FacebookLoginAPIHandler {
+  function post() {
+    facebook_login_php();
+  }
+}
+
+class FacebookLogoutAPIHandler {
+  function post() {
+    logout_active_session();
   }
 }
 
@@ -689,24 +707,37 @@ class QuestionSubmitAPIHandler {
 
 class UpvoteAPIHandler {
     function post() {
-        if (isset($_POST["answer_id"])) {
-            $answer_id = $_POST["answer_id"];
-            $new_num_votes = upvote_answer($answer_id);
-            echo $new_num_votes;
+        if (is_logged_in()) {
+            if (isset($_POST["answer_id"])) {
+                $answer_id = $_POST["answer_id"];
+                echo upvote_answer($answer_id);
+                http_response_code(200);
+            } else {
+                http_response_code(400);
+            }
+        } else {
+            http_response_code(403);
         }
     }
 }
 
 class DownvoteAPIHandler {
     function post() {
-        if (isset($_POST["answer_id"])) {
-            $answer_id = $_POST["answer_id"];
-            $new_num_votes = downvote_answer($answer_id);
-            echo $new_num_votes;
+        if (is_logged_in()) {
+            if (isset($_POST["answer_id"])) {
+                $answer_id = $_POST["answer_id"];
+                echo downvote_answer($answer_id);
+                http_response_code(200);
+            } else {
+                http_response_code(400);
+            }
+        } else {
+            http_response_code(403);
         }
     }
 }
 
+/*
 class UserSaveQuestionChangesAPIHandler {
     function post() {
         if((isset($_POST["question_id"]) && isset($_POST["question_title"])) && isset($_POST["question_details"])) {
@@ -780,6 +811,37 @@ class UserDeleteAnswerCommentAPIHandler {
         if(isset($_POST["comment_id"])) {
             $comment_id = htmlspecialchars($_POST["comment_id"]);
             $has_deleted = delete_answer_comment($comment_id);
+        }
+    }
+}*/
+
+class UserQuestionEditAPIHandler {
+    function post() {
+        if (is_logged_in()) {
+            if (isset($_POST['question-id']) && isset($_POST['title']) && isset($_POST['content'])) {
+                $question_id = trim($_POST['question-id']);
+                $title = htmlspecialchars(trim($_POST['title']));
+                $content = htmlspecialchars(trim($_POST['content']));
+                if ($question_id !== "" && $title !== "") {
+                    update_user_question($question_id, $title, $content);
+                }
+            }
+            $redirect_address = '/user-edit-question?question-id=' . $question_id;
+            header('Location: ' . $redirect_address);
+        }
+    }
+}
+
+class UserQuestionDeletionAPIHandler {
+    function post() {
+        if (is_logged_in()) {
+            if (isset($_POST['question-id'])) {
+                foreach ($_POST['question-id'] as $question_id) {
+                    delete_user_question($question_id);
+                }
+            }
+            $redirect_address = '/user-view-questions';
+            header('Location: ' . $redirect_address);
         }
     }
 }
@@ -1120,10 +1182,16 @@ $html_urls = array(
     "/admin/login" => "AdminLoginHandler",
 
     "/user-dashboard" => "UserDashboardHandler",
-    "/user-questions" => "UserDashboardQuestionsHandler",
-    "/user-question-comments" => "UserDashboardQuestionCommentsHandler",
-    "/user-answers" => "UserDashboardAnswersHandler",
-    "/user-answer-comments" => "UserDashboardAnswerCommentsHandler",
+    "/user-view-questions" => "UserViewQuestionsHandler",
+    "/user-edit-question" => "UserEditQuestionHandler",
+
+//    "/user-question-comments" => "UserDashboardQuestionCommentsHandler",
+
+//   "/user-answers" => "UserDashboardAnswersHandler",
+
+//    "/user-answer-comments" => "UserDashboardAnswerCommentsHandler",
+
+
     "/admin-dashboard" => "AdminDashboardHandler",
     "/admin-create-admin-account" => "AdminCreateAdminAccountHandler",
     "/admin-view-admin-accounts" => "AdminViewAdminAccountsHandler",
@@ -1155,6 +1223,9 @@ $json_base_urls = array(
     "/question/comments/:number" => "QuestionCommentAPIHandler",
     "/answer/comments/:number" => "AnswerCommentAPIHandler",
 
+    "/login/facebook" => "FacebookLoginAPIHandler",
+    "/logout/facebook" => "FacebookLogoutAPIHandler",
+
     "/question/comments/post" => "QuestionCommentPostAPIHandler",
     "/answer/comments/post" => "AnswerCommentPostAPIHandler",
 
@@ -1163,6 +1234,9 @@ $json_base_urls = array(
 
     "/upvote/" => "UpvoteAPIHandler",
     "/downvote/" => "DownvoteAPIHandler",
+
+    "/user-question-deletion/" => "UserQuestionDeletionAPIHandler",
+    "/user-question-edit/" => "UserQuestionEditAPIHandler",
 
     "/admin-creation/" => "AdminCreationAPIHandler",
     "/admin-edit/" => "AdminEditAPIHandler",
@@ -1185,16 +1259,7 @@ $json_base_urls = array(
     "/tag-creation/" => "TagCreationAPIHandler",
     "/tag-edit/" => "TagEditAPIHandler",
     "/tag-deletion/" => "TagDeletionAPIHandler",
-    "/tag/search/" => "TagSearchAPIHandler",
-
-    "/user-question-edit/" => "UserSaveQuestionChangesAPIHandler",
-    "/user-question-delete/" => "UserDeleteQuestionAPIHandler",
-    "/user-question-comment-edit/" => "UserSaveQuestionCommentChangesAPIHandler",
-    "/user-question-comment-delete/" => "UserDeleteQuestionCommentAPIHandler",
-    "/user-answer-edit/" => "UserSaveAnswerChangesAPIHandler",
-    "/user-answer-delete/" => "UserDeleteAnswerAPIHandler",
-    "/user-answer-comment-edit/" => "UserSaveAnswerCommentChangesAPIHandler",
-    "/user-answer-comment-delete/" => "UserDeleteAnswerCommentAPIHandler"
+    "/tag/search/" => "TagSearchAPIHandler"
 );
 
 $json_urls = generate_urls($json_base_urls, $json_url_prefix);

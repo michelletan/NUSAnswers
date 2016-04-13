@@ -62,7 +62,7 @@
                                 <table class="table table-filter" id="questionsAndAnswers">
                                     <tbody>
                                         <?php 
-                                            $comments = retrieve_comments_for_question_by_user('Curien'); // to be replaced by display name
+                                            $comments = retrieve_comments_for_question_by_user(get_active_profile()); // to be replaced by display name
                                             foreach($comments as $item) {
                                                 $comment = $item[0];
                                                 $ques = $item[1];

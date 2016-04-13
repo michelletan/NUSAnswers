@@ -60,7 +60,7 @@
                     <div class="row center-block">
                         <div class="post-vote center-block">
                             <div class="center-block text-center">
-                                <a onclick="upvoteAnswer(<?php echo $answer['answer_id']?>)"><span class="glyphicon glyphicon-chevron-up"></span><a>
+                                <a onclick="upvoteAnswer(<?php echo $answer['answer_id']?>)"><span class="glyphicon glyphicon-chevron-up"></span></a>
                             </div>
                             <div id="answer-<?php echo $answer['answer_id']?>-vote-count" class="post-vote-count text-center">
                                 <?php if ($answer["vote_count"]) { echo $answer["vote_count"]; } else { echo 0; }?>
@@ -73,15 +73,15 @@
                     </div>
                 </div>
             </div>
-            <?php } else { ?>
+            <?php } else if (is_logged_in()) { ?>
             <div class="row center-block">
                 <h5>Your Answer</h5>
             </div>
             <div class="row">
                 <div class="answer-user col-sm-2 col-md-2 col-lg-2">
                     <div class="post-user row center-block text-center">
-                        <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
-                        <a href="">John Doe</a>
+                        <img class="img-user img-circle" src="<?php echo get_active_profile_picture() ?>" alt="user-profile-pic" class="img-thumbnail"><br>
+                        <a href=""><?php echo get_active_display_name() ?></a>
                     </div>
                 </div>
               <div class="answer-text-box col-sm-10 col-md-10 col-lg-10">
@@ -92,7 +92,8 @@
               <input type="hidden" id="<?php echo $question["question_id"]?>-question-friendly-url" value="<?php echo $question['friendly_url'];?>">
               <button type="submit" id="<?php echo $question["question_id"]?>-btn-submit-answer" class="btn btn-primary answer-button">Answer</button>
           </div>
-            <?php }?>
+          <?php } else {?>
+          <?php } ?>
         </div>
         <div class="post-footer">
             <div class="row center-block">

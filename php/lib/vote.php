@@ -2,34 +2,43 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
 
 function upvote_answer($answer_id_param) {
+    global $db;
+    $answer_id = $db->escape_string($answer_id_param); 
     return vote_answer($answer_id_param, 1);
 }
 
 function downvote_answer($answer_id_param) {
+    global $db;
+    $answer_id = $db->escape_string($answer_id_param);
     return vote_answer($answer_id_param, -1);
 }
 
 function vote_answer($answer_id, $type) {
     global $db;
-    $query = "SELECT votes FROM answers WHERE answer_id = " . $answer_id;
+    $change_type = 0;
+    $profile_id = get_active_profile();    
+    $query = "SELECT vote_type FROM votes WHERE answer_fk = " . $answer_id . " AND profile_fk = " . $profile_id;
     $result = $db->query($query);
-
+    
     if ($row = $result->fetch_assoc()) {
-        $num_votes_changed = $row['votes'];
-        if ($type === 1) {
-            $num_votes_changed = $num_votes_changed + 1;
-        } else if ($type === -1) {
-            $num_votes_changed = $num_votes_changed - 1;
+        $original_type = $row['vote_type'];
+        if ($original_type + $type == 0) {
+            $query = "DELETE FROM votes WHERE answer_fk = " . $answer_id . " AND profile_fk = " . $profile_id;
+            $change_type = $type;
         }
-        $query = "UPDATE answers SET votes = " . $num_votes_changed . " WHERE answer_id = " . $answer_id;
-        $db->query($query);
-        $query = "SELECT votes FROM answers WHERE answer_id = " . $answer_id;
-        $result = $db->query($query);
-        if ($row = $result->fetch_assoc()) {
-            $new_num_votes = $row['votes'];
-            return $new_num_votes;
-        };
+    } else {
+        $query = "INSERT INTO votes VALUES ($profile_id, $answer_id, $type)";
+        $change_type = $type;
     }
+    $db->query($query);
+    
+    $query = "SELECT SUM(*) as num_votes FROM votes WHERE answer_fk = " . $answer_id;
+    if ($row = $result->fetch_assoc()) {
+        $num_votes = $row['num_votes'];
+        $query = "UPDATE answers SET votes = " . $num_votes . " WHERE answer_fk = " . $answer_id;
+        $db->query($query);
+    }
+    return $change_type;
 }
 
 ?>
