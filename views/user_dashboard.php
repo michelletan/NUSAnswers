@@ -17,7 +17,7 @@
                                 </div>
                                 <div class="col-xs-9 col-md-6 text-center">
                                     <div class="todays-stats-quantity">
-                                        <?php echo retrieve_question_quantity_user('Curien'); ?>
+                                        <?php echo retrieve_question_quantity_user(get_active_profile()); ?>
                                     </div>
                                     <div class="todays-stats-metric">
                                         Questions asked
@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="col-xs-9 col-md-6 text-center">
                                     <div class="todays-stats-quantity">
-                                        <?php echo retrieve_answer_quantity_user('Curien'); ?>
+                                        <?php echo retrieve_answer_quantity_user(get_active_profile()); ?>
                                     </div>
                                     <div class="todays-stats-metric">
                                         Answers given
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="col-xs-9 col-md-6 text-center">
                                     <div class="todays-stats-quantity">
-                                         <?php echo retrieve_comment_quantity_user('Curien'); ?>
+                                         <?php echo retrieve_comment_quantity_user(get_active_profile()); ?>
                                     </div>
                                     <div class="todays-stats-metric">
                                         Comments given
