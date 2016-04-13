@@ -5,6 +5,21 @@
             <div class="col-md-10 col-lg-10">
                 <div class="card">
                     <div class="sidebar-body">
+                        <div id="non-login-view" class="row" style="display:none;">
+                            <a href="javascript:login();"><?php $is_logged_in = false; ?>Login</a>
+                        </div>
+                        <div class="login-view row">
+                            <div class="post-user row center-block text-center">
+                                <div class="col-xs-3 col-sm-12">
+                                    <img class="img-user img-circle" src="<?php echo get_active_profile_picture(); ?>" alt="user-profile-pic" class="img-thumbnail"><br>
+                                </div>
+                                <a class="col-xs-4 col-sm-12" href="/user/<?php echo get_active_profile(); ?>"><?php echo get_active_display_name(); ?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="sidebar-body">
                         <form class= "navbar-left col-xs-12 col-sm-12 col-md-4 col-lg-4" role="search">
                             <input type="text" id="nav-search-bar" class="form-control" placeholder="Search">
                         </form>

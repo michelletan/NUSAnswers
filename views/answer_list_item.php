@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="hidden-xs post-user row center-block text-center">
-                        <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
+                        <img class="img-user img-circle" src="<?php echo $answer["user"]["image_url"]; ?>" alt="user-profile-pic" class="img-thumbnail"><br>
                         <a href="/user/<?php echo $answer["user"]["user_id"]; ?>"><?php echo $answer["user"]["display_name"]; ?></a>
                 </div>
             </div>

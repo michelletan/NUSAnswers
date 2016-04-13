@@ -17,7 +17,7 @@
                             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                                 <div class="post-user row center-block text-center">
                                     <div class="col-xs-3 col-sm-12">
-                                        <img class="img-user img-circle" src="/img/profile01.png" alt="user-profile-pic" class="img-thumbnail"><br>
+                                        <img class="img-user img-circle" src="<?php echo $question["user"]["image_url"]; ?>" alt="user-profile-pic" class="img-thumbnail"><br>
                                     </div>
                                     <a class="col-xs-4 col-sm-12" href="/user/<?php echo $question["user"]["user_id"]; ?>"><?php echo $question["user"]["display_name"]; ?></a>
                                 </div>
