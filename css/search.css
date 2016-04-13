@@ -10,7 +10,7 @@ div.gs-snippet {
 }
 
 .gsc-thumbnail-inside {
-    padding-left: 0;
+    padding-left: 0 !important;
     margin-bottom: 10px;
 }
 

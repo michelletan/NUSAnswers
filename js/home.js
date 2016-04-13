@@ -92,7 +92,7 @@ function populateFoldout(foldout, data, postId) {
         enableDeleting: false,
         enableAttachments: false,
         enableNavigation: false,
-        enableReplying: $("#is_logged_in").val(),
+        readOnly: $("#is-logged-in").val() == "false",
         profilePictureURL: '/img/profile02.png',
         fieldMappings: {
             id: 'comment_id',

@@ -156,7 +156,66 @@ function retrieve_question_with_answers($url_param) {
     }
 }
 
-function retrieve_questions_by_profile($id_param) {
+function retrieve_questions_by_profile($id_param, $limit_param, $page_param) {
+    global $db;
+
+    if (!is_int($id_param)) {
+        // ERROR
+        $id = $db->escape_string($id_param);
+    } else {
+        $id = $id_param;
+    }
+
+    if (!is_int($limit_param)) {
+        // ERROR
+        $limit = $db->escape_string($limit_param);
+        $param = $db->escape_string($page_param);
+    } else {
+        $limit = $limit_param;
+        $page = $page_param;
+    }
+
+    $query = "SELECT * FROM questions q " .
+             "WHERE q.profile_fk = $id " .
+             "ORDER BY q.question_id DESC ".
+             "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
+
+    $result = retrieve_questions_with_query($query, $limit);
+
+    return $result;
+}
+
+function retrieve_questions_by_answers_by_profile($id_param, $limit_param, $page_param) {
+    global $db;
+
+    if (!is_int($id_param)) {
+        // ERROR
+        $id = $db->escape_string($id_param);
+    } else {
+        $id = $id_param;
+    }
+
+    if (!is_int($limit_param)) {
+        // ERROR
+        $limit = $db->escape_string($limit_param);
+        $param = $db->escape_string($page_param);
+    } else {
+        $limit = $limit_param;
+        $page = $page_param;
+    }
+
+    $query = "SELECT q.* FROM questions q " .
+             "LEFT JOIN answers a ON q.question_id = a.question_fk " .
+             "WHERE a.profile_fk = $id " .
+             "ORDER BY q.question_id DESC ".
+             "LIMIT " . ($limit + 1) . " OFFSET " . ($page - 1) * $limit;
+
+    $result = retrieve_questions_with_query($query, $limit);
+
+    return $result;
+}
+
+function retrieve_questions_by_profile_for_profile($id_param) {
     global $db;
 
     if (!is_int($id_param)) {
