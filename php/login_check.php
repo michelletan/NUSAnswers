@@ -25,6 +25,10 @@ function set_active_role($role) {
 	$_SESSION['role'] = $role;
 }
 
+function set_active_profile_picture($profile_picture) {
+	$_SESSION['profile_picture'] = $profile_picture;
+}
+
 function get_active_profile() {
 	if (isset($_SESSION['profile'])) {
 		return $_SESSION['profile'];
@@ -43,13 +47,21 @@ function get_active_display_name() {
 	}
 }
 
-// roles:
 function get_active_role() {
 	if (isset($_SESSION['role'])) {
 		return $_SESSION['role'];
 	}
 	else {
 		return null;
+	}
+}
+
+function get_active_profile_picture() {
+	if (isset($_SESSION['profile_picture'])) {
+		return $_SESSION['profile_picture'];
+	}
+	else {
+		return "/img/profile01.png";
 	}
 }
 
@@ -79,5 +91,6 @@ function logout_active_session() {
 	unset($_SESSION['profile']);
 	unset($_SESSION['display_name']);
 	unset($_SESSION['role']);
+	unset($_SESSION['profile_picture']);
 }
 ?>
