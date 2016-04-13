@@ -245,13 +245,17 @@ class QuestionHandler {
     function get($url) {
         $data = retrieve_question_with_answers($url);
 
-        global $question;
-        $question = $data["question"];
+        if (count($data["question"]) > 0) {
+            global $question;
+            $question = $data["question"];
 
-        global $answers;
-        $answers = $data["answers"];
+            global $answers;
+            $answers = $data["answers"];
 
-        require VIEW_DIRECTORY . '/question.php';
+            require VIEW_DIRECTORY . '/question.php';
+        } else {
+            header('Location: ' . APP_HOME_URL);
+        }
     }
 }
 
