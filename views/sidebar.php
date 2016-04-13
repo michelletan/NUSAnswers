@@ -17,7 +17,7 @@
                     <div class="sidebar-body">
                         <a href="/popular-questions/">Popular</a><br>
                         <a href="/new-questions/">New</a><br>
-                        <a class="login-view" style="display:none">My Questions</a>
+                        <a href="/my-questions/" class="login-view" style="display:none">My Questions</a>
                     </div>
                 </div>
                 <div class="card">
@@ -25,7 +25,7 @@
                     <div class="sidebar-body">
                         <a href="/popular-answers/">Popular</a><br>
                         <a href="/new-answers/">New</a><br>
-                        <a class="login-view" style="display:none">My Answers</a>
+                        <a href="/my-answers/" class="login-view" style="display:none">My Answers</a>
                     </div>
                 </div>
                 <div class="card">
@@ -55,7 +55,7 @@
                 <div class="sidebar-body">
                     <a href="/popular-questions/">Popular</a><br>
                     <a href="/new-questions/">New</a><br>
-                    <a class="login-view" style="display:none">My Questions</a>
+                    <a href="/my-questions/" class="login-view" style="display:none">My Questions</a>
                 </div>
             </div>
             <div class="card">
@@ -63,7 +63,7 @@
                 <div class="sidebar-body">
                     <a href="/popular-answers/">Popular</a><br>
                     <a href="/new-answers/">New</a><br>
-                    <a class="login-view" style="display:none">My Answers</a>
+                    <a href="/my-answers/" class="login-view" style="display:none">My Answers</a>
                 </div>
             </div>
             <div class="card">

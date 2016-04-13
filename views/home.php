@@ -7,14 +7,19 @@
         <div class="row row-offcanvas row-offcanvas-left">
             <?php include_once __DIR__ . '/sidebar.php'; ?>
             <main id="panel">
-            <div class="main jscroll-outer col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-6">
+            <div class="main jscroll-outer col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                 <?php
-                foreach ($questions as $data) {
-                    $question = $data["question"];
-                    $answer = $data["answer"];
-                    // echo var_dump($answer);
-                    include __DIR__ . '/question_list_item.php';
-                }?>
+                if (is_array($questions)) {
+                    foreach ($questions as $data) {
+                        $question = $data["question"];
+                        $answer = $data["answer"];
+                        // echo var_dump($answer);
+                        include __DIR__ . '/question_list_item.php';
+                    }
+                } else {
+                    echo "No questions found!";
+                }
+                ?>
                 <?php include_once __DIR__ . '/pagination_bar.php'; ?>
             </div>
             </main>
