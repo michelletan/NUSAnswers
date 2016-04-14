@@ -48,8 +48,8 @@
                     </div>
                     <div class="post-footer">
                         <div class="row center-block">
-                            <div class="hidden-xs hidden-sm col-md-9 col-lg-9"></div>
-                            <a class="btn-view-comments col-xs-12 col-sm-12 col-md-3 col-lg-3 text-center"><?php echo "Comments (" . $question["comment_count"] . ")";?></a>
+                            <div class="hidden-xs col-sm-9 col-md-9 col-lg-9"></div>
+                            <a class="btn-view-comments col-xs-12 col-sm-3 col-md-3 col-lg-3 text-center"><?php echo "Comments (" . $question["comment_count"] . ")";?></a>
                         </div>
                     </div>
                 </div>

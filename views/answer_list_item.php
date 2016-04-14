@@ -33,7 +33,7 @@
     </div>
     <div class="post-footer">
         <div class="row center-block">
-            <div class="hidden-xs hidden-sm col-md-9 col-lg-9"></div>
+            <div class="hidden-xs col-sm-9 col-md-9 col-lg-9"></div>
             <a class="btn-view-comments col-xs-6 col-sm-3 col-md-3 col-lg-3 text-center"><?php echo "Comments (" . $answer["comment_count"] . ")";?></a>
         </div>
     </div>

@@ -36,6 +36,7 @@ function initShareButton(target) {
     var postContent = target.find(".post-question-content").text();
 
     target.find(".share-buttons").jsSocials({
+        shareIn: "popup",
         showCount: false,
         showLabel: false,
         shares: [
