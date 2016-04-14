@@ -20,7 +20,40 @@ $(document).ready(function() {
             }
         }
     });
+
+    $(".share-buttons").each(function () {
+        // e.preventDefault();
+        var post = $(this).closest(".card");
+        initShareButton(post);
+    });
 });
+
+function initShareButton(target) {
+    console.log("init");
+    var postId = target.find(".card").attr("id");
+    var postUrl = target.find(".post-title a").attr("href");
+    var postTitle = target.find(".post-title a").text();
+    var postContent = target.find(".post-question-content").text();
+
+    target.find(".share-buttons").jsSocials({
+        showCount: false,
+        showLabel: false,
+        shares: [
+            {
+                share: "twitter",
+                label: "Tweet"
+            },
+            {
+                share: "googleplus",
+                label: "Share"
+            },
+            {
+                share: "facebook",
+                label: "Share"
+            }
+        ]
+    });
+}
 
 function isFoldoutShown(parent) {
     return parent.hasClass('foldout-shown');

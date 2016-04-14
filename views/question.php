@@ -7,20 +7,27 @@
             <?php include_once __DIR__ . '/sidebar.php'; ?>
             <main id="panel">
             <div class="main col-md-6 col-lg-6">
-                <h3 class="page-title"><?php if ($question) { echo $question["title"]; } else { echo "Default question title"; }?></h3>
                 <div id="<?php if ($question) { echo $question["question_id"]; } ?>" class="card">
                     <div class="post-content card-line">
-                        <div class="post-details row center-block">
-                            <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
-                                <?php if ($question) { echo $question["content"]; if($question["image_url"] != NULL) {echo '<br><img class="col-md-11 col-lg-11" src="'. $question["image_url"] . '"alt="question-img">';}} else { echo "Default question details"; }?>
+                        <div class="post-title row center-block">
+                            <a href="/question/<?php echo $question["friendly_url"]?>"><?php echo $question["title"]?></a>
+                        </div>
+                        <div class="post-subtitle row">
+                            <div class="col-xs-12 col-sm-9 col-md-8 col-lg-9 col-xl-9">
+                                By <img class="img-user img-circle" src="<?php echo $question["user"]["image_url"]; ?>" alt="user-profile-pic" class="img-thumbnail">
+                                <a href="/user/<?php echo $question["user"]["profile_id"]?>"><?php echo $question["user"]["display_name"]?></a>
+                                <div class="timestamp"><?php echo $question["created_date"]; ?></div>
                             </div>
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                <div class="post-user row center-block text-center">
-                                    <div class="col-xs-3 col-sm-12">
-                                        <img class="img-user img-circle" src="<?php echo $question["user"]["image_url"]; ?>" alt="user-profile-pic" class="img-thumbnail"><br>
-                                    </div>
-                                    <a class="col-xs-4 col-sm-12" href="/user/<?php echo $question["user"]["user_id"]; ?>"><?php echo $question["user"]["display_name"]; ?></a>
-                                </div>
+                            <!-- <a class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 text-center" onclick="share('/question/<?php echo $question["friendly_url"]?>')" id="share"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a> -->
+                            <div class="share-buttons col-xs-12 col-sm-3 col-md-4 col-lg-3 col-xl-3"></div>
+                        </div>
+                        <div class="post-details row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                  <div class="post-question-content post-answer">
+                                      <?php echo $question["content"];
+                                      if($question["image_url"] != NULL) {echo '<br><img class="post-content-image col-md-11 col-lg-11" src="'. $question["image_url"] . '"alt="question-img">';}
+                                      ?>
+                                  </div>
                             </div>
                         </div>
                         <div class="post-tags row text-left">
@@ -41,10 +48,8 @@
                     </div>
                     <div class="post-footer">
                         <div class="row center-block">
-                            <div class="timestamp col-xs-12 col-sm-3 col-md-4 col-lg-4">Posted: <?php echo $question["created_date"]; ?></div>
-                            <div class="hidden-xs col-sm-3 col-md-3 col-lg-3"></div>
-                            <a class="btn-view-comments col-xs-6 col-sm-3 col-md-3 col-lg-3 text-center"><?php echo "Comments (" . $question["comment_count"] . ")";?></a>
-                            <a class="col-xs-6 col-sm-3 col-md-2 col-lg-2 text-center" onclick="share('/question/<?php echo $question["friendly_url"]?>')" id="share"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
+                            <div class="hidden-xs hidden-sm col-md-9 col-lg-9"></div>
+                            <a class="btn-view-comments col-xs-12 col-sm-12 col-md-3 col-lg-3 text-center"><?php echo "Comments (" . $question["comment_count"] . ")";?></a>
                         </div>
                     </div>
                 </div>

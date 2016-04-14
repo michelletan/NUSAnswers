@@ -29,6 +29,18 @@ $(document).ready(function() {
       handleAnswerSubmit(id, answerContent, questionUrl, target);
     });
 
+    $(".share-buttons").each(function () {
+        // e.preventDefault();
+        var post = $(this).closest(".question-list-item");
+        initShareButton(post);
+    });
+
+    // $('body').on("click", ".share-button", function (e) {
+    //   e.preventDefault();
+    //   var post = $(e.target).closest(".question-list-item");
+    //   initShareButton(post);
+    // });
+
     // Initialise infinite scrolling
     $('.main').jscroll({
         debug: true,
@@ -40,6 +52,33 @@ $(document).ready(function() {
         callback: createLinksForUrlsInText
     });
 });
+
+function initShareButton(target) {
+    console.log("init");
+    var postId = target.find(".card").attr("id");
+    var postUrl = target.find(".post-title a").attr("href");
+    var postTitle = target.find(".post-title a").text();
+    var postContent = target.find(".post-question-content").text();
+
+    target.find(".share-buttons").jsSocials({
+        showCount: false,
+        showLabel: false,
+        shares: [
+            {
+                share: "twitter",
+                label: "Tweet"
+            },
+            {
+                share: "googleplus",
+                label: "Share"
+            },
+            {
+                share: "facebook",
+                label: "Share"
+            }
+        ]
+    });
+}
 
 function createLinksForUrlsInText() {
     $(".post-details").linkify();
