@@ -114,6 +114,11 @@ img.navbar-logo {
     padding-top: 20px;
 }
 
+.no-content {
+    color: #999999;
+    padding: 20px;
+}
+
 .card {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -122,6 +127,10 @@ img.navbar-logo {
     border: 1px solid #F7F7F7;
     margin-bottom: 10px;
     box-shadow: 0 4px 4px -2px #CCCCCC;
+}
+
+.login-card {
+    padding: 5px 13px 0px 13px;
 }
 
 .card-line {

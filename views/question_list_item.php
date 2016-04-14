@@ -108,7 +108,7 @@
               <button type="submit" id="<?php echo $question["question_id"]?>-btn-submit-answer" class="btn btn-primary answer-button">Answer</button>
           </div>
           <?php } else {?>
-              <div class="row center-block">
+              <div class="row center-block no-content">
                   Please login to answer questions.
               </div>
           <?php } ?>

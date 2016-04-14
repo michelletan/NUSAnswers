@@ -10,8 +10,9 @@ function submit_tags($tags, $question_id) {
     // get which tags are already present
     $parameters = "(";
     foreach($tags as $value) {
-        $parameters = $parameters.
-        "'$value',";
+        if ($value != '') {
+            $parameters = $parameters."'$value',";
+        }
     }
 
     $parameters = substr($parameters, 0, -1).
