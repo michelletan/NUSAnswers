@@ -97,16 +97,16 @@ function clearFoldout(foldout) {
 function populateFoldout(foldout, data, postId, isQuestion) {
     // Initialise comments container
     foldout.comments({
+        readOnly: !$("#is-logged-in").val(),
         enableEditing: false,
         enableUpvoting: false,
         enableDeleting: false,
         enableAttachments: false,
         enableNavigation: false,
-        enableReplying: $("#is_logged_in").val(),
-        profilePictureURL: '/img/profile02.png',
+        profilePictureURL: $("#user-image-url").val(),
         fieldMappings: {
             id: 'comment_id',
-            created: 'created_timestamp',
+            created: 'created_date',
             content: 'content',
             parent: 'parent',
             fullname: 'display_name',
@@ -132,7 +132,7 @@ function populateFoldout(foldout, data, postId, isQuestion) {
             });
         },
         timeFormatter: function(time) {
-            return moment(time).fromNow();
+            return moment.tz(time, 'Asia/Singapore').fromNow();
         }
     });
 }

@@ -10,7 +10,7 @@
                             <a href="javascript:login();">Login</a>
                         </div>
                         <?php } else { ?>
-                        <div class="login-view row login-card">
+                        <div class="row login-card">
                             <div class="post-user row center-block text-center">
                                 <div class="col-xs-3 col-sm-12">
                                     <img class="img-user img-circle" src="<?php echo get_active_profile_picture(); ?>" alt="user-profile-pic" class="img-thumbnail"><br>
@@ -77,7 +77,7 @@
                 <div class="sidebar-body">
                     <a href="/popular-questions/">Popular</a><br>
                     <a href="/new-questions/">New</a><br>
-                    <a href="/my-questions/" class="login-view" style="display:none">My Questions</a>
+                    <?php if (is_logged_in()) {?><a href="/my-questions/">My Questions</a><?php } ?>
                 </div>
             </div>
             <div class="card">
@@ -85,7 +85,7 @@
                 <div class="sidebar-body">
                     <a href="/popular-answers/">Popular</a><br>
                     <a href="/new-answers/">New</a><br>
-                    <a href="/my-answers/" class="login-view" style="display:none">My Answers</a>
+                    <?php if (is_logged_in()) {?><a href="/my-answers/">My Answers</a><?php } ?>
                 </div>
             </div>
             <div class="card">

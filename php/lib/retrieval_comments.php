@@ -19,6 +19,7 @@ function retrieve_question_comment_with_id($id_param) {
         return array();
     } else {
         $rows = $result->fetch_all(MYSQLI_ASSOC);
+        $rows = add_relative_time_to_comment($rows);
         return $rows;
     }
 }
@@ -43,6 +44,7 @@ function retrieve_answer_comment_with_id($id_param) {
         return array();
     } else {
         $rows = $result->fetch_all(MYSQLI_ASSOC);
+        $rows = add_relative_time_to_comment($rows);
         return $rows;
     }
 }
@@ -95,6 +97,7 @@ function retrieve_comments_for_question($id_param) {
         return array();
     } else {
         $rows = $result->fetch_all(MYSQLI_ASSOC);
+        $rows = add_relative_time_to_comments($rows);
         return $rows;
     }
 }
@@ -119,8 +122,21 @@ function retrieve_comments_for_answer($id_param) {
         return array();
     } else {
         $rows = $result->fetch_all(MYSQLI_ASSOC);
+        $rows = add_relative_time_to_comments($rows);
         return $rows;
     }
+}
+
+function add_relative_time_to_comment($comment) {
+    $comment["created_date"] = timestamp_to_browser_locale($comment["created_timestamp"]);
+    return $comment;
+}
+
+function add_relative_time_to_comments($array) {
+    for ($i = 0; $i < count($array); $i++) {
+        $array[$i] = add_relative_time_to_comment($array[$i]);
+    }
+    return $array;
 }
 
 // function retrieve_comments_with_query($query) {

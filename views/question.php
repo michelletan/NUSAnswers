@@ -62,15 +62,7 @@
                     <div class="post-content">
                         <form class="form-horizontal" action="/api/answer/submit/question" method="POST">
                             <div class="row center-block">
-                                <div class="answer-user col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                    <div class="post-user row center-block text-center">
-                                        <div class="col-xs-3">
-                                            <img class="img-user img-circle" src="<?php echo get_active_profile_picture() ?>" alt="user-profile-pic" class="img-thumbnail"><br>
-                                        </div>
-                                        <a class="col-xs-4" href="/user/<?php echo get_active_profile() ?>"><?php echo get_active_display_name(); ?></a>
-                                    </div>
-                                </div>
-                              <div class="answer-text-box col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                              <div class="answer-text-box">
                                 <textarea class="form-control" id="answer-text" placeholder="What's your answer?" name="answer-content"></textarea>
                               </div>
                             </div>

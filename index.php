@@ -122,7 +122,7 @@ class MyQuestionsHandler {
 
 class MyQuestionsPageHandler {
     function get($page_no) {
-        $current_user_id = 1;//get_active_profile();
+        $current_user_id = get_active_profile();
 
         $data = retrieve_questions_by_profile($current_user_id, INITIAL_NUM_QUESTIONS, $page_no);
 
@@ -209,7 +209,7 @@ class NewAnswersPageHandler {
 
 class MyAnswersHandler {
     function get() {
-        $current_user_id = 1;//get_active_profile();
+        $current_user_id = get_active_profile();
 
         $data = retrieve_questions_by_answers_by_profile($current_user_id, INITIAL_NUM_QUESTIONS, 1);
 
@@ -228,7 +228,7 @@ class MyAnswersHandler {
 
 class MyAnswersPageHandler {
     function get($page_no) {
-        $current_user_id = 1;//get_active_profile();
+        $current_user_id = get_active_profile();
 
         $data = retrieve_questions_by_answers_by_profile($current_user_id, INITIAL_NUM_QUESTIONS, $page_no);
 

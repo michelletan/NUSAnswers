@@ -1,6 +1,13 @@
 <?php
-date_default_timezone_set('Asia/Singapore');
+date_default_timezone_set('America/New_York');
 
+function timestamp_to_browser_locale($ts) {
+    $date = new DateTime($ts, new DateTimeZone('America/New_York'));
+    $date->setTimezone(new DateTimeZone('Asia/Singapore'));
+    return $date->format('Y-m-d H:i:sP');
+}
+
+// Receives a date in UTC and changes it into relative time to Singapore timezone
 function timestamp_to_relative_date($ts) {
     if(!ctype_digit($ts))
         $ts = strtotime($ts);

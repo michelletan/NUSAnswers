@@ -92,14 +92,8 @@
             <div class="row center-block">
                 <h5>Your Answer</h5>
             </div>
-            <div class="row">
-                <div class="answer-user col-sm-2 col-md-2 col-lg-2">
-                    <div class="post-user row center-block text-center">
-                        <img class="img-user img-circle" src="<?php echo get_active_profile_picture() ?>" alt="user-profile-pic" class="img-thumbnail"><br>
-                        <a href=""><?php echo get_active_display_name() ?></a>
-                    </div>
-                </div>
-              <div class="answer-text-box col-sm-10 col-md-10 col-lg-10">
+            <div class="row center-block">
+              <div class="answer-text-box">
                 <textarea class="form-control" id="<?php echo $question["question_id"]?>-answer-text" placeholder="What's your answer?"></textarea>
               </div>
           </div>

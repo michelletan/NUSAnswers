@@ -11,6 +11,7 @@ function submit_tags($tags, $question_id) {
     $parameters = "(";
     foreach($tags as $value) {
         if ($value != '') {
+            $value = str_replace('#', '', $value);
             $parameters = $parameters."'$value',";
         }
     }

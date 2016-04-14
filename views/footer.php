@@ -4,6 +4,7 @@
 <script type="text/javascript" src="/js/slideout.js"></script>
 <script type="text/javascript" src="/js/jquery-comments.js"></script>
 <script type="text/javascript" src="/js/moment.js"></script>
+<script type="text/javascript" src="/js/moment-timezone.js"></script>
 <script type="text/javascript" src="/js/navbar.js"></script>
 <script type="text/javascript" src="/js/jquery-ui.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/tag-it.js" charset="utf-8"></script>

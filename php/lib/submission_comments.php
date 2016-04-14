@@ -5,7 +5,7 @@ function submit_comment_for_question($question_id_param, $content_param, $parent
 
     $question_id = $db->escape_string($question_id_param);
     $content = $db->escape_string($content_param);
-    $profile_id = 1; // TODO get from session login
+    $profile_id = get_active_profile();
 
     $query = "INSERT INTO question_comments (content, profile_fk, question_fk, parent) VALUES ".
              "('". $content . "', " . $profile_id . ", " . $question_id;
@@ -37,7 +37,7 @@ function submit_comment_for_answer($answer_id_param, $content_param, $parent_par
 
     $answer_id = $db->escape_string($answer_id_param);
     $content = $db->escape_string($content_param);
-    $profile_id = 1; // TODO get from session login
+    $profile_id = get_active_profile();
 
     $query = "INSERT INTO answer_comments (content, profile_fk, answer_fk, parent) VALUES ".
              "('". $content . "', " . $profile_id . ", " . $answer_id;

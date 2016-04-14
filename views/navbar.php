@@ -5,6 +5,7 @@
             <input type="hidden" id="has-admin-rights" value="<?php echo has_admin_rights() ? 'true' : 'false';?>" />
             <input type="hidden" id="has_mod_rights" value="<?php echo has_mod_rights() ? 'true' : 'false';?>" />
             <input type="hidden" id="user-display-name" value="<?php echo get_active_display_name();?>" />
+            <input type="hidden" id="user-image-url" value="<?php echo get_active_profile_picture();?>" />
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="col-xs-2 col-sm-1 hidden-md hidden-lg hidden-xl">
                 <button type="button" id="btn-toggle-menu">

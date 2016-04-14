@@ -136,7 +136,7 @@ function populateFoldout(foldout, data, postId) {
         profilePictureURL: '/img/profile02.png',
         fieldMappings: {
             id: 'comment_id',
-            created: 'created_timestamp',
+            created: 'created_date',
             content: 'content',
             parent: 'parent',
             fullname: 'display_name',
