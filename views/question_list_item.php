@@ -51,7 +51,7 @@
                           <?php echo $answer["content"]; ?>
                       </div>
                 </div>
-                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+                <div class="hidden-xs col-sm-1 col-md-1 col-lg-1">
                     <div class="row center-block">
                         <div class="post-vote center-block">
                             <div class="center-block text-center">
@@ -68,9 +68,24 @@
                 </div>
             </div>
             <div class="post-subtitle row">
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-9 col-xl-9">
+                <div class="col-xs-8 col-sm-6 col-md-6 col-lg-9 col-xl-9">
                     By <img class="img-user img-circle" src="<?php echo $answer["user"]["image_url"]; ?>" alt="user-profile-pic" class="img-thumbnail">
                     <a href="/user/<?php echo $answer["user"]["profile_id"]?>"><?php echo $answer["user"]["display_name"]?></a>
+                </div>
+                <div class="col-xs-4 hidden-sm hidden-md hidden-lg hidden-xl">
+                    <div class="row center-block">
+                        <div class="post-vote center-block">
+                            <div class="center-block text-center">
+                                <a onclick="upvoteAnswer(<?php echo $answer['answer_id']?>)"><span class="glyphicon glyphicon-chevron-up"></span></a>
+                            </div>
+                            <div id="answer-<?php echo $answer['answer_id']?>-vote-count" class="post-vote-count text-center">
+                                <?php if ($answer["vote_count"]) { echo $answer["vote_count"]; } else { echo 0; }?>
+                            </div>
+                            <div class="center-block text-center">
+                                <a onclick="downvoteAnswer(<?php echo $answer['answer_id']?>)"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <?php } else if (is_logged_in()) { ?>
@@ -100,13 +115,13 @@
         </div>
         <div class="post-footer">
             <div class="row center-block">
-                <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6"></div>
+                <div class="hidden-xs col-sm-6 col-md-6 col-lg-6"></div>
                 <?php if ($question["answer_count"] > 0) { ?>
-                    <a href="/question/<?php echo $question["friendly_url"]?>" class="btn-view-answers col-xs-4 col-sm-3 col-md-3 col-lg-3 text-center">Answers (<?php echo $question["answer_count"]; ?>)</a>
+                    <a href="/question/<?php echo $question["friendly_url"]?>" class="btn-view-answers col-xs-6 col-sm-3 col-md-3 col-lg-3 text-center">Answers (<?php echo $question["answer_count"]; ?>)</a>
                 <?php } else { ?>
                     <div class="hidden-xs hidden-sm col-md-3 col-lg-3"></div>
                 <?php } ?>
-                <a class="btn-view-comments col-xs-4 col-sm-3 col-md-3 col-lg-3 text-center"><?php echo "Comments (" . $question["comment_count"] . ")";?></a>
+                <a class="btn-view-comments col-xs-6 col-sm-3 col-md-3 col-lg-3 text-center"><?php echo "Comments (" . $question["comment_count"] . ")";?></a>
             </div>
         </div>
     </div>

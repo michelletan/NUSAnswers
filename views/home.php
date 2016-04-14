@@ -1,6 +1,6 @@
 <?php include_once __DIR__ . '/header.php'; ?>
 <body>
-    <script src="../js/fb.js"></script>
+    <script src="/js/fb.js"></script>
     <?php include_once __DIR__ . '/navbar.php'; ?>
 
     <div class="container-fluid center-block">
@@ -27,7 +27,7 @@
     </div>
 
     <?php include_once __DIR__ . '/footer.php'; ?>
-    <script src="../js/home.js"></script>
-    <script src="../js/vote-ajax.js"></script>
+    <script src="/js/home.js"></script>
+    <script src="/js/vote-ajax.js"></script>
 </body>
 </html>
