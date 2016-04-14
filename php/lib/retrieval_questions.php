@@ -291,6 +291,11 @@ function retrieve_best_answer_tags_users_for_question($question_row) {
 
     if (count($question_user) > 0) {
         $question["user"] = $question_user[0];
+    } else {
+        $anon = array();
+        $anon["profile_id"] = ANON_PROFILE_ID;
+        $anon["display_name"] = "Anonymous";
+        $question["user"] = $anon;
     }
 
     // Add answer count to question
@@ -335,6 +340,11 @@ function retrieve_answers_tags_users_for_question($question_row) {
 
     if (count($question_user) > 0) {
         $question["user"] = $question_user[0];
+    } else {
+        $anon = array();
+        $anon["profile_id"] = ANON_PROFILE_ID;
+        $anon["display_name"] = "Anonymous";
+        $question["user"] = $anon;
     }
 
     // Add answer count to question

@@ -36,13 +36,12 @@ function facebook_login_php() {
     exit;
   }
 
-  if (! isset($accessToken)) {
-    echo 'No cookie set or no OAuth data could be obtained from cookie.';
+  if (!isset($accessToken)) {
+      echo 'No cookie set or no OAuth data could be obtained from cookie.';
     exit;
   }
 
   $_SESSION['fb_access_token'] = (string) $accessToken;
-
 
   try {
     // Returns a `Facebook\FacebookResponse` object
@@ -87,7 +86,7 @@ function facebook_login_php() {
       set_active_display_name($auto_display_name);
       set_active_role(0);
       set_active_profile_picture($image);
-    }
+  }
   }
 }
 ?>

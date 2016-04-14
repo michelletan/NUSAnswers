@@ -11,6 +11,8 @@ define('SIDEBAR_TAG_NUMBER', 5);
 define('PROFILE_MAX_QUESTIONS_SHOWN', 5);
 define('PROFILE_MAX_ANSWERS_SHOWN', 5);
 
+define('ANON_PROFILE_ID', 0);
+
 // MESSAGES
 define('DEFAULT_NO_ANSWER', 'No answers yet. Write your own!');
 ?>

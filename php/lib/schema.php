@@ -287,18 +287,16 @@ function insert_admin() {
 
 function insert_users() {
   global $db;
-  $query = "INSERT INTO profiles (display_name) VALUES " .
-  "('Curien')," .
-  "('Goldman')," .
-  "('Cat')" .
+  $query = "INSERT INTO profiles (profile_id, display_name) VALUES " .
+  "(0, 'Anonymous')" .
   ";";
   $db->query($query);
-  $query = "INSERT INTO users (login_id, role, profile_fk) VALUES " .
-  " ('curien', 0, 2)," .
-  " ('goldman', 1, 3)," .
-  " ('catherine', 0, 4)" .
-  ";";
-  $db->query($query);
+  // $query = "INSERT INTO users (login_id, role, profile_fk) VALUES " .
+  // " ('curien', 0, 2)," .
+  // " ('goldman', 1, 3)," .
+  // " ('catherine', 0, 4)" .
+  // ";";
+  // $db->query($query);
 }
 
 function insert_questions() {

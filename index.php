@@ -825,7 +825,7 @@ class QuestionSubmitAPIHandler {
 
                       // check if person is logged in, and get the profile id here
                       // left blank for now
-                      $profile = NULL;
+                      $profile = get_active_profile() != null ? get_active_profile() : ANON_PROFILE_ID;
 
                       $file = isset($_POST['file']) ? $_POST['file'] : NULL;
                       $id = submit_question($_POST['title'], $_POST['content'], $tags, $profile, $file);
@@ -1356,7 +1356,7 @@ $html_urls = array(
 
    "/user-view-answers" => "UserViewAnswersHandler",
    "/user-edit-answer" => "UserEditAnswerHandler",
-   "/user-view-answer-comments" => "UserViewAnswerCommentsHandler", 
+   "/user-view-answer-comments" => "UserViewAnswerCommentsHandler",
    "/user-edit-answer-comment" => "UserEditAnswerCommentHandler",
 
     "/admin-dashboard" => "AdminDashboardHandler",
@@ -1410,7 +1410,7 @@ $json_base_urls = array(
     "/user-answer-deletion/" => "UserAnswerDeletionAPIHandler",
     "/user-answer-edit/" => "UserAnswerEditAPIHandler",
     "/user-answer-comment-deletion/" => "UserAnswerCommentDeletionAPIHandler",
-    "/user-answer-comment-edit/" => "UserAnswerCommentEditAPIHandler",    
+    "/user-answer-comment-edit/" => "UserAnswerCommentEditAPIHandler",
 
     "/admin-creation/" => "AdminCreationAPIHandler",
     "/admin-edit/" => "AdminEditAPIHandler",
