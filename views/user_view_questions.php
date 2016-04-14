@@ -36,7 +36,6 @@ include_once __DIR__ . '/user_header.php'; ?>
                                     </thead>
                                     <tbody>
                                         <?php
-                                            set_active_profile(1); // TO BE COMMENTED OUT
                                             $questions = retrieve_questions_by_user(get_active_profile()); 
                                             foreach($questions as $question) {
                                         ?>

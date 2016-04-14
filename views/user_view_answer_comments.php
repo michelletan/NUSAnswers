@@ -36,7 +36,6 @@ include_once __DIR__ . '/user_header.php'; ?>
                                     </thead>
                                     <tbody>
                                         <?php
-                                            set_active_profile(1);
                                             $answer_comments = retrieve_answer_comments_by_user(get_active_profile());
                                             foreach ($answer_comments as $answer_comment) {
                                         ?>
