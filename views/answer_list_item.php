@@ -41,8 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class="share-buttons col-xs-12 col-sm-3 col-md-4 col-lg-3 col-xl-3"></div>
-
+            <!-- <div class="share-buttons col-xs-12 col-sm-3 col-md-4 col-lg-3 col-xl-3"></div> -->
 
         </div>
     </div>
