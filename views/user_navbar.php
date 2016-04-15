@@ -36,7 +36,7 @@
                             <?php } ?>
                             <li><a href="/user-dashboard">User Dashboard</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/api/logout/admin">Logout</a></li>
+                            <li><a href="javascript:logout();">Logout</a></li>
                         </ul>
                     </li>
                     <?php } ?>
