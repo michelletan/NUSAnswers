@@ -37,7 +37,7 @@ function share(url) {
 
 window.fbAsyncInit = function() {
   var applicationId = "";
-  if(window.location.host == "nusanswers.me") {
+  if(window.location.host == "nusanswers.me" || window.location.host == "www.nusanswers.me") {
     applicationId = '581406865343052';
   } else {
     applicationId = '1581294052181728';

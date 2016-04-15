@@ -6,7 +6,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/dbaccess.php';
 function facebook_login_php() {
   global $db;
 
-  if($_SERVER['HTTP_HOST'] === "nusanswers.me") {
+  if($_SERVER['HTTP_HOST'] === "nusanswers.me" || $_SERVER['HTTP_HOST'] === "www.nusanswers.me") {
     $appid = '581406865343052';
     $appsecret = '894be6b1bb847d273b6080aea4c8b815';
   } else {
