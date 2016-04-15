@@ -50,9 +50,9 @@ td {
         padding-left: 0px;
     }
     .summary-display {
-        max-height: 410px;
+/*        max-height: 410px;
         height: 100%;
-    }
+    }*/
 }
   
 #summary-breakdown-column li {
