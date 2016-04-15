@@ -322,7 +322,7 @@ function retrieve_answers_tags_users_for_question($question_row) {
     // Retrieve answers, tags, user profiles
     $answers = retrieve_answers_for_question_order_by_votes($question_id);
     $tags = retrieve_tags_for_question($question_id);
-    $comment_count = retrieve_comment_count_for_question($question_id);
+    $question_comment_count = retrieve_comment_count_for_question($question_id);
     $question_user = retrieve_profile_by_id($question["profile_fk"]);
 
     // Retrieve profiles for each answer and question
@@ -351,7 +351,7 @@ function retrieve_answers_tags_users_for_question($question_row) {
     $question["answer_count"] = $answer["answer_count"];
 
     // Add comment count to question
-    $question["comment_count"] = $comment_count;
+    $question["comment_count"] = $question_comment_count;
 
     // Change timestamp to relative one
     $question["created_date"] = timestamp_to_relative_date($question["created_timestamp"]);
