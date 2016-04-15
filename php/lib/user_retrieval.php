@@ -225,7 +225,7 @@ function retrieve_questions_by_date($id_param, $today_date){
     global $db;
     $profile_id = $db->escape_string($id_param);
 
-    $query = "SELECT * FROM questions WHERE created_timestamp BETWEEN DATE_SUB(NOW(), INTERVAL " . $today_date . " DAY) AND NOW()";
+    $query = "SELECT * FROM questions WHERE (created_timestamp BETWEEN DATE_SUB(NOW(), INTERVAL " . $today_date . " DAY) AND NOW()) AND profile_fk = '" . $profile_id . "'";
     $result = $db->query($query);
 
     $return_array = array_fill(0, 7, 0);
@@ -240,7 +240,7 @@ function retrieve_answers_by_date($id_param, $today_date){
     global $db;
     $profile_id = $db->escape_string($id_param);
 
-    $query = "SELECT * FROM answers WHERE created_timestamp BETWEEN DATE_SUB(NOW(), INTERVAL " . $today_date . " DAY) AND NOW()";
+    $query = "SELECT * FROM answers WHERE (created_timestamp BETWEEN DATE_SUB(NOW(), INTERVAL " . $today_date . " DAY) AND NOW()) AND profile_fk = '" . $profile_id . "'";
     $result = $db->query($query);
 
     $return_array = array_fill(0, 7, 0);
@@ -255,7 +255,7 @@ function retrieve_comments_by_date($id_param, $today_date){
     global $db;
     $profile_id = $db->escape_string($id_param);
 
-    $query = "SELECT * FROM question_comments WHERE created_timestamp BETWEEN DATE_SUB(NOW(), INTERVAL " . $today_date . " DAY) AND NOW()";
+    $query = "SELECT * FROM question_comments WHERE (created_timestamp BETWEEN DATE_SUB(NOW(), INTERVAL " . $today_date . " DAY) AND NOW()) AND profile_fk = '" . $profile_id . "'";
     $result = $db->query($query);
 
     $return_array = array_fill(0, 7, 0);
@@ -263,7 +263,7 @@ function retrieve_comments_by_date($id_param, $today_date){
         $return_array[date('N', strtotime($row["created_timestamp"])) - 1] += 1;
     }
 
-    $query = "SELECT * FROM answer_comments WHERE created_timestamp BETWEEN DATE_SUB(NOW(), INTERVAL " . $today_date . " DAY) AND NOW()";
+    $query = "SELECT * FROM answer_comments WHERE (created_timestamp BETWEEN DATE_SUB(NOW(), INTERVAL " . $today_date . " DAY) AND NOW()) AND profile_fk = '" . $profile_id . "'";
     $result = $db->query($query);
     
     while($row = $result->fetch_assoc()) {
