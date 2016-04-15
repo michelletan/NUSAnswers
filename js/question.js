@@ -132,7 +132,7 @@ function populateFoldout(foldout, data, postId, isQuestion) {
             });
         },
         timeFormatter: function(time) {
-            return moment.tz(time, 'Asia/Singapore').fromNow();
+            return moment(time).fromNow();
         }
     });
 }
