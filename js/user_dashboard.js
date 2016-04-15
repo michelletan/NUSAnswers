@@ -1,14 +1,22 @@
+var userStats = [];
 $(document).ready(function() {
-   Chart.defaults.global.responsive = true;
-    drawSummaryChart("summary-canvas");
-    drawQuestionsChart("questions-canvas");
-    drawAnswersChart("answers-canvas");
-    drawCommentsChart("comments-canvas");
+    Chart.defaults.global.responsive = true;
+    $.get("http://" + window.location.host + "/api/user-statistics/", function(data) {
+        var stats = JSON.parse(data);
+        userStats[0] = stats['questions'].slice(0, 7);
+        userStats[1] = stats['answers'].slice(0, 7);
+        userStats[2] = stats['comments'].slice(0, 7);
+
+        drawSummaryChart("summary-canvas", userStats);
+        drawQuestionsChart("questions-canvas", userStats[0]);
+        drawAnswersChart("answers-canvas", userStats[1]);
+        drawCommentsChart("comments-canvas", userStats[2]);
+    })
 });
 
 function drawSummaryChart(id) {
     var data = {
-        labels: ["April", "May", "June", "July", "August", "September", "October"],
+        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         datasets: [
             {
                 label: "Number of Questions Asked",
@@ -16,7 +24,7 @@ function drawSummaryChart(id) {
                 strokeColor: "rgba(238, 207, 32, 0.8)",
                 highlightFill: "rgba(238, 207, 32, 0.75)",
                 highlightStroke: "rgba(238, 207, 32, 1)",
-                data: [20, 0, 0, 0, 0, 0, 0]
+                data: [userStats[0][0], userStats[0][1], userStats[0][2], userStats[0][3], userStats[0][4], userStats[0][5], userStats[0][6]]
             },
             {
                 label: "Number of Answers Given",
@@ -24,7 +32,7 @@ function drawSummaryChart(id) {
                 strokeColor: "rgba(224, 102, 102, 0.8)",
                 highlightFill: "rgba(224, 102, 102, 0.75)",
                 highlightStroke: "rgba(224, 102, 102, 1)",
-                data: [13, 0, 0, 0, 0, 0, 0]
+                data: [userStats[1][0], userStats[1][1], userStats[1][2], userStats[1][3], userStats[1][4], userStats[1][5], userStats[1][6]]
             },
             {
                 label: "Number of Comments Given",
@@ -32,7 +40,7 @@ function drawSummaryChart(id) {
                 strokeColor: "rgba(204, 102, 255, 0.8)",
                 highlightFill: "rgba(204, 102, 255, 0.75)",
                 highlightStroke: "rgba(204, 102, 255, 1)",
-                data: [47, 0, 0, 0, 0, 0, 0]
+                data: [userStats[2][0], userStats[2][1], userStats[2][2], userStats[2][3], userStats[2][4], userStats[2][5], userStats[2][6]]
             }
         ]
     };
@@ -75,9 +83,9 @@ function drawSummaryChart(id) {
     var myBarChart = new Chart(ctx).Bar(data, options);
 }
 
-function drawQuestionsChart(id) {
+function drawQuestionsChart(id, questionStats) {
     var data = {
-        labels: ["April", "May", "June", "July", "August", "September", "October"],
+        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         datasets: [
             {
                 label: "Number of Questions Asked",
@@ -85,7 +93,7 @@ function drawQuestionsChart(id) {
                 strokeColor: "rgba(238, 207, 32, 0.8)",
                 highlightFill: "rgba(238, 207, 32, 0.75)",
                 highlightStroke: "rgba(238, 207, 32, 1)",
-                data: [20, 0, 0, 0, 0, 0, 0]
+                data: [questionStats[0], questionStats[1], questionStats[2], questionStats[3], questionStats[4], questionStats[5], questionStats[6]]
             }
         ]
     };
@@ -128,9 +136,9 @@ function drawQuestionsChart(id) {
     var myBarChart = new Chart(ctx).Bar(data, options);
 }
 
-function drawAnswersChart(id) {
+function drawAnswersChart(id, answerStats) {
     var data = {
-        labels: ["April", "May", "June", "July", "August", "September", "October"],
+        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         datasets: [
             {
                 label: "Number of Answers Given",
@@ -138,7 +146,7 @@ function drawAnswersChart(id) {
                 strokeColor: "rgba(224, 102, 102, 0.8)",
                 highlightFill: "rgba(224, 102, 102, 0.75)",
                 highlightStroke: "rgba(224, 102, 102, 1)",
-                data: [13, 0, 0, 0, 0, 0, 0]
+                data: [answerStats[0], answerStats[1], answerStats[2], answerStats[3], answerStats[4], answerStats[5], answerStats[6]]
             }
         ]
     };
@@ -181,9 +189,9 @@ function drawAnswersChart(id) {
     var myBarChart = new Chart(ctx).Bar(data, options);
 }
 
-function drawCommentsChart(id) {
+function drawCommentsChart(id, commentStats) {
     var data = {
-        labels: ["April", "May", "June", "July", "August", "September", "October"],
+        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         datasets: [
             {
                 label: "Number of Comments Given",
@@ -191,7 +199,7 @@ function drawCommentsChart(id) {
                 strokeColor: "rgba(204, 102, 255, 0.8)",
                 highlightFill: "rgba(204, 102, 255, 0.75)",
                 highlightStroke: "rgba(204, 102, 255, 1)",
-                data: [47, 0, 0, 0, 0, 0, 0]
+                data: [commentStats[0], commentStats[1], commentStats[2], commentStats[3], commentStats[4], commentStats[5], commentStats[6]]
             }
         ]
     };

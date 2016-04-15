@@ -6,7 +6,7 @@ function retrieve_questions_by_user($id_param) {
     global $db;
     $profile_id = $db->escape_string($id_param);
     
-    $query = "SELECT * FROM questions WHERE profile_fk = '" . $profile_id . "'"; //change: WHERE p.display_name = $name
+    $query = "SELECT * FROM questions WHERE profile_fk = '" . $profile_id . "' ORDER BY created_timestamp DESC"; //change: WHERE p.display_name = $name
 
     $questions = $db->query($query);
 
@@ -38,7 +38,7 @@ function retrieve_question_comments_by_user($id_param) {
     global $db;
     $profile_id = $db->escape_string($id_param);
 
-    $query = "SELECT * FROM question_comments WHERE profile_fk = '" . $profile_id . "'"; 
+    $query = "SELECT * FROM question_comments WHERE profile_fk = '" . $profile_id . "' ORDER BY created_timestamp DESC"; 
 
     $result = $db->query($query);
 
@@ -75,7 +75,7 @@ function retrieve_answers_by_user($id_param) {
     global $db;
     $profile_id = $db->escape_string($id_param);
     
-    $query = "SELECT * FROM answers WHERE profile_fk = '" . $profile_id . "'"; //change: WHERE p.display_name = $name
+    $query = "SELECT * FROM answers WHERE profile_fk = '" . $profile_id . "' ORDER BY created_timestamp DESC"; //change: WHERE p.display_name = $name
 
     $result = $db->query($query);
 
@@ -115,7 +115,7 @@ function retrieve_answer_comments_by_user($id_param) {
     global $db;
     $profile_id = $db->escape_string($id_param);
     
-    $query = "SELECT * FROM answer_comments WHERE profile_fk = '" . $profile_id . "'"; //change: WHERE p.display_name = $name
+    $query = "SELECT * FROM answer_comments WHERE profile_fk = '" . $profile_id . "' ORDER BY created_timestamp DESC"; //change: WHERE p.display_name = $name
 
     $result = $db->query($query);
 
@@ -203,4 +203,74 @@ function retrieve_comment_quantity_user($id_param) {
     
     return $num_rows;
 }
+
+function retrieve_user_stats($id_param) {
+    global $db;
+    $profile_id = $db->escape_string($id_param);
+
+    $date = getdate();
+    $today = $date["wday"];
+    $today_date = $date["mday"];
+
+    $questions = retrieve_questions_by_date($id_param, $today);
+    $answers = retrieve_answers_by_date($id_param, $today);
+    $comments = retrieve_comments_by_date($id_param, $today);
+
+    $stats = array("questions" => $questions, "answers" => $answers, "comments" => $comments);
+
+    return json_encode($stats);
+}
+
+function retrieve_questions_by_date($id_param, $today_date){
+    global $db;
+    $profile_id = $db->escape_string($id_param);
+
+    $query = "SELECT * FROM questions WHERE created_timestamp BETWEEN DATE_SUB(NOW(), INTERVAL " . $today_date . " DAY) AND NOW()";
+    $result = $db->query($query);
+
+    $return_array = array_fill(0, 7, 0);
+    while($row = $result->fetch_assoc()) {
+        $return_array[date('N', strtotime($row["created_timestamp"])) - 1] += 1;
+    }
+
+    return $return_array;
+}
+
+function retrieve_answers_by_date($id_param, $today_date){
+    global $db;
+    $profile_id = $db->escape_string($id_param);
+
+    $query = "SELECT * FROM answers WHERE created_timestamp BETWEEN DATE_SUB(NOW(), INTERVAL " . $today_date . " DAY) AND NOW()";
+    $result = $db->query($query);
+
+    $return_array = array_fill(0, 7, 0);
+    while($row = $result->fetch_assoc()) {
+        $return_array[date('N', strtotime($row["created_timestamp"])) - 1] += 1;
+    }
+
+    return $return_array;
+}
+
+function retrieve_comments_by_date($id_param, $today_date){
+    global $db;
+    $profile_id = $db->escape_string($id_param);
+
+    $query = "SELECT * FROM question_comments WHERE created_timestamp BETWEEN DATE_SUB(NOW(), INTERVAL " . $today_date . " DAY) AND NOW()";
+    $result = $db->query($query);
+
+    $return_array = array_fill(0, 7, 0);
+    while($row = $result->fetch_assoc()) {
+        $return_array[date('N', strtotime($row["created_timestamp"])) - 1] += 1;
+    }
+
+    $query = "SELECT * FROM answer_comments WHERE created_timestamp BETWEEN DATE_SUB(NOW(), INTERVAL " . $today_date . " DAY) AND NOW()";
+    $result = $db->query($query);
+    
+    while($row = $result->fetch_assoc()) {
+        $return_array[date('N', strtotime($row["created_timestamp"])) - 1] += 1;
+    }
+
+    return $return_array;
+}
+    
 ?>

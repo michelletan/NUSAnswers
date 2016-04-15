@@ -119,7 +119,6 @@
     </div>
 </body>
 <?php include_once __DIR__ . '/footer.php'; ?>
-<script src="/js/metisMenu.min.js"></script>
 <script src="/js/Chart.min.js"></script>
 <script src="/js/user_dashboard.js"></script>
 </html>

@@ -1,11 +1,9 @@
 function login() {
   FB.login(function(response) {
     if (response.status === 'connected') {
-      $("#non-login-view").hide();
-      $(".login-view").show();
+      window.location.reload();
       FB.api('/me', function(response) {
       //  console.log('Successful login for: ' + response.name);
-        document.getElementById('username').innerHTML = response.name + "<span class=\"caret\"></span>";
         $.ajax({
           url: '/api/login/facebook',
           method: 'POST'
@@ -26,7 +24,7 @@ function logout() {
 }
 
 function share(url) {
-  var shareLink = 'http://www.nusanswers.me' + url;
+  var shareLink = 'http://' + window.location.host + url;
   FB.ui({
     method: 'share',
     href: shareLink

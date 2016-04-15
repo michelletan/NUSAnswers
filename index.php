@@ -881,6 +881,12 @@ class DownvoteAPIHandler {
     }
 }
 
+class UserDashboardChartAPIHandler {
+    function get() {
+        echo retrieve_user_stats(get_active_profile());
+    }
+}
+
 class UserQuestionEditAPIHandler {
     function post() {
         if (is_logged_in()) {
@@ -1402,6 +1408,7 @@ $json_base_urls = array(
     "/upvote/" => "UpvoteAPIHandler",
     "/downvote/" => "DownvoteAPIHandler",
 
+    "/user-statistics/" => "UserDashboardChartAPIHandler",
     "/user-question-deletion/" => "UserQuestionDeletionAPIHandler",
     "/user-question-edit/" => "UserQuestionEditAPIHandler",
     "/user-question-comment-deletion" => "UserQuestionCommentDeletionAPIHandler",
