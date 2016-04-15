@@ -1,5 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/Toro.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/HTMLPurifier.standalone.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/constants.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/login_check.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
@@ -22,9 +23,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/user_update.php';
 define('VIEW_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/views/');
 define('API_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/api/');
 
-$post_data = array();
-$post_data["post_title"] = "I am a new student. Bidding has commenced, but I still have not received notice whether I have passed the QET and whether I am required to allocate part of my schedule to attend compulsory English support modules. What should I do?";
-$post_data["post_answer"] = "The Centre for English Language Communication (CELC) will endeavour to release the QET results before the commencement of bidding for faculty and ULR modules by new students. However, in the unforeseen event that the results are not yet available, students should proceed to bid for their faculty and ULR modules on the understanding that priority be given to CELC's English support courses (Basic English Course and English for Academic Purposes Course) if students are required to take them in the current semester when the QET results are subsequently released.";
+// HTMLPurifier setup
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 
 // Handlers for HTML pages
 class ComingSoonHandler {
@@ -798,6 +799,8 @@ class AnswerCommentPostAPIHandler {
 
 class QuestionSubmitAPIHandler {
     function post_xhr() {
+        global $purifier;
+
         $array_to_return = array();
         if (isset($_POST['type'])) {
             $type = $_POST['type'];
@@ -823,12 +826,16 @@ class QuestionSubmitAPIHandler {
                           $tags = explode(',', $tags_string);
                       }
 
+                      // Sanitise content
+                      $title = $purifier->purify($_POST['title']);
+                      $content = $purifier->purify($_POST['content']);
+
                       // check if person is logged in, and get the profile id here
                       // left blank for now
                       $profile = get_active_profile() != null ? get_active_profile() : ANON_PROFILE_ID;
 
                       $file = isset($_POST['file']) ? $_POST['file'] : NULL;
-                      $id = submit_question($_POST['title'], $_POST['content'], $tags, $profile, $file);
+                      $id = submit_question($title, $content, $tags, $profile, $file);
                     } else {
                       $id = false;
                     }
