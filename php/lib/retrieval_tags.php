@@ -26,7 +26,7 @@ function retrieve_tag_names_with_limit($limit_param) {
         $limit = $limit_param;
     }
 
-    $query = "SELECT tag_name FROM tags LIMIT ". $limit;
+    $query = "SELECT tag_name FROM tags ORDER BY tag_id DESC LIMIT ". $limit;
 
     $result = $db->query($query);
 
