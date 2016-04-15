@@ -82,7 +82,7 @@
                 <div class="row">
                     <div class="col-lg-9">
                         <div class="row">
-                            <div id="summary-column" class="col-lg-8">
+                            <div id="summary-column" class="col-lg-12">
                                 <ul class="top-buffer-20px list-group">
                                     <li class="list-group-item">
                                         <h4>Answers Summary (Answer/month)</h4>
@@ -92,7 +92,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div id="summary-breakdown-column" class="top-buffer-20px visible-lg col-lg-4">                                    
+                            <!--<div id="summary-breakdown-column" class="top-buffer-20px visible-lg col-lg-4">                                    
                                 <ul class="list-group">
                                     <li class="list-group-item">
                                         <h4>Summary Breakdown</h4>
@@ -103,7 +103,7 @@
                                         </li>
                                     </li>
                                 </ul>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="row">
                             <div class="col-lg-4">

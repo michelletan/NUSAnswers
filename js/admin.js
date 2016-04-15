@@ -1,7 +1,7 @@
 $(document).ready(function() {
     Chart.defaults.global.responsive = true;
     drawSummaryChart("summary-canvas");
-    drawSummaryBreakdownChart("summary-breakdown-canvas");
+    //drawSummaryBreakdownChart("summary-breakdown-canvas");
     drawQuickViewChart("questions-quick-view-canvas");
     drawQuickViewChart("users-quick-view-canvas");
     drawQuickViewChart("upvotes-quick-view-canvas");
