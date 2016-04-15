@@ -20,6 +20,7 @@ function submit_tags($tags, $question_id) {
     ")";
 
     $query = "SELECT tag_name FROM tags WHERE tag_name IN $parameters";
+    return $query;
     $result = $db->query($query);
     $present_tags = array();
     while ($row = $result->fetch_assoc()) {

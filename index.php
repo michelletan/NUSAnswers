@@ -818,7 +818,7 @@ class QuestionSubmitAPIHandler {
 
                     if ($resp->isSuccess()) {
                       $tags = [];
-                      if (isset($_POST['tags'])) {
+                      if (isset($_POST['tags']) && $_POST['tags'] != "") {
                           $tags_string = $_POST['tags'];
                           $tags = explode(',', $tags_string);
                       }
