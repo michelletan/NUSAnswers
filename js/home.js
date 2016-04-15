@@ -127,13 +127,13 @@ function clearFoldout(foldout) {
 function populateFoldout(foldout, data, postId) {
     // Initialise comments container
     foldout.comments({
+        readOnly: $("#is-logged-in").val() == "false",
         enableEditing: false,
         enableUpvoting: false,
         enableDeleting: false,
         enableAttachments: false,
         enableNavigation: false,
-        readOnly: $("#is-logged-in").val() == "false",
-        profilePictureURL: '/img/profile02.png',
+        profilePictureURL: $("#user-image-url").val(),
         fieldMappings: {
             id: 'comment_id',
             created: 'created_date',

@@ -97,7 +97,7 @@ function clearFoldout(foldout) {
 function populateFoldout(foldout, data, postId, isQuestion) {
     // Initialise comments container
     foldout.comments({
-        readOnly: !$("#is-logged-in").val(),
+        readOnly: $("#is-logged-in").val() == "false",
         enableEditing: false,
         enableUpvoting: false,
         enableDeleting: false,

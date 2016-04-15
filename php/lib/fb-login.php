@@ -45,7 +45,7 @@ function facebook_login_php() {
 
   try {
     // Returns a `Facebook\FacebookResponse` object
-    $response = $fb->get('/me?fields=id,email', $_SESSION['fb_access_token']);
+    $response = $fb->get('/me?fields=id,name,email', $_SESSION['fb_access_token']);
   } catch(Facebook\Exceptions\FacebookResponseException $e) {
     echo 'Graph returned an error: ' . $e->getMessage();
     exit;
@@ -57,6 +57,7 @@ function facebook_login_php() {
   $user = $response->getGraphUser();
 
   $fbid = $user['id'];
+  $name = $user['name'];
   $email = $user['email'];
 
   $query = "SELECT p.display_name AS display_name, p.profile_id AS profile_id, p.image_url AS image_url, u.role AS role " .
@@ -86,7 +87,8 @@ function facebook_login_php() {
       set_active_display_name($auto_display_name);
       set_active_role(0);
       set_active_profile_picture($image);
+    }
   }
-  }
+  set_active_facebook_name($name);
 }
 ?>

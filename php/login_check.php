@@ -29,6 +29,10 @@ function set_active_profile_picture($profile_picture) {
 	$_SESSION['profile_picture'] = $profile_picture;
 }
 
+function set_active_facebook_name($facebook_name) {
+	$_SESSION['facebook_name'] = $facebook_name;
+}
+
 function get_active_profile() {
 	if (isset($_SESSION['profile'])) {
 		return $_SESSION['profile'];
@@ -65,6 +69,15 @@ function get_active_profile_picture() {
 	}
 }
 
+function get_active_facebook_name() {
+	if (isset($_SESSION['facebook_name'])) {
+		return $_SESSION['facebook_name'];
+	}
+	else {
+		return null;
+	}
+}
+
 function has_admin_rights() {
 	if (isset($_SESSION['role']) && $_SESSION['role'] >= USER_ROLE_ADMIN) {
 		return true;
@@ -92,5 +105,6 @@ function logout_active_session() {
 	unset($_SESSION['display_name']);
 	unset($_SESSION['role']);
 	unset($_SESSION['profile_picture']);
+	unset($_SESSION['facebook_name']);
 }
 ?>
