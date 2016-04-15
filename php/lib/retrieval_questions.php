@@ -136,6 +136,18 @@ function retrieve_questions_without_answers($limit_param, $page_param) {
     return $result;
 }
 
+function retrieve_count_of_questions_with_url($url_param) {
+    global $db;
+
+    $url = $db->escape_string($url_param);
+
+    $query = "SELECT * FROM questions WHERE friendly_url LIKE '". $url ."%'";
+
+    $result = $db->query($query);
+
+    return $result->num_rows;
+}
+
 function retrieve_question_with_answers($url_param) {
     global $db;
 

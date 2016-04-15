@@ -27,6 +27,13 @@ function submit_question($title_param, $content_param, $tags_param, $profile_id_
   $image_url = $db->escape_string($image_param);
   $friendly_url = get_seo_string($title);
 
+  // Check if friendly url has been used
+  $url_count = retrieve_count_of_questions_with_url($friendly_url);
+  if ($url_count > 0) { // Question with this url exists
+      // Append number to back
+      $friendly_url = $friendly_url . "-" . ($url_count + 1);
+  }
+
   // handle profile differently depending on whether user is logged in
   if ($profile_id_param) {
     $profile_id = $db->escape_string($profile_id_param);
@@ -91,6 +98,16 @@ function get_seo_string($vp_string){
     $vp_string = preg_replace('~-+~', '-', $vp_string);
 
     $vp_string = str_replace(array('.', ',', '/'), '' , $vp_string);
+
+    // Don't allow hyphen at end of string
+    if (substr($vp_string, -1) == "-") {
+        $vp_string = substr($vp_string, 0, -1);
+    }
+
+    // If string becomes empty
+    if (strlen($vp_string) == 0) {
+        $vp_string = "question";
+    }
 
     return $vp_string;
 }
