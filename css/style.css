@@ -7,6 +7,11 @@ a {
     color: #00A8C6;
 }
 
+h4 {
+    color: #00A8C6;
+    font-weight: 600;
+}
+
 h5 {
     color: #00A8C6;
 }
@@ -214,6 +219,16 @@ img.navbar-logo {
     font-size: 24px;
 }
 
+.post-title h3 {
+    color: #00A8C6;
+    font-weight: 600;
+    font-size: 24px;
+    padding-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+
 .post-answer {
     color: black;
     margin-bottom: 15px;
@@ -292,6 +307,39 @@ button {
     width: 30px;
     height: 30px;
     margin-bottom: 5px;
+}
+
+.img-user-profile {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+.stats-container .todays-stats {
+    margin-top: 0px;
+    padding: 10px;
+    padding-right: 20px;
+    height: 125px;
+}
+
+.stats-container .todays-stats-questions {
+    background-color: #8FBE00;
+}
+
+.stats-container .todays-stats-answers {
+    background-color: #69D2E7;
+}
+
+.stats-container .todays-stats-comments {
+    background-color: #F38630;
+}
+
+.stats-container .todays-stats-quantity {
+    margin-top: -10px;
+}
+
+.stats-container .glyphicon {
+    font-size: 48px !important;
 }
 
 .post-footer a {

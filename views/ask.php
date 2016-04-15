@@ -13,8 +13,10 @@
             <?php include_once __DIR__ . '/sidebar.php'; ?>
             <main id="panel">
             <div class="main col-md-6 col-lg-6">
-                <h3 class="page-title">Post Your Question</h3>
                 <div class="card">
+                    <div class="post-title row center-block">
+                        <h3>Post Your Question</h3>
+                    </div>
                     <div class="post-content">
                         <div class="ask-form form-horizontal" enctype="multipart/form-data">
                            <div class="form-group">

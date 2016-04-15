@@ -26,11 +26,11 @@
                 <form method="get" action="/search" class= "navbar-left col-md-4 col-lg-4 hidden-xs hidden-sm" role="search">
                     <input type="text" id="nav-search-bar" class="form-control" placeholder="Search" name="q">
                 </form>
-                <ul class="nav navbar-nav col-md-3 col-lg-2">
+                <ul class="nav navbar-nav col-md-2 col-lg-2">
                     <li><a href="/ask/"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Ask</a></li>
-                    <li><a href="/answer/"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Answer</a></li>
+                    <li class="hidden-md"><a href="/answer/"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Answer</a></li>
                 </ul>
-                <ul class="nav navbar-nav col-md-1 col-lg-2">
+                <ul class="nav navbar-nav col-md-2 col-lg-2">
                     <li id="non-login-view" style="display:none"><a href="javascript:login();"><?php $is_logged_in = false; ?>Login</a></li>
                     <li class="dropdown login-view" style="display:none">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="username"><?php $is_logged_in = true; ?>Username <span class="caret"></span></a>
