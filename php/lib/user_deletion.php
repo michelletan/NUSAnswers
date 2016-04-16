@@ -21,7 +21,7 @@ function delete_user_question_comment($question_comment_id_param)
     global $db;
     $id = $db->escape_string($question_comment_id_param);
 
-    $query = "SELECT * FROM questions WHERE question_id = $id AND profile_fk = " . get_active_profile();
+    $query = "SELECT * FROM question_comments WHERE comment_id = $id AND profile_fk = " . get_active_profile();
 
     $result = $db->query($query);
 
@@ -35,7 +35,7 @@ function delete_user_answer($answer_id_param)
 {
     global $db;
     $id    = $db->escape_string($answer_id_param);
-    $query = "SELECT * FROM questions WHERE question_id = $id AND profile_fk = " . get_active_profile();
+    $query = "SELECT * FROM answers WHERE answer_id = $id AND profile_fk = " . get_active_profile();
 
     $result = $db->query($query);
 
@@ -49,7 +49,7 @@ function delete_user_answer_comment($answer_comment_id_param)
 {
     global $db;
     $id    = $db->escape_string($answer_comment_id_param);
-    $query = "SELECT * FROM questions WHERE question_id = $id AND profile_fk = " . get_active_profile();
+    $query = "SELECT * FROM answer_comments WHERE comment_id = $id AND profile_fk = " . get_active_profile();
 
     $result = $db->query($query);
 

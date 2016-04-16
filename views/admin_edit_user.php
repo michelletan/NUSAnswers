@@ -1,6 +1,6 @@
-<?php 
-require_once 'C:/xampp/htdocs/projects/CS3226/NUSAnswers/php/lib/retrieval.php';
-include_once __DIR__ . '/admin_header.php'; 
+<?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/php/lib/retrieval.php';
+include_once __DIR__ . '/admin_header.php';
 
 if (isset($_GET['user-id'])) {
     $user_id = $_GET['user-id'];

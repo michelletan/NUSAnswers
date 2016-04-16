@@ -17,7 +17,7 @@ include_once __DIR__ . '/admin_header.php'; ?>
                         </li>
                         <li class="list-group-item">
                             <a href="" type="button" class="btn btn-info"><span class="glyphicon glyphicon-refresh"></span> Refresh</a>
-                            <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-trash" onclick="submitAnswerCommentIdsForDeletion()"></span> Delete</button>
+                            <button type="button" class="btn btn-info" onclick="submitAnswerCommentIdsForDeletion()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
                         </li>
                         <li class="list-group-item">
                             <table id="answer-comments-table" class="table table-filter">
