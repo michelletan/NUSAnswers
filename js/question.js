@@ -29,16 +29,13 @@ $(document).ready(function() {
 });
 
 function initShareButton(target) {
-    console.log("init");
-    var postId = target.find(".card").attr("id");
     var postUrl = target.find(".post-title a").attr("href");
-    var postTitle = target.find(".post-title a").text();
-    var postContent = target.find(".post-question-content").text();
 
     target.find(".share-buttons").jsSocials({
         shareIn: "popup",
         showCount: false,
         showLabel: false,
+        url: "http://nusanswers.me" + postUrl,
         shares: [
             {
                 share: "twitter",
