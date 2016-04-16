@@ -162,6 +162,10 @@ function retrieve_question_with_answers($url_param) {
     } else {
         $rows = $result->fetch_all(MYSQLI_ASSOC);
 
+        // add a view since this is currently called only by an individual question page
+        $view_query = "UPDATE questions SET views=views+1 WHERE friendly_url = '". $url ."'";
+        $db->query($view_query);
+
         $data = retrieve_answers_tags_users_for_question($rows[0]);
 
         return $data;
