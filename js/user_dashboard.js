@@ -16,7 +16,7 @@ $(document).ready(function() {
 
 function drawSummaryChart(id) {
     var data = {
-        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         datasets: [
             {
                 label: "Number of Questions Asked",
@@ -85,7 +85,7 @@ function drawSummaryChart(id) {
 
 function drawQuestionsChart(id, questionStats) {
     var data = {
-        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         datasets: [
             {
                 label: "Number of Questions Asked",
@@ -138,7 +138,7 @@ function drawQuestionsChart(id, questionStats) {
 
 function drawAnswersChart(id, answerStats) {
     var data = {
-        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         datasets: [
             {
                 label: "Number of Answers Given",
@@ -191,7 +191,7 @@ function drawAnswersChart(id, answerStats) {
 
 function drawCommentsChart(id, commentStats) {
     var data = {
-        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         datasets: [
             {
                 label: "Number of Comments Given",
