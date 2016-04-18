@@ -1,12 +1,15 @@
 function login() {
   FB.login(function(response) {
     if (response.status === 'connected') {
-      window.location.reload();
       FB.api('/me', function(response) {
       //  console.log('Successful login for: ' + response.name);
         $.ajax({
           url: '/api/login/facebook',
-          method: 'POST'
+          method: 'POST',
+
+          success: function(data) {
+            window.location.reload();
+          }
         });
       });
     }
@@ -17,9 +20,12 @@ function logout() {
   FB.logout(function(response) {
     $.ajax({
       url: '/api/logout/facebook',
-      method: 'POST'
+      method: 'POST',
+
+      success: function(data) {
+        window.location = "/"
+      }
     });
-    window.location = "/"
   }, {scope: 'email'});
 }
 
