@@ -476,7 +476,7 @@ class UserEditAnswerCommentHandler {
 
 class AdminDashboardHandler {
     function get() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             $answers_quantity = retrieve_answers_quantity();
             $questions_quantity = retrieve_questions_quantity();
             $users_quantity = retrieve_users_quantity();
@@ -546,7 +546,7 @@ class AdminEditUserHandler {
 
 class AdminViewQuestionsHandler {
     function get() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             require VIEW_DIRECTORY . '/admin_view_questions.php';
         } else {
             $redirect_address = '/admin/login';
@@ -557,7 +557,7 @@ class AdminViewQuestionsHandler {
 
 class AdminEditQuestionHandler {
     function get() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             require VIEW_DIRECTORY . '/admin_edit_question.php';
         } else {
             $redirect_address = '/admin/login';
@@ -568,7 +568,7 @@ class AdminEditQuestionHandler {
 
 class AdminViewQuestionCommentsHandler {
     function get() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             require VIEW_DIRECTORY . '/admin_view_question_comments.php';
         } else {
             $redirect_address = '/admin/login';
@@ -579,7 +579,7 @@ class AdminViewQuestionCommentsHandler {
 
 class AdminEditQuestionCommentHandler {
     function get() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             require VIEW_DIRECTORY . '/admin_edit_question_comment.php';
         } else {
             $redirect_address = '/admin/login';
@@ -590,7 +590,7 @@ class AdminEditQuestionCommentHandler {
 
 class AdminViewAnswersHandler {
     function get() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             require VIEW_DIRECTORY . '/admin_view_answers.php';
         } else {
             $redirect_address = '/admin/login';
@@ -601,7 +601,7 @@ class AdminViewAnswersHandler {
 
 class AdminEditAnswerHandler {
     function get() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             require VIEW_DIRECTORY . '/admin_edit_answer.php';
         } else {
             $redirect_address = '/admin/login';
@@ -612,7 +612,7 @@ class AdminEditAnswerHandler {
 
 class AdminViewAnswerCommentsHandler {
     function get() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             require VIEW_DIRECTORY . '/admin_view_answer_comments.php';
         } else {
             $redirect_address = '/admin/login';
@@ -623,7 +623,7 @@ class AdminViewAnswerCommentsHandler {
 
 class AdminEditAnswerCommentHandler {
     function get() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             require VIEW_DIRECTORY . '/admin_edit_answer_comment.php';
         } else {
             $redirect_address = '/admin/login';
@@ -634,7 +634,7 @@ class AdminEditAnswerCommentHandler {
 
 class AdminCreateTagHandler {
     function get() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             require VIEW_DIRECTORY . '/admin_create_tag.php';
         } else {
             $redirect_address = '/admin/login';
@@ -645,7 +645,7 @@ class AdminCreateTagHandler {
 
 class AdminViewTagsHandler {
     function get() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             require VIEW_DIRECTORY . '/admin_view_tags.php';
         } else {
             $redirect_address = '/admin/login';
@@ -656,7 +656,7 @@ class AdminViewTagsHandler {
 
 class AdminEditTagHandler {
     function get() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             require VIEW_DIRECTORY . '/admin_edit_tag.php';
         } else {
             $redirect_address = '/admin/login';
@@ -1124,7 +1124,7 @@ class UserEditAPIHandler {
 
 class QuestionEditAPIHandler {
     function post() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             if (isset($_POST['question-id']) && isset($_POST['title']) && isset($_POST['content'])) {
                 $question_id = trim($_POST['question-id']);
                 $title = htmlspecialchars(trim($_POST['title']));
@@ -1145,7 +1145,7 @@ class QuestionEditAPIHandler {
 
 class QuestionDeletionAPIHandler {
     function post() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             if (isset($_POST['question-id'])) {
                 foreach ($_POST['question-id'] as $question_id) {
                     delete_question($question_id);
@@ -1159,7 +1159,7 @@ class QuestionDeletionAPIHandler {
 
 class QuestionCommentEditAPIHandler {
     function post() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             if (isset($_POST['comment-id']) && isset($_POST['content'])) {
                 $comment_id = trim($_POST['comment-id']);
                 $content = trim($_POST['content']);
@@ -1175,7 +1175,7 @@ class QuestionCommentEditAPIHandler {
 
 class QuestionCommentDeletionAPIHandler {
     function post() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             if (isset($_POST['question-comment-id'])) {
                 foreach ($_POST['question-comment-id'] as $question_comment_id) {
                     delete_question_comment($question_comment_id);
@@ -1189,7 +1189,7 @@ class QuestionCommentDeletionAPIHandler {
 
 class AnswerEditAPIHandler {
     function post() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             if (isset($_POST['answer-id']) && isset($_POST['content'])) {
                 $answer_id = trim($_POST['answer-id']);
                 $content = htmlspecialchars(trim($_POST['content']));
@@ -1209,7 +1209,7 @@ class AnswerEditAPIHandler {
 
 class AnswerDeletionAPIHandler {
     function post() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             if (isset($_POST['answer-id'])) {
                 foreach ($_POST['answer-id'] as $answer_id) {
                     delete_answer($answer_id);
@@ -1223,7 +1223,7 @@ class AnswerDeletionAPIHandler {
 
 class AnswerCommentEditAPIHandler {
     function post() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             if (isset($_POST['comment-id']) && isset($_POST['content'])) {
                 $comment_id = trim($_POST['comment-id']);
                 $content = trim($_POST['content']);
@@ -1239,7 +1239,7 @@ class AnswerCommentEditAPIHandler {
 
 class AnswerCommentDeletionAPIHandler {
     function post() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             if (isset($_POST['answer-comment-id'])) {
                 foreach ($_POST['answer-comment-id'] as $answer_comment_id) {
                     delete_answer_comment($answer_comment_id);
@@ -1253,7 +1253,7 @@ class AnswerCommentDeletionAPIHandler {
 
 class TagCreationAPIHandler {
     function post() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             if (isset($_POST['tag-name'])) {
                 $tag_name = htmlspecialchars(trim($_POST['tag-name']));
                 if ($tag_name !== "") {
@@ -1268,7 +1268,7 @@ class TagCreationAPIHandler {
 
 class TagEditAPIHandler {
     function post() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             if (isset($_POST['tag-name']) && isset($_POST['tag-id'])) {
                 $tag_id = trim($_POST['tag-id']);
                 $tag_name = htmlspecialchars(trim($_POST['tag-name']));
@@ -1284,7 +1284,7 @@ class TagEditAPIHandler {
 
 class TagDeletionAPIHandler {
     function post() {
-        if (is_logged_in() && has_admin_rights()) {
+        if (is_logged_in() && has_mod_rights()) {
             if (isset($_POST['tag-id'])) {
                 foreach ($_POST['tag-id'] as $tag_id) {
                     delete_tag($tag_id);

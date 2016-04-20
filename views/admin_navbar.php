@@ -25,9 +25,8 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo get_active_display_name() ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <?php if (has_admin_rights()) {?>
-                            <li><a href="#">Admin Dashboard</a></li>
+                            <li><a href="/admin-dashboard">Admin Dashboard</a></li>
                             <?php } ?>
-                            <li><a href="#">User Dashboard</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/api/logout/admin">Logout</a></li>
                         </ul>

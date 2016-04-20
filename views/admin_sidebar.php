@@ -55,6 +55,7 @@
                     <a href="/admin-dashboard">Charts</a>
                 </div>
             </div>
+            <?php if (has_admin_rights()) {?>
             <div class="card">
                 <div class="sidebar-title">Admin Accounts</div>
                 <div class="sidebar-body">
@@ -68,6 +69,7 @@
                     <a href="/admin-view-users">View Users</a>
                 </div>
             </div>
+            <?php } ?>
             <div class="card">
                 <div class="sidebar-title">Questions</div>
                 <div class="sidebar-body">
